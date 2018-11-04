@@ -198,12 +198,6 @@ namespace CopyPost
         }
         #endregion
 
-        private void опубликоватьToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            post.Name = textBox_NamePost.Text;
-            post.Description = textBox_Description.Text;
-        }
-
         private void добавитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form_AddProgram form_AddProgram = new Form_AddProgram(true, searchStr.ShortName);
@@ -214,6 +208,12 @@ namespace CopyPost
         private void Form_AddProgram_FormClosed(object sender, FormClosedEventArgs e)
         {
             dataGridView_Search.DataSource = SearchList.UpdateProgramsGrid(textBox_SearchProgram.Text);
+        }
+
+        private void опубликоватьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            post.Name = textBox_NamePost.Text;
+            post.Description = textBox_Description.Text;
         }
     }
 }

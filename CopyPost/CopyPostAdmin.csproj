@@ -75,7 +75,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddPost\addingPrograms.cs" />
+    <Compile Include="AddPost\AddPrograms\addingPrograms.cs" />
+    <Compile Include="AddPost\AddPrograms\CategoriesWrapper.cs" />
+    <Compile Include="AddPost\AddPrograms\PlatformsWrapper.cs" />
     <Compile Include="AddPost\Slider.cs" />
     <Compile Include="Browser.cs" />
     <Compile Include="categories.cs">
@@ -88,10 +90,10 @@
     <Compile Include="AddPost\Form_AddPost.Designer.cs">
       <DependentUpon>Form_AddPost.cs</DependentUpon>
     </Compile>
-    <Compile Include="AddPost\Form_AddProgram.cs">
+    <Compile Include="AddPost\AddPrograms\Form_AddProgram.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AddPost\Form_AddProgram.Designer.cs">
+    <Compile Include="AddPost\AddPrograms\Form_AddProgram.Designer.cs">
       <DependentUpon>Form_AddProgram.cs</DependentUpon>
     </Compile>
     <Compile Include="DBSoftModel.Context.cs">
@@ -155,7 +157,7 @@
     <EmbeddedResource Include="AddPost\Form_AddPost.resx">
       <DependentUpon>Form_AddPost.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AddPost\Form_AddProgram.resx">
+    <EmbeddedResource Include="AddPost\AddPrograms\Form_AddProgram.resx">
       <DependentUpon>Form_AddProgram.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form_Main.resx">
