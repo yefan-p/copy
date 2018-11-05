@@ -18,6 +18,7 @@ namespace CopyPost.AddPost.AddPrograms
                 from el in mydb.categories
                 select new
                 {
+                    el.id,
                     category = el.ru_name
                 };
 

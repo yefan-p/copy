@@ -18,6 +18,7 @@ namespace CopyPost.AddPost.AddPrograms
                 from el in mydb.platforms
                 select new
                 {
+                    el.id,
                     platform = el.name
                 };
 

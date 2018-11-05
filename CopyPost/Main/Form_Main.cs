@@ -39,10 +39,10 @@ namespace CopyPost
                 orderby el.id descending
                 select new
                 {
-                    id = el.id,
-                    date = el.date,
+                    el.id,
+                    el.date,
                     trackerName = el.tracker1.name,
-                    name = el.name
+                    el.name
                 };
 
             dataGridView_NewPost.DataSource = preposts.ToList();

@@ -75,15 +75,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddPost\AddPrograms\addingPrograms.cs" />
     <Compile Include="AddPost\AddPrograms\CategoriesWrapper.cs" />
     <Compile Include="AddPost\AddPrograms\PlatformsWrapper.cs" />
+    <Compile Include="AddPost\AddPrograms\ProgramCategoriesWrapper.cs" />
+    <Compile Include="AddPost\AddPrograms\ProgramWrapper.cs" />
     <Compile Include="AddPost\Slider.cs" />
-    <Compile Include="Browser.cs" />
+    <Compile Include="Global\Browser.cs" />
     <Compile Include="categories.cs">
       <DependentUpon>DBSoftModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataBase.cs" />
     <Compile Include="AddPost\Form_AddPost.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -111,22 +111,22 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DBSoftModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Downloader.cs" />
-    <Compile Include="Form_Main.cs">
+    <Compile Include="Global\Downloader.cs" />
+    <Compile Include="Main\Form_Main.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form_Main.Designer.cs">
+    <Compile Include="Main\Form_Main.Designer.cs">
       <DependentUpon>Form_Main.cs</DependentUpon>
     </Compile>
     <Compile Include="images.cs">
       <DependentUpon>DBSoftModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="MainFunc.cs" />
+    <Compile Include="Global\MainFunc.cs" />
     <Compile Include="AddPost\Post.cs" />
     <Compile Include="platforms.cs">
       <DependentUpon>DBSoftModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="PostList.cs" />
+    <Compile Include="Main\PostList.cs" />
     <Compile Include="posts.cs">
       <DependentUpon>DBSoftModel.tt</DependentUpon>
     </Compile>
@@ -144,7 +144,7 @@
     <Compile Include="spoilers.cs">
       <DependentUpon>DBSoftModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="StatusBarGlobal.cs" />
+    <Compile Include="Global\StatusBarGlobal.cs" />
     <Compile Include="tracker.cs">
       <DependentUpon>DBSoftModel.tt</DependentUpon>
     </Compile>
@@ -160,7 +160,7 @@
     <EmbeddedResource Include="AddPost\AddPrograms\Form_AddProgram.resx">
       <DependentUpon>Form_AddProgram.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form_Main.resx">
+    <EmbeddedResource Include="Main\Form_Main.resx">
       <DependentUpon>Form_Main.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
