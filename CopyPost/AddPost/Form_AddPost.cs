@@ -224,10 +224,13 @@ namespace CopyPost
             string idProgramString = dataGridView_Search.Rows[selectedRows].Cells[0].Value.ToString();
             int idProgram = int.Parse(idProgramString);
 
-            post.Program = idProgram;
+            post.ProgramID = idProgram;
             post.DatePublic = dateTimePicker1.Value;
             post.Imgs = imgsSlider.Slides;
             post.Spoilers = spoilerSlider.Slides;
+            post.Add();
+
+            Close();
         }
     }
 }

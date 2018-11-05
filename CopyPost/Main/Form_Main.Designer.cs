@@ -154,10 +154,17 @@
             // 
             // dataGridView_PublicPost
             // 
+            this.dataGridView_PublicPost.AllowUserToAddRows = false;
+            this.dataGridView_PublicPost.AllowUserToDeleteRows = false;
+            this.dataGridView_PublicPost.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridView_PublicPost.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView_PublicPost.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView_PublicPost.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnF2;
             this.dataGridView_PublicPost.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView_PublicPost.MultiSelect = false;
             this.dataGridView_PublicPost.Name = "dataGridView_PublicPost";
+            this.dataGridView_PublicPost.ReadOnly = true;
+            this.dataGridView_PublicPost.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView_PublicPost.Size = new System.Drawing.Size(585, 492);
             this.dataGridView_PublicPost.TabIndex = 3;
             // 

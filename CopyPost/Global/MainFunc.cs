@@ -15,6 +15,9 @@ namespace CopyPost
         public static string rutorWorkURL = @"http://mega-tor.org/soft";
         public static string rutorWorkURL1 = @"http://www.rutor.info/soft";
 
+        public static int countViewRecordPrPost = 100;
+        public static int countViewRecordPost = 100;
+
         public static string MakeNameFile(string badName)
         {
             string goodName = badName.Replace("<", "");

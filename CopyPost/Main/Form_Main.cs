@@ -33,7 +33,7 @@ namespace CopyPost
         {
             mydbContext mydb = new mydbContext();
 
-            var preposts =
+            var prepostsList =
                 from el in mydb.preposts
                 where el.itpublic == 0
                 orderby el.id descending
@@ -45,7 +45,26 @@ namespace CopyPost
                     el.name
                 };
 
-            dataGridView_NewPost.DataSource = preposts.ToList();
+            dataGridView_NewPost.DataSource = prepostsList
+                .Take(MainFunc.countViewRecordPrPost)
+                .ToList();
+
+            var postsList =
+                from el in mydb.posts
+                orderby el.date_create descending
+                select new
+                {
+                    el.id,
+                    el.name,
+                    el.date_create,
+                    el.date_public,
+                    el.count_view,
+                    el.visible
+                };
+
+            dataGridView_PublicPost.DataSource = postsList
+                .Take(MainFunc.countViewRecordPost)
+                .ToList();
         }
 
         private void StatusBarGlobal_onChangeProgress(object sender, EventArgs e)
@@ -79,6 +98,7 @@ namespace CopyPost
             preposts prPost = mydb.preposts.Single(n => n.id.ToString() == idPrepost);
 
             Form_AddPost form_AddPost = new Form_AddPost(prPost);
+            form_AddPost.FormClosed += PostList_onAfterAdd;
             form_AddPost.ShowDialog();
         }
     }
