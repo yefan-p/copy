@@ -24,6 +24,8 @@ namespace CopyPost
         public List<SpoilersItem> Spoilers { get; set; }
         public string TorrentPath { get; set; }
         public DateTime DatePublic { get; set; }
+        public int Program { get; set; }
+        public preposts Prepost { get; set; }
 
         public Post(preposts prPost)
         {
@@ -43,6 +45,7 @@ namespace CopyPost
             Spoilers = item.Spoilers;
             Imgs = item.Imgs;
             TorrentPath = item.TorrentPath;
+            Prepost = prPost;
         }
     }
 }

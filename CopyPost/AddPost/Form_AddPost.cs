@@ -46,6 +46,9 @@ namespace CopyPost
             searchStr = new SearchStr(post.Name);
             searchStr.onChangeName += SearchStr_onChangeName;
             textBox_SearchProgram.Text = searchStr.ShortName;
+
+            dataGridView_Search.DataSource = SearchList.UpdateProgramsGrid(textBox_SearchProgram.Text);
+            dataGridView_Search.Columns[0].Visible = false;
         }
 
         private void SearchStr_onChangeName(object sender, EventArgs e)
@@ -198,6 +201,7 @@ namespace CopyPost
         }
         #endregion
 
+        #region Открытие формы добавления программы.
         private void добавитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form_AddProgram form_AddProgram = new Form_AddProgram(true, searchStr.ShortName);
@@ -209,11 +213,21 @@ namespace CopyPost
         {
             dataGridView_Search.DataSource = SearchList.UpdateProgramsGrid(textBox_SearchProgram.Text);
         }
+        #endregion
 
         private void опубликоватьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             post.Name = textBox_NamePost.Text;
             post.Description = textBox_Description.Text;
+
+            int selectedRows = dataGridView_Search.SelectedRows[0].Index;
+            string idProgramString = dataGridView_Search.Rows[selectedRows].Cells[0].Value.ToString();
+            int idProgram = int.Parse(idProgramString);
+
+            post.Program = idProgram;
+            post.DatePublic = dateTimePicker1.Value;
+            post.Imgs = imgsSlider.Slides;
+            post.Spoilers = spoilerSlider.Slides;
         }
     }
 }

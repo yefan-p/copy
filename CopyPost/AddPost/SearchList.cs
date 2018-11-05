@@ -21,7 +21,7 @@ namespace CopyPost
                 {
                     el.id,
                     el.name,
-                    el.platforms
+                    platform = el.platforms.name
                 };
 
             BindingSource binding = new BindingSource();
