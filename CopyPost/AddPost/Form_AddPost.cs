@@ -34,7 +34,7 @@ namespace CopyPost
             textBox_TorrentFile.Text = post.TorrentPath;
             openFileDialog1.InitialDirectory = Path.GetDirectoryName(post.TorrentPath);
 
-            imgsSlider = new Slider<string>(post.Imgs);
+            imgsSlider = new Slider<string>(post.Imgs.AllCollection);
             imgsSlider.onChangeSlide += ImgsSlider_onChangeImg;
             imgsSlider.Initialize();
 
@@ -227,7 +227,6 @@ namespace CopyPost
 
             post.ProgramID = idProgram;
             post.DatePublic = dateTimePicker1.Value;
-            post.Imgs = imgsSlider.Slides;
             post.Spoilers = spoilerSlider.Slides;
             post.Add();
 

@@ -17,6 +17,7 @@ namespace CopyPost
         public int id { get; set; }
         public string href { get; set; }
         public int posts_id { get; set; }
+        public string type { get; set; }
     
         public virtual posts posts { get; set; }
     }

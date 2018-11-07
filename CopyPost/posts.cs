@@ -27,10 +27,10 @@ namespace CopyPost
         public string description { get; set; }
         public Nullable<System.DateTime> date_create { get; set; }
         public Nullable<System.DateTime> date_public { get; set; }
-        public Nullable<int> count_view { get; set; }
+        public int count_view { get; set; }
         public string file { get; set; }
         public Nullable<int> pre_post { get; set; }
-        public Nullable<sbyte> visible { get; set; }
+        public sbyte visible { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<images> images { get; set; }

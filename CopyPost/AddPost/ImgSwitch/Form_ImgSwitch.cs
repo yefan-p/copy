@@ -150,6 +150,7 @@ namespace CopyPost.AddPost.ImgSwitch
                         sp.content = sp.content.Replace(item, "");
                 }
             }
+            Close();
         }
     }
 }
