@@ -21,7 +21,7 @@ namespace CopyPost
 
         public string Name { get; set; }
         public string Description { get; set; }
-        public List<string> Imgs { get; set; }
+        public ImgItem Imgs { get; set; }
         public List<SpoilersItem> Spoilers { get; set; }
         public string TorrentPath { get; set; }
         public DateTime DatePublic { get; set; }
@@ -44,7 +44,6 @@ namespace CopyPost
             Name = item.Name;
             Description = item.Description;
             Spoilers = item.Spoilers;
-            Imgs = item.Imgs;
             TorrentPath = item.TorrentPath;
             PrepostID = prPost.id;
 
@@ -58,12 +57,33 @@ namespace CopyPost
 
             Description = form_ImgSwitch.Description;
             Spoilers = form_ImgSwitch.Spoilers;
-            Imgs = form_ImgSwitch.Imgs.AllCollection;
+            Imgs = form_ImgSwitch.Imgs;
         }
 
+        #region Добавление в БД
         public void Add()
         {
             mydbContext mydb = new mydbContext();
+
+            AddPost(mydb);
+
+            posts post = mydb.posts
+                    .OrderByDescending(el => el.id)
+                    .First();
+
+            AddScreen(mydb, post);
+            AddSpoilers(mydb, post);
+
+            preposts prPost = mydb.preposts.Single(el => el.id == PrepostID);
+            prPost.itpublic = 1;
+            mydb.SaveChanges();
+
+            Program.statusBarGlobal.Message = "Добавление поста";
+            Program.statusBarGlobal.Description = "Пост успешно добавлен.";
+        }
+        
+        private void AddPost(mydbContext mydb)
+        {
             posts post = new posts
             {
                 name = Name,
@@ -77,22 +97,44 @@ namespace CopyPost
             };
             mydb.posts.Add(post);
             mydb.SaveChanges();
+        }
 
-            post = mydb.posts
-                    .OrderByDescending(el => el.id)
-                    .First();
-
-            foreach (string item in Imgs)
+        private void AddScreen(mydbContext mydb, posts post)
+        {
+            images img = new images
             {
-                images img = new images
+                href = Imgs.Poster,
+                type = "post",
+                posts = post
+            };
+            mydb.images.Add(img);
+
+            foreach (string item in Imgs.Screens)
+            {
+                img = new images
                 {
                     href = item,
+                    type = "screen",
+                    posts = post
+                };
+                mydb.images.Add(img);
+            }
+
+            foreach (string item in Imgs.Views)
+            {
+                img = new images
+                {
+                    href = item,
+                    type = "view",
                     posts = post
                 };
                 mydb.images.Add(img);
             }
             mydb.SaveChanges();
+        }
 
+        private void AddSpoilers(mydbContext mydb, posts post)
+        {
             foreach (SpoilersItem item in Spoilers)
             {
                 spoilers spoiler = new spoilers
@@ -104,13 +146,7 @@ namespace CopyPost
                 mydb.spoilers.Add(spoiler);
             }
             mydb.SaveChanges();
-
-            preposts prPost = mydb.preposts.Single(el => el.id == PrepostID);
-            prPost.itpublic = 1;
-            mydb.SaveChanges();
-
-            Program.statusBarGlobal.Message = "Добавление поста";
-            Program.statusBarGlobal.Description = "Пост успешно добавлен.";
         }
+        #endregion
     }
 }
