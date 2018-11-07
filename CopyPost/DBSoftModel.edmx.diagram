@@ -5,23 +5,23 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="53f7f255bbad4e55b87b2b351260e5be" Name="Diagram1">
-        <EntityTypeShape EntityType="mydbModel.categories" Width="1.5" PointX="7.75" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="mydbModel.images" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="mydbModel.platforms" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="mydbModel.posts" Width="1.5" PointX="5.25" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="mydbModel.preposts" Width="1.5" PointX="3" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="mydbModel.program_categories" Width="1.5" PointX="5.25" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="mydbModel.programs" Width="1.5" PointX="3.125" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="mydbModel.spoilers" Width="1.5" PointX="7.5" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="mydbModel.tracker" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
-        <AssociationConnector Association="mydbModel.fk_categories_has_programs_categories1" ManuallyRouted="false" />
-        <AssociationConnector Association="mydbModel.fk_images_posts1" ManuallyRouted="false" />
-        <AssociationConnector Association="mydbModel.fk_programs_platform1" ManuallyRouted="false" />
-        <AssociationConnector Association="mydbModel.fk_posts_prePost1" ManuallyRouted="false" />
-        <AssociationConnector Association="mydbModel.fk_posts_programs1" ManuallyRouted="false" />
-        <AssociationConnector Association="mydbModel.fk_spoilers_posts1" ManuallyRouted="false" />
-        <AssociationConnector Association="mydbModel.fk_prePost_tracker1" ManuallyRouted="false" />
-        <AssociationConnector Association="mydbModel.fk_categories_has_programs_programs1" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="mydbModel.categories" Width="1.5" PointX="8" PointY="7.625" />
+        <EntityTypeShape EntityType="mydbModel.images" Width="1.5" PointX="8" PointY="1" />
+        <EntityTypeShape EntityType="mydbModel.platforms" Width="1.5" PointX="1.25" PointY="4.625" />
+        <EntityTypeShape EntityType="mydbModel.posts" Width="1.5" PointX="5.75" PointY="1.75" />
+        <EntityTypeShape EntityType="mydbModel.preposts" Width="1.5" PointX="3.75" PointY="2" />
+        <EntityTypeShape EntityType="mydbModel.program_categories" Width="1.5" PointX="5.875" PointY="6.25" />
+        <EntityTypeShape EntityType="mydbModel.programs" Width="1.5" PointX="3.625" PointY="5.625" />
+        <EntityTypeShape EntityType="mydbModel.spoilers" Width="1.5" PointX="8.25" PointY="3.875" />
+        <EntityTypeShape EntityType="mydbModel.tracker" Width="1.5" PointX="1.125" PointY="2.25" />
+        <AssociationConnector Association="mydbModel.fk_categories_has_programs_categories1" />
+        <AssociationConnector Association="mydbModel.fk_images_posts1" />
+        <AssociationConnector Association="mydbModel.fk_programs_platform1" />
+        <AssociationConnector Association="mydbModel.fk_posts_prePost1" />
+        <AssociationConnector Association="mydbModel.fk_posts_programs1" />
+        <AssociationConnector Association="mydbModel.fk_spoilers_posts1" />
+        <AssociationConnector Association="mydbModel.fk_prePost_tracker1" />
+        <AssociationConnector Association="mydbModel.fk_categories_has_programs_programs1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
