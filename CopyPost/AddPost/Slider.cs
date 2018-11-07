@@ -40,7 +40,7 @@ namespace CopyPost
             if (sliderList.Count > 0)
             {
                 sliderList.RemoveAt(currentIndexSlide);
-                ChangeIndex(-1);
+                ChangeIndex(0);
             }
         }
         #endregion
@@ -87,9 +87,9 @@ namespace CopyPost
         {
             currentIndexSlide = currentIndexSlide + step;
             if (currentIndexSlide < 0)
-                currentIndexSlide = 0;
-            else if (currentIndexSlide >= sliderList.Count)
                 currentIndexSlide = sliderList.Count - 1;
+            else if (currentIndexSlide >= sliderList.Count)
+                currentIndexSlide = 0;
 
             onChangeSlide?.Invoke(this, EventArgs.Empty);
         }

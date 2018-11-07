@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using CopyPost.TorrentSoftExtensions;
 
 namespace CopyPost
 {
@@ -231,6 +232,55 @@ namespace CopyPost
             post.Add();
 
             Close();
+        }
+
+        private void опубликоватьToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            TorrentSoftPost torrentSoftPost = new TorrentSoftPost
+            {
+                Name = textBox_NamePost.Text,
+                DatePublic = dateTimePicker1.Value,
+                Description = textBox_Description.Text,
+                Imgs = imgsSlider.Slides,
+                Spoilers = spoilerSlider.Slides,
+                TorrentPath = post.TorrentPath
+            };
+
+            TorrentSoftManager torrentSoftManager = new TorrentSoftManager(torrentSoftPost);
+            torrentSoftManager.Add();
+        }
+
+        private void автофильтрИзображенийToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string sp = spoilerSlider.Slides[0].content;
+            List<string> im = new List<string>();
+            im.AddRange(imgsSlider.Slides);
+
+            foreach (string item in imgsSlider.Slides)
+            {
+                if (item == imgsSlider.CurrentSlide) continue;
+                if (sp.Contains(item))
+                {
+                    sp = sp.Replace(item, "");
+                    im.Remove(item);
+                }
+            }
+
+            imgsSlider = new Slider<string>(im);
+            imgsSlider.onChangeSlide += ImgsSlider_onChangeImg;
+            imgsSlider.Initialize();
+
+            SpoilersItem itemSpoiler = new SpoilersItem
+            {
+                name = spoilerSlider.Slides[0].name,
+                content = sp
+            };
+
+            SpoilersItem itemOld = spoilerSlider.Slides.First();
+            spoilerSlider.Slides.Remove(itemOld);
+            spoilerSlider.Slides.Insert(0, itemSpoiler);
+
+            spoilerSlider.Initialize();
         }
     }
 }

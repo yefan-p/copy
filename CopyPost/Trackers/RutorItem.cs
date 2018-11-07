@@ -39,6 +39,9 @@ namespace CopyPost.Trackers
             SetTorrentFile();
 
             browser.Close();
+
+            CleanDescription();
+            CleanSpoilers();
         }
 
         #region Получаем информацию о посте с Web-страницы. Парсинг.
@@ -143,6 +146,41 @@ namespace CopyPost.Trackers
             {
                 Program.statusBarGlobal.Description = "Загрузка торрент файла с рутор.";
                 Program.statusBarGlobal.Message = "Не удалось получить ссылку для загрузки.";
+            }
+        }
+        #endregion
+
+        #region Удаление мусора. Дополнительный опциональный парсинг.
+        private void CleanDescription()
+        {
+            while (Description.Contains("<br><br>") || Description.Contains("<br>\r\n<br>"))
+            {
+                Description = Description.Replace("<br><br>", "<br>");
+                Description = Description.Replace("<br>\r\n<br>", "<br>");
+            }   
+        }
+
+        private void CleanSpoilers()
+        {
+            string sp = spoilers.First().content;
+
+            int divExistsBegin = sp.IndexOf(@"<a href=""http://zarunet.org/""");
+            int divExistsEnd = sp.IndexOf(@"</a>");
+
+            if (divExistsBegin != -1 && divExistsEnd != -1)
+            {
+                sp = sp.Remove(divExistsBegin, divExistsEnd - divExistsBegin + 4); // + 4 потому что IndexOf(@"</a>") возвращает начало вхождения
+
+                SpoilersItem itemNew = new SpoilersItem
+                {
+                    name = spoilers.First().name,
+                    content = sp
+                };
+
+                SpoilersItem itemDel = spoilers.First();
+                spoilers.Remove(itemDel);
+
+                spoilers.Insert(0, itemNew);
             }
         }
         #endregion

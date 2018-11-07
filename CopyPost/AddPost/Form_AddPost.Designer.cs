@@ -31,6 +31,8 @@
             this.components = new System.ComponentModel.Container();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.опубликоватьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.torrentSoftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.опубликоватьToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox_ImgSlider = new System.Windows.Forms.GroupBox();
             this.textBox_ImgUrl = new System.Windows.Forms.TextBox();
@@ -69,6 +71,8 @@
             this.Status_ProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.StatusLabel_Message = new System.Windows.Forms.ToolStripStatusLabel();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.инструментыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.автофильтрИзображенийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -100,7 +104,9 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.опубликоватьToolStripMenuItem});
+            this.опубликоватьToolStripMenuItem,
+            this.torrentSoftToolStripMenuItem,
+            this.инструментыToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1473, 24);
@@ -113,6 +119,21 @@
             this.опубликоватьToolStripMenuItem.Size = new System.Drawing.Size(98, 20);
             this.опубликоватьToolStripMenuItem.Text = "Опубликовать";
             this.опубликоватьToolStripMenuItem.Click += new System.EventHandler(this.опубликоватьToolStripMenuItem_Click);
+            // 
+            // torrentSoftToolStripMenuItem
+            // 
+            this.torrentSoftToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.опубликоватьToolStripMenuItem1});
+            this.torrentSoftToolStripMenuItem.Name = "torrentSoftToolStripMenuItem";
+            this.torrentSoftToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
+            this.torrentSoftToolStripMenuItem.Text = "TorrentSoft";
+            // 
+            // опубликоватьToolStripMenuItem1
+            // 
+            this.опубликоватьToolStripMenuItem1.Name = "опубликоватьToolStripMenuItem1";
+            this.опубликоватьToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.опубликоватьToolStripMenuItem1.Text = "Опубликовать";
+            this.опубликоватьToolStripMenuItem1.Click += new System.EventHandler(this.опубликоватьToolStripMenuItem1_Click);
             // 
             // splitContainer1
             // 
@@ -527,6 +548,21 @@
             this.openFileDialog1.Filter = "Torrent|*.torrent|Все файлы(*.*)|*.*";
             this.openFileDialog1.Title = "Выберите .torrent файл";
             // 
+            // инструментыToolStripMenuItem
+            // 
+            this.инструментыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.автофильтрИзображенийToolStripMenuItem});
+            this.инструментыToolStripMenuItem.Name = "инструментыToolStripMenuItem";
+            this.инструментыToolStripMenuItem.Size = new System.Drawing.Size(95, 20);
+            this.инструментыToolStripMenuItem.Text = "Инструменты";
+            // 
+            // автофильтрИзображенийToolStripMenuItem
+            // 
+            this.автофильтрИзображенийToolStripMenuItem.Name = "автофильтрИзображенийToolStripMenuItem";
+            this.автофильтрИзображенийToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.автофильтрИзображенийToolStripMenuItem.Text = "Автофильтр изображений";
+            this.автофильтрИзображенийToolStripMenuItem.Click += new System.EventHandler(this.автофильтрИзображенийToolStripMenuItem_Click);
+            // 
             // Form_AddPost
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -620,5 +656,9 @@
         private System.Windows.Forms.TextBox textBox_NameSpoiler;
         private System.Windows.Forms.TextBox textBox_SpoilerContent;
         private System.Windows.Forms.Label label_NumberSpoiler;
+        private System.Windows.Forms.ToolStripMenuItem torrentSoftToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem опубликоватьToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem инструментыToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem автофильтрИзображенийToolStripMenuItem;
     }
 }

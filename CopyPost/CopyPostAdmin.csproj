@@ -145,6 +145,8 @@
       <DependentUpon>DBSoftModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Global\StatusBarGlobal.cs" />
+    <Compile Include="TorrentSoftExtensions\TorrentSoftManager.cs" />
+    <Compile Include="TorrentSoftExtensions\TorrentSoftPost.cs" />
     <Compile Include="tracker.cs">
       <DependentUpon>DBSoftModel.tt</DependentUpon>
     </Compile>
