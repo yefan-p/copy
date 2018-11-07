@@ -86,7 +86,7 @@ namespace CopyPost.AddPost.ImgSwitch
             int CurrentCol = 0;
             int CurrentRow = 0;
 
-            foreach (GroupBox item in Controls)
+            foreach (GroupBox item in Controls.OfType<GroupBox>())
             {
                 item.Location = new Point(CurrentCol * WidthPadding, CurrentRow * HeightPadding);
                 CurrentCol++;
@@ -146,10 +146,8 @@ namespace CopyPost.AddPost.ImgSwitch
                 {
                     Description = Description.Replace(item, "");
 
-                    for (int i = 0; i < Spoilers.Count(); i++)
-                    {
-                        Spoilers[i].content = Spoilers[i].content.Replace(item, "");
-                    }
+                    foreach (SpoilersItem sp in Spoilers)
+                        sp.content = sp.content.Replace(item, "");
                 }
             }
         }

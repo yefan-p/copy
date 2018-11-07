@@ -55,6 +55,10 @@ namespace CopyPost
         {
             Form_ImgSwitch form_ImgSwitch = new Form_ImgSwitch(item);
             form_ImgSwitch.ShowDialog();
+
+            Description = form_ImgSwitch.Description;
+            Spoilers = form_ImgSwitch.Spoilers;
+            Imgs = form_ImgSwitch.Imgs.AllCollection;
         }
 
         public void Add()

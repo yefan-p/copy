@@ -12,14 +12,19 @@ namespace CopyPost.AddPost.ImgSwitch
         public List<string> Views { get; set; }
         public List<string> Screens { get; set; }
 
-        List<string> allCollection = new List<string>();
+        List<string> allCollection;
 
         public List<string> AllCollection
         {
             get
             {
-                allCollection.AddRange(Views);
-                allCollection.AddRange(Screens);
+                allCollection = new List<string>();
+                if (Views != null)
+                    allCollection.AddRange(Views);
+
+                if (Screens != null)
+                    allCollection.AddRange(Screens);
+
                 return allCollection;
             }
             private set
