@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CopyPost.Trackers;
+using CopyPost.AddPost.ImgSwitch;
 
 namespace CopyPost
 {
-    public struct SpoilersItem
+    public class SpoilersItem
     {
         public string name;
         public string content;
@@ -46,6 +47,18 @@ namespace CopyPost
             Imgs = item.Imgs;
             TorrentPath = item.TorrentPath;
             PrepostID = prPost.id;
+
+            SwithcAndFilterImg(item);
+        }
+
+        private void SwithcAndFilterImg(ITrackersItem item)
+        {
+            Form_ImgSwitch form_ImgSwitch = new Form_ImgSwitch(item);
+            form_ImgSwitch.ShowDialog();
+
+            Description = form_ImgSwitch.Description;
+            Spoilers = form_ImgSwitch.Spoilers;
+            Imgs = form_ImgSwitch.Imgs.AllCollection;
         }
 
         public void Add()

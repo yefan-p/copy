@@ -79,6 +79,13 @@
     <Compile Include="AddPost\AddPrograms\PlatformsWrapper.cs" />
     <Compile Include="AddPost\AddPrograms\ProgramCategoriesWrapper.cs" />
     <Compile Include="AddPost\AddPrograms\ProgramWrapper.cs" />
+    <Compile Include="AddPost\ImgSwitch\Form_ImgSwitch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddPost\ImgSwitch\Form_ImgSwitch.Designer.cs">
+      <DependentUpon>Form_ImgSwitch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AddPost\ImgSwitch\ImgItem.cs" />
     <Compile Include="AddPost\Slider.cs" />
     <Compile Include="Global\Browser.cs" />
     <Compile Include="categories.cs">
@@ -161,6 +168,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AddPost\AddPrograms\Form_AddProgram.resx">
       <DependentUpon>Form_AddProgram.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddPost\ImgSwitch\Form_ImgSwitch.resx">
+      <DependentUpon>Form_ImgSwitch.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main\Form_Main.resx">
       <DependentUpon>Form_Main.cs</DependentUpon>
