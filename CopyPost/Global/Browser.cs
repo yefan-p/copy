@@ -17,6 +17,8 @@ namespace CopyPost
         {
             ChromeOptions OptionsBrowser = new ChromeOptions();
             OptionsBrowser.AddArgument(@"user-data-dir=" + ChromeUserDataPath);
+            //OptionsBrowser.PageLoadStrategy = PageLoadStrategy.None;
+
             BrowserMan = new ChromeDriver(OptionsBrowser);
         }
 
