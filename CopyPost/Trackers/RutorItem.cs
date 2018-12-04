@@ -40,7 +40,7 @@ namespace CopyPost.Trackers
 
             browser.Close();
 
-            CleanDescription();
+            if(Description != null) CleanDescription();
             CleanSpoilers();
         }
 

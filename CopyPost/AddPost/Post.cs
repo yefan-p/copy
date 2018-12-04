@@ -109,6 +109,7 @@ namespace CopyPost
             };
             mydb.images.Add(img);
 
+            if (Imgs.Screens != null)
             foreach (string item in Imgs.Screens)
             {
                 img = new images
@@ -120,6 +121,7 @@ namespace CopyPost
                 mydb.images.Add(img);
             }
 
+            if (Imgs.Views != null)
             foreach (string item in Imgs.Views)
             {
                 img = new images

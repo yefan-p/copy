@@ -144,7 +144,7 @@ namespace CopyPost.AddPost.ImgSwitch
             {
                 if (!imgItem.AllCollection.Contains(item))
                 {
-                    Description = Description.Replace(item, "");
+                    if(Description != null) Description = Description.Replace(item, "");
 
                     foreach (SpoilersItem sp in Spoilers)
                         sp.content = sp.content.Replace(item, "");
