@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="mydbModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="storageModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="categories">
           <Key>
             <PropertyRef Name="id" />
@@ -186,16 +186,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="mydbModelStoreContainer">
-          <EntitySet Name="categories" EntityType="Self.categories" Schema="mydb" store:Type="Tables" />
-          <EntitySet Name="images" EntityType="Self.images" Schema="mydb" store:Type="Tables" />
-          <EntitySet Name="platforms" EntityType="Self.platforms" Schema="mydb" store:Type="Tables" />
-          <EntitySet Name="posts" EntityType="Self.posts" Schema="mydb" store:Type="Tables" />
-          <EntitySet Name="preposts" EntityType="Self.preposts" Schema="mydb" store:Type="Tables" />
-          <EntitySet Name="program_categories" EntityType="Self.program_categories" Schema="mydb" store:Type="Tables" />
-          <EntitySet Name="programs" EntityType="Self.programs" Schema="mydb" store:Type="Tables" />
-          <EntitySet Name="spoilers" EntityType="Self.spoilers" Schema="mydb" store:Type="Tables" />
-          <EntitySet Name="tracker" EntityType="Self.tracker" Schema="mydb" store:Type="Tables" />
+        <EntityContainer Name="storageModelStoreContainer">
+          <EntitySet Name="categories" EntityType="Self.categories" Schema="storage" store:Type="Tables" />
+          <EntitySet Name="images" EntityType="Self.images" Schema="storage" store:Type="Tables" />
+          <EntitySet Name="platforms" EntityType="Self.platforms" Schema="storage" store:Type="Tables" />
+          <EntitySet Name="posts" EntityType="Self.posts" Schema="storage" store:Type="Tables" />
+          <EntitySet Name="preposts" EntityType="Self.preposts" Schema="storage" store:Type="Tables" />
+          <EntitySet Name="program_categories" EntityType="Self.program_categories" Schema="storage" store:Type="Tables" />
+          <EntitySet Name="programs" EntityType="Self.programs" Schema="storage" store:Type="Tables" />
+          <EntitySet Name="spoilers" EntityType="Self.spoilers" Schema="storage" store:Type="Tables" />
+          <EntitySet Name="tracker" EntityType="Self.tracker" Schema="storage" store:Type="Tables" />
           <AssociationSet Name="fk_categories_has_programs_categories1" Association="Self.fk_categories_has_programs_categories1">
             <End Role="categories" EntitySet="categories" />
             <End Role="program_categories" EntitySet="program_categories" />
@@ -229,53 +229,11 @@
             <End Role="spoilers" EntitySet="spoilers" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="mydbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="mydbContext" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="categories" EntityType="mydbModel.categories" />
-          <EntitySet Name="images" EntityType="mydbModel.images" />
-          <EntitySet Name="platforms" EntityType="mydbModel.platforms" />
-          <EntitySet Name="posts" EntityType="mydbModel.posts" />
-          <EntitySet Name="preposts" EntityType="mydbModel.preposts" />
-          <EntitySet Name="program_categories" EntityType="mydbModel.program_categories" />
-          <EntitySet Name="programs" EntityType="mydbModel.programs" />
-          <EntitySet Name="spoilers" EntityType="mydbModel.spoilers" />
-          <EntitySet Name="tracker" EntityType="mydbModel.tracker" />
-          <AssociationSet Name="fk_categories_has_programs_categories1" Association="mydbModel.fk_categories_has_programs_categories1">
-            <End Role="categories" EntitySet="categories" />
-            <End Role="program_categories" EntitySet="program_categories" />
-          </AssociationSet>
-          <AssociationSet Name="fk_images_posts1" Association="mydbModel.fk_images_posts1">
-            <End Role="posts" EntitySet="posts" />
-            <End Role="images" EntitySet="images" />
-          </AssociationSet>
-          <AssociationSet Name="fk_programs_platform1" Association="mydbModel.fk_programs_platform1">
-            <End Role="platforms" EntitySet="platforms" />
-            <End Role="programs" EntitySet="programs" />
-          </AssociationSet>
-          <AssociationSet Name="fk_posts_prePost1" Association="mydbModel.fk_posts_prePost1">
-            <End Role="preposts" EntitySet="preposts" />
-            <End Role="posts" EntitySet="posts" />
-          </AssociationSet>
-          <AssociationSet Name="fk_posts_programs1" Association="mydbModel.fk_posts_programs1">
-            <End Role="programs" EntitySet="programs" />
-            <End Role="posts" EntitySet="posts" />
-          </AssociationSet>
-          <AssociationSet Name="fk_spoilers_posts1" Association="mydbModel.fk_spoilers_posts1">
-            <End Role="posts" EntitySet="posts" />
-            <End Role="spoilers" EntitySet="spoilers" />
-          </AssociationSet>
-          <AssociationSet Name="fk_prePost_tracker1" Association="mydbModel.fk_prePost_tracker1">
-            <End Role="tracker" EntitySet="tracker" />
-            <End Role="preposts" EntitySet="preposts" />
-          </AssociationSet>
-          <AssociationSet Name="fk_categories_has_programs_programs1" Association="mydbModel.fk_categories_has_programs_programs1">
-            <End Role="programs" EntitySet="programs" />
-            <End Role="program_categories" EntitySet="program_categories" />
-          </AssociationSet>
-        </EntityContainer>
+      <Schema Namespace="storageModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="categories">
           <Key>
             <PropertyRef Name="id" />
@@ -283,7 +241,7 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ru_name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="slug_name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="program_categories" Relationship="mydbModel.fk_categories_has_programs_categories1" FromRole="categories" ToRole="program_categories" />
+          <NavigationProperty Name="program_categories" Relationship="Self.fk_categories_has_programs_categories1" FromRole="categories" ToRole="program_categories" />
         </EntityType>
         <EntityType Name="images">
           <Key>
@@ -293,7 +251,7 @@
           <Property Name="href" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="posts_id" Type="Int32" Nullable="false" />
           <Property Name="type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="posts" Relationship="mydbModel.fk_images_posts1" FromRole="images" ToRole="posts" />
+          <NavigationProperty Name="posts" Relationship="Self.fk_images_posts1" FromRole="images" ToRole="posts" />
         </EntityType>
         <EntityType Name="platforms">
           <Key>
@@ -302,7 +260,7 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="off_site" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="programs" Relationship="mydbModel.fk_programs_platform1" FromRole="platforms" ToRole="programs" />
+          <NavigationProperty Name="programs" Relationship="Self.fk_programs_platform1" FromRole="platforms" ToRole="programs" />
         </EntityType>
         <EntityType Name="posts">
           <Key>
@@ -318,10 +276,10 @@
           <Property Name="file" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="pre_post" Type="Int32" />
           <Property Name="visible" Type="SByte" Nullable="false" />
-          <NavigationProperty Name="images" Relationship="mydbModel.fk_images_posts1" FromRole="posts" ToRole="images" />
-          <NavigationProperty Name="preposts" Relationship="mydbModel.fk_posts_prePost1" FromRole="posts" ToRole="preposts" />
-          <NavigationProperty Name="programs" Relationship="mydbModel.fk_posts_programs1" FromRole="posts" ToRole="programs" />
-          <NavigationProperty Name="spoilers" Relationship="mydbModel.fk_spoilers_posts1" FromRole="posts" ToRole="spoilers" />
+          <NavigationProperty Name="images" Relationship="Self.fk_images_posts1" FromRole="posts" ToRole="images" />
+          <NavigationProperty Name="preposts" Relationship="Self.fk_posts_prePost1" FromRole="posts" ToRole="preposts" />
+          <NavigationProperty Name="programs" Relationship="Self.fk_posts_programs1" FromRole="posts" ToRole="programs" />
+          <NavigationProperty Name="spoilers" Relationship="Self.fk_spoilers_posts1" FromRole="posts" ToRole="spoilers" />
         </EntityType>
         <EntityType Name="preposts">
           <Key>
@@ -333,8 +291,8 @@
           <Property Name="date" Type="DateTime" />
           <Property Name="tracker" Type="Int32" />
           <Property Name="itpublic" Type="SByte" />
-          <NavigationProperty Name="posts" Relationship="mydbModel.fk_posts_prePost1" FromRole="preposts" ToRole="posts" />
-          <NavigationProperty Name="tracker1" Relationship="mydbModel.fk_prePost_tracker1" FromRole="preposts" ToRole="tracker" />
+          <NavigationProperty Name="posts" Relationship="Self.fk_posts_prePost1" FromRole="preposts" ToRole="posts" />
+          <NavigationProperty Name="tracker1" Relationship="Self.fk_prePost_tracker1" FromRole="preposts" ToRole="tracker" />
         </EntityType>
         <EntityType Name="program_categories">
           <Key>
@@ -343,8 +301,8 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="programs_id" Type="Int32" Nullable="false" />
           <Property Name="categories_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="categories" Relationship="mydbModel.fk_categories_has_programs_categories1" FromRole="program_categories" ToRole="categories" />
-          <NavigationProperty Name="programs" Relationship="mydbModel.fk_categories_has_programs_programs1" FromRole="program_categories" ToRole="programs" />
+          <NavigationProperty Name="categories" Relationship="Self.fk_categories_has_programs_categories1" FromRole="program_categories" ToRole="categories" />
+          <NavigationProperty Name="programs" Relationship="Self.fk_categories_has_programs_programs1" FromRole="program_categories" ToRole="programs" />
         </EntityType>
         <EntityType Name="programs">
           <Key>
@@ -355,9 +313,9 @@
           <Property Name="off_site" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="count_download" Type="Int32" />
           <Property Name="platform_id" Type="Int32" />
-          <NavigationProperty Name="platforms" Relationship="mydbModel.fk_programs_platform1" FromRole="programs" ToRole="platforms" />
-          <NavigationProperty Name="posts" Relationship="mydbModel.fk_posts_programs1" FromRole="programs" ToRole="posts" />
-          <NavigationProperty Name="program_categories" Relationship="mydbModel.fk_categories_has_programs_programs1" FromRole="programs" ToRole="program_categories" />
+          <NavigationProperty Name="platforms" Relationship="Self.fk_programs_platform1" FromRole="programs" ToRole="platforms" />
+          <NavigationProperty Name="posts" Relationship="Self.fk_posts_programs1" FromRole="programs" ToRole="posts" />
+          <NavigationProperty Name="program_categories" Relationship="Self.fk_categories_has_programs_programs1" FromRole="programs" ToRole="program_categories" />
         </EntityType>
         <EntityType Name="spoilers">
           <Key>
@@ -367,7 +325,7 @@
           <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="content" Type="String" MaxLength="16777215" FixedLength="false" Unicode="false" />
           <Property Name="posts_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="posts" Relationship="mydbModel.fk_spoilers_posts1" FromRole="spoilers" ToRole="posts" />
+          <NavigationProperty Name="posts" Relationship="Self.fk_spoilers_posts1" FromRole="spoilers" ToRole="posts" />
         </EntityType>
         <EntityType Name="tracker">
           <Key>
@@ -375,11 +333,11 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="preposts" Relationship="mydbModel.fk_prePost_tracker1" FromRole="tracker" ToRole="preposts" />
+          <NavigationProperty Name="preposts" Relationship="Self.fk_prePost_tracker1" FromRole="tracker" ToRole="preposts" />
         </EntityType>
         <Association Name="fk_categories_has_programs_categories1">
-          <End Type="mydbModel.categories" Role="categories" Multiplicity="1" />
-          <End Type="mydbModel.program_categories" Role="program_categories" Multiplicity="*" />
+          <End Role="categories" Type="Self.categories" Multiplicity="1" />
+          <End Role="program_categories" Type="Self.program_categories" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="categories">
               <PropertyRef Name="id" />
@@ -390,8 +348,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_images_posts1">
-          <End Type="mydbModel.posts" Role="posts" Multiplicity="1" />
-          <End Type="mydbModel.images" Role="images" Multiplicity="*" />
+          <End Role="posts" Type="Self.posts" Multiplicity="1" />
+          <End Role="images" Type="Self.images" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="posts">
               <PropertyRef Name="id" />
@@ -402,8 +360,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_programs_platform1">
-          <End Type="mydbModel.platforms" Role="platforms" Multiplicity="0..1" />
-          <End Type="mydbModel.programs" Role="programs" Multiplicity="*" />
+          <End Role="platforms" Type="Self.platforms" Multiplicity="0..1" />
+          <End Role="programs" Type="Self.programs" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="platforms">
               <PropertyRef Name="id" />
@@ -414,8 +372,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_posts_prePost1">
-          <End Type="mydbModel.preposts" Role="preposts" Multiplicity="0..1" />
-          <End Type="mydbModel.posts" Role="posts" Multiplicity="*" />
+          <End Role="preposts" Type="Self.preposts" Multiplicity="0..1" />
+          <End Role="posts" Type="Self.posts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="preposts">
               <PropertyRef Name="id" />
@@ -426,8 +384,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_posts_programs1">
-          <End Type="mydbModel.programs" Role="programs" Multiplicity="0..1" />
-          <End Type="mydbModel.posts" Role="posts" Multiplicity="*" />
+          <End Role="programs" Type="Self.programs" Multiplicity="0..1" />
+          <End Role="posts" Type="Self.posts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="programs">
               <PropertyRef Name="id" />
@@ -438,8 +396,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_spoilers_posts1">
-          <End Type="mydbModel.posts" Role="posts" Multiplicity="1" />
-          <End Type="mydbModel.spoilers" Role="spoilers" Multiplicity="*" />
+          <End Role="posts" Type="Self.posts" Multiplicity="1" />
+          <End Role="spoilers" Type="Self.spoilers" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="posts">
               <PropertyRef Name="id" />
@@ -450,8 +408,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_prePost_tracker1">
-          <End Type="mydbModel.tracker" Role="tracker" Multiplicity="0..1" />
-          <End Type="mydbModel.preposts" Role="preposts" Multiplicity="*" />
+          <End Role="tracker" Type="Self.tracker" Multiplicity="0..1" />
+          <End Role="preposts" Type="Self.preposts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tracker">
               <PropertyRef Name="id" />
@@ -462,8 +420,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_categories_has_programs_programs1">
-          <End Type="mydbModel.programs" Role="programs" Multiplicity="1" />
-          <End Type="mydbModel.program_categories" Role="program_categories" Multiplicity="*" />
+          <End Role="programs" Type="Self.programs" Multiplicity="1" />
+          <End Role="program_categories" Type="Self.program_categories" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="programs">
               <PropertyRef Name="id" />
@@ -473,103 +431,146 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityContainer Name="mydbContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="categories" EntityType="Self.categories" />
+          <EntitySet Name="images" EntityType="Self.images" />
+          <EntitySet Name="platforms" EntityType="Self.platforms" />
+          <EntitySet Name="posts" EntityType="Self.posts" />
+          <EntitySet Name="preposts" EntityType="Self.preposts" />
+          <EntitySet Name="program_categories" EntityType="Self.program_categories" />
+          <EntitySet Name="programs" EntityType="Self.programs" />
+          <EntitySet Name="spoilers" EntityType="Self.spoilers" />
+          <EntitySet Name="tracker" EntityType="Self.tracker" />
+          <AssociationSet Name="fk_categories_has_programs_categories1" Association="Self.fk_categories_has_programs_categories1">
+            <End Role="categories" EntitySet="categories" />
+            <End Role="program_categories" EntitySet="program_categories" />
+          </AssociationSet>
+          <AssociationSet Name="fk_images_posts1" Association="Self.fk_images_posts1">
+            <End Role="posts" EntitySet="posts" />
+            <End Role="images" EntitySet="images" />
+          </AssociationSet>
+          <AssociationSet Name="fk_programs_platform1" Association="Self.fk_programs_platform1">
+            <End Role="platforms" EntitySet="platforms" />
+            <End Role="programs" EntitySet="programs" />
+          </AssociationSet>
+          <AssociationSet Name="fk_posts_prePost1" Association="Self.fk_posts_prePost1">
+            <End Role="preposts" EntitySet="preposts" />
+            <End Role="posts" EntitySet="posts" />
+          </AssociationSet>
+          <AssociationSet Name="fk_posts_programs1" Association="Self.fk_posts_programs1">
+            <End Role="programs" EntitySet="programs" />
+            <End Role="posts" EntitySet="posts" />
+          </AssociationSet>
+          <AssociationSet Name="fk_spoilers_posts1" Association="Self.fk_spoilers_posts1">
+            <End Role="posts" EntitySet="posts" />
+            <End Role="spoilers" EntitySet="spoilers" />
+          </AssociationSet>
+          <AssociationSet Name="fk_prePost_tracker1" Association="Self.fk_prePost_tracker1">
+            <End Role="tracker" EntitySet="tracker" />
+            <End Role="preposts" EntitySet="preposts" />
+          </AssociationSet>
+          <AssociationSet Name="fk_categories_has_programs_programs1" Association="Self.fk_categories_has_programs_programs1">
+            <End Role="programs" EntitySet="programs" />
+            <End Role="program_categories" EntitySet="program_categories" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="mydbModelStoreContainer" CdmEntityContainer="mydbContext">
+        <EntityContainerMapping StorageEntityContainer="storageModelStoreContainer" CdmEntityContainer="mydbContext">
           <EntitySetMapping Name="categories">
-            <EntityTypeMapping TypeName="mydbModel.categories">
+            <EntityTypeMapping TypeName="storageModel.categories">
               <MappingFragment StoreEntitySet="categories">
-                <ScalarProperty Name="slug_name" ColumnName="slug_name" />
-                <ScalarProperty Name="ru_name" ColumnName="ru_name" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="ru_name" ColumnName="ru_name" />
+                <ScalarProperty Name="slug_name" ColumnName="slug_name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="images">
-            <EntityTypeMapping TypeName="mydbModel.images">
+            <EntityTypeMapping TypeName="storageModel.images">
               <MappingFragment StoreEntitySet="images">
-                <ScalarProperty Name="type" ColumnName="type" />
-                <ScalarProperty Name="posts_id" ColumnName="posts_id" />
-                <ScalarProperty Name="href" ColumnName="href" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="href" ColumnName="href" />
+                <ScalarProperty Name="posts_id" ColumnName="posts_id" />
+                <ScalarProperty Name="type" ColumnName="type" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="platforms">
-            <EntityTypeMapping TypeName="mydbModel.platforms">
+            <EntityTypeMapping TypeName="storageModel.platforms">
               <MappingFragment StoreEntitySet="platforms">
-                <ScalarProperty Name="off_site" ColumnName="off_site" />
-                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="off_site" ColumnName="off_site" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="posts">
-            <EntityTypeMapping TypeName="mydbModel.posts">
+            <EntityTypeMapping TypeName="storageModel.posts">
               <MappingFragment StoreEntitySet="posts">
-                <ScalarProperty Name="visible" ColumnName="visible" />
-                <ScalarProperty Name="pre_post" ColumnName="pre_post" />
-                <ScalarProperty Name="file" ColumnName="file" />
-                <ScalarProperty Name="count_view" ColumnName="count_view" />
-                <ScalarProperty Name="date_public" ColumnName="date_public" />
-                <ScalarProperty Name="date_create" ColumnName="date_create" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="program_id" ColumnName="program_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="program_id" ColumnName="program_id" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="date_create" ColumnName="date_create" />
+                <ScalarProperty Name="date_public" ColumnName="date_public" />
+                <ScalarProperty Name="count_view" ColumnName="count_view" />
+                <ScalarProperty Name="file" ColumnName="file" />
+                <ScalarProperty Name="pre_post" ColumnName="pre_post" />
+                <ScalarProperty Name="visible" ColumnName="visible" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="preposts">
-            <EntityTypeMapping TypeName="mydbModel.preposts">
+            <EntityTypeMapping TypeName="storageModel.preposts">
               <MappingFragment StoreEntitySet="preposts">
-                <ScalarProperty Name="itpublic" ColumnName="itpublic" />
-                <ScalarProperty Name="tracker" ColumnName="tracker" />
-                <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="href" ColumnName="href" />
-                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="href" ColumnName="href" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="tracker" ColumnName="tracker" />
+                <ScalarProperty Name="itpublic" ColumnName="itpublic" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="program_categories">
-            <EntityTypeMapping TypeName="mydbModel.program_categories">
+            <EntityTypeMapping TypeName="storageModel.program_categories">
               <MappingFragment StoreEntitySet="program_categories">
-                <ScalarProperty Name="categories_id" ColumnName="categories_id" />
-                <ScalarProperty Name="programs_id" ColumnName="programs_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="programs_id" ColumnName="programs_id" />
+                <ScalarProperty Name="categories_id" ColumnName="categories_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="programs">
-            <EntityTypeMapping TypeName="mydbModel.programs">
+            <EntityTypeMapping TypeName="storageModel.programs">
               <MappingFragment StoreEntitySet="programs">
-                <ScalarProperty Name="platform_id" ColumnName="platform_id" />
-                <ScalarProperty Name="count_download" ColumnName="count_download" />
-                <ScalarProperty Name="off_site" ColumnName="off_site" />
-                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="off_site" ColumnName="off_site" />
+                <ScalarProperty Name="count_download" ColumnName="count_download" />
+                <ScalarProperty Name="platform_id" ColumnName="platform_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="spoilers">
-            <EntityTypeMapping TypeName="mydbModel.spoilers">
+            <EntityTypeMapping TypeName="storageModel.spoilers">
               <MappingFragment StoreEntitySet="spoilers">
-                <ScalarProperty Name="posts_id" ColumnName="posts_id" />
-                <ScalarProperty Name="content" ColumnName="content" />
-                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="posts_id" ColumnName="posts_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tracker">
-            <EntityTypeMapping TypeName="mydbModel.tracker">
+            <EntityTypeMapping TypeName="storageModel.tracker">
               <MappingFragment StoreEntitySet="tracker">
-                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
