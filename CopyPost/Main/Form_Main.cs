@@ -91,8 +91,10 @@ namespace CopyPost
 
         private void опубликоватьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int selectedRows = dataGridView_NewPost.SelectedRows[0].Index;          // получаем значение из выделенной строки первой колонки.
+            int selectedRows = dataGridView_NewPost.SelectedRows[0].Index;          
+            // получаем значение из выделенной строки первой колонки
             string idPrepost = dataGridView_NewPost.Rows[selectedRows].Cells[0].Value.ToString();
+            // то есть получаем id выделенной записи
 
             mydbContext mydb = new mydbContext();
             preposts prPost = mydb.preposts.Single(n => n.id.ToString() == idPrepost);
