@@ -125,6 +125,7 @@
     </Compile>
     <Compile Include="Global\Downloader.cs" />
     <Compile Include="Global\HTMLPage.cs" />
+    <Compile Include="Global\HTMLPageEventArgs.cs" />
     <Compile Include="images.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>

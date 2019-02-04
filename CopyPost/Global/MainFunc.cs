@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace CopyPost
 {
-    class MainFunc
+    public class MainFunc
     {
         public static string workDir = Application.StartupPath + @"\";
         public static string prefixTorrentFileName = "[storageTorrents]";

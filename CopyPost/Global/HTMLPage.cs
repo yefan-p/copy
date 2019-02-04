@@ -11,18 +11,18 @@ namespace CopyPost.Global
 {
     public class HTMLPage
     {
-        public HTMLPage(string URL)
+        public void SetPage(string URL)
         {
             WebClient client = new WebClient();
             //up необходимо для загрузки страницы с помощью socks5 proxy
             //стандратный метод из agility pack использует только http proxy
-            HttpToSocks5Proxy proxy = new HttpToSocks5Proxy("127.0.0.1", 9050); 
+            HttpToSocks5Proxy proxy = new HttpToSocks5Proxy("127.0.0.1", 9050);
             //up тип из MihaZupan
             //необходим для использования socks5 прокси
             client.Proxy = proxy;
 
             Uri uri = new Uri(URL);
-            client.DownloadDataCompleted += Client_DownloadDataCompleted; 
+            client.DownloadDataCompleted += Client_DownloadDataCompleted;
             //up подписываемся на событие после окончания загрузки
             client.DownloadDataAsync(uri); //начинаем загрузку асинхронно
         }
@@ -36,10 +36,15 @@ namespace CopyPost.Global
 
                 HtmlDocument doc = new HtmlDocument(); //тип из agility pack
                 doc.LoadHtml(page); //делаем страницу из string
-                onPageDownload(this, doc); //возвращем полученную страницу
+
+                HTMLPageEventArgs args = new HTMLPageEventArgs(doc, page); //делаем аргументы для события
+                if (onPageDownload != null)
+                {
+                    onPageDownload(this, args); //вызываем событие
+                }
             }
         }
 
-        public EventHandler<HtmlDocument> onPageDownload;
+        public event EventHandler<HTMLPageEventArgs> onPageDownload;
     }
 }
