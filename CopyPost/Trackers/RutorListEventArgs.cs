@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CopyPost.Trackers
 {
-    class RutorListEventArgs : EventArgs
+    public class RutorListEventArgs : EventArgs
     {
         public RutorListEventArgs(List<TrackersListItem> posts)
         {

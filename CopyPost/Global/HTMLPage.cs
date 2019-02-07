@@ -38,10 +38,7 @@ namespace CopyPost.Global
                 doc.LoadHtml(page); //делаем страницу из string
 
                 HTMLPageEventArgs args = new HTMLPageEventArgs(doc, page); //делаем аргументы для события
-                if (onPageDownload != null)
-                {
-                    onPageDownload(this, args); //вызываем событие
-                }
+                OnPageDownload?.Invoke(this, args); //вызываем событие, аналог if(OnPageDow!=null)
             }
             else
             {
@@ -49,6 +46,6 @@ namespace CopyPost.Global
             }
         }
 
-        public event EventHandler<HTMLPageEventArgs> onPageDownload;
+        public event EventHandler<HTMLPageEventArgs> OnPageDownload;
     }
 }

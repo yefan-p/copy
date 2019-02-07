@@ -9,8 +9,10 @@ namespace CopyPost
     {
         mydbContext context = new mydbContext();
 
+        //dw событие, которое происходит после добавления записей в бд
         public event EventHandler onAfterAdd;
 
+        //dw вызывает событие добавления записей в бд, нужно для обновления формы
         public void Initialize()
         {
             onAfterAdd?.Invoke(this, EventArgs.Empty);
@@ -18,12 +20,15 @@ namespace CopyPost
 
         public void Add(ITrackersList t)
         {
+            //dw если бд пустая, просто добавляем в бд
+            //инчае нужно делать проверку на дубликаты
             if (context.preposts.Count() == 0)
             {
                 AddPostInDB(t.Posts, t.TrackerExpression);
                 return;
             }
 
+            //dw проверка на дубликаты записей в бд
             List<TrackersListItem> listNew = new List<TrackersListItem>();
             foreach (var item in t.Posts.OrderBy(it => it.Index))
             {

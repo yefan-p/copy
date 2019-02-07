@@ -15,7 +15,7 @@ namespace CopyPost.Global.Tests
             HTMLPage page = new HTMLPage();
             //dw подписываемся на событие при помощи анонимного делегата
             //если делать ассерты внутри делегата, то тест всегда проходит
-            page.onPageDownload +=
+            page.OnPageDownload +=
                 delegate (object sender, HTMLPageEventArgs e)
                 {
                     actual = e.PageStr;
