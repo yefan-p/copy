@@ -45,7 +45,7 @@ namespace CopyPost.Global
             }
             else
             {
-                Program.statusBarGlobal.Message = "Ошибка при запросе списка торрентов";
+                Program.statusBarGlobal.Message = "Ошибка подключения при запросе списка торрентов";
             }
         }
 

@@ -170,6 +170,7 @@
     <Compile Include="AddPost\SearchStr.cs" />
     <Compile Include="Trackers\ITrackersItem.cs" />
     <Compile Include="Trackers\RutorList.cs" />
+    <Compile Include="Trackers\RutorListEventArgs.cs" />
     <EmbeddedResource Include="AddPost\Form_AddPost.resx">
       <DependentUpon>Form_AddPost.cs</DependentUpon>
     </EmbeddedResource>
