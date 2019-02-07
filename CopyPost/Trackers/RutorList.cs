@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CopyPost.Global;
 
 namespace CopyPost.Trackers
 {
@@ -16,7 +17,16 @@ namespace CopyPost.Trackers
             Posts = PostsRutor.Select((el, i) => new TrackersListItem { Name = el.Text, Href = el.GetAttribute("href"), Index = i }).Reverse().ToList();
             browser.Close();
 
-            TrackerExpression = it => it.id == 1;
+            HTMLPage page = new HTMLPage();
+            page.onPageDownload += Page_onPageDownload; //подписываемся на событие загрузки страницы
+            page.SetPage(MainFunc.rutorWorkURL_2); //указываем, какую страницу хотим получить
+
+            TrackerExpression = it => it.id == 1; //указываем с каким трекером работаем в БД
+        }
+
+        private void Page_onPageDownload(object sender, HTMLPageEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         public List<TrackersListItem> Posts { get; }

@@ -43,6 +43,10 @@ namespace CopyPost.Global
                     onPageDownload(this, args); //вызываем событие
                 }
             }
+            else
+            {
+                Program.statusBarGlobal.Message = "Ошибка при запросе списка торрентов";
+            }
         }
 
         public event EventHandler<HTMLPageEventArgs> onPageDownload;
