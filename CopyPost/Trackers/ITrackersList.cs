@@ -16,7 +16,8 @@ namespace CopyPost.Trackers
 
     public interface ITrackersList
     {
-        List<TrackersListItem> Posts { get; }
-        Func<tracker, bool> TrackerExpression { get; }
+        event EventHandler<RutorListEventArgs> OnPostReceived;
+        void GetList();
+        Func<tracker, bool> ExpressionDb { get; }
     }
 }

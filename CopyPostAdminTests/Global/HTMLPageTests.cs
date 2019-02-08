@@ -11,6 +11,7 @@ namespace CopyPost.Global.Tests
         {
             string expected = "<title>зеркало rutor.info :: Софт</title>";
             string actual = null;
+            bool flagCall = false;
 
             HTMLPage page = new HTMLPage();
             //dw подписываемся на событие при помощи анонимного делегата
@@ -19,11 +20,15 @@ namespace CopyPost.Global.Tests
                 delegate (object sender, HTMLPageEventArgs e)
                 {
                     actual = e.PageStr;
+                    flagCall = true;
                 };
             page.SetPage(MainFunc.rutorWorkURL_2);
 
-            //dw так как будет обращение к интернет, делаем паузу
-            Thread.Sleep(2000);
+            //dw ждем 12 секунд, если событие выполниться, идем дальше
+            for (int countCall = 0; countCall < 48 && !flagCall; countCall++)
+            {
+                Thread.Sleep(250);
+            }
 
             Assert.IsNotNull(actual);
             StringAssert.Contains(actual, expected);

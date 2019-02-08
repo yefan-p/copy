@@ -10,13 +10,7 @@ namespace CopyPost.Trackers
     {
         public RutorList()
         {
-            //dw легаси
-            //Browser browser = new Browser();
-            //browser.Open();
-            //browser.BrowserMan.Navigate().GoToUrl(MainFunc.rutorWorkURL);
-            //IList<IWebElement> PostsRutor = browser.BrowserMan.FindElements(By.CssSelector(@"div[id=""index""] a[href*=""torrent""]"));
-            //Posts = PostsRutor.Select((el, i) => new TrackersListItem { Name = el.Text, Href = el.GetAttribute("href"), Index = i }).Reverse().ToList();
-            //browser.Close();
+            ExpressionDb = it => it.id == 1; //указываем с каким трекером работаем в БД
         }
 
         public void GetList()
@@ -24,8 +18,6 @@ namespace CopyPost.Trackers
             HTMLPage page = new HTMLPage();
             page.OnPageDownload += Page_onPageDownload; //подписываемся на событие загрузки страницы
             page.SetPage(MainFunc.rutorWorkURL_2); //указываем, какую страницу хотим получить
-
-            TrackerExpression = it => it.id == 1; //указываем с каким трекером работаем в БД
         }
 
         private void Page_onPageDownload(object sender, HTMLPageEventArgs e)
@@ -59,8 +51,6 @@ namespace CopyPost.Trackers
 
         //dw событие после получения списка постов
         public event EventHandler<RutorListEventArgs> OnPostReceived;
-
-        public List<TrackersListItem> Posts { get; private set; } //легаси
-        public Func<tracker, bool> TrackerExpression { get; private set; }
+        public Func<tracker, bool> ExpressionDb { get; private set; }
     }
 }

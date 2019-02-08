@@ -26,6 +26,7 @@ namespace CopyPost
         public Nullable<System.DateTime> date { get; set; }
         public Nullable<int> tracker { get; set; }
         public Nullable<sbyte> itpublic { get; set; }
+        public string magnet { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<posts> posts { get; set; }

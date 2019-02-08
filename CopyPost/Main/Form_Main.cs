@@ -25,7 +25,7 @@ namespace CopyPost
             Program.statusBarGlobal.onChangeProgress += StatusBarGlobal_onChangeProgress;
 
             postList = new PostList();
-            postList.onAfterAdd += PostList_onAfterAdd;
+            postList.OnAfterAdd += PostList_onAfterAdd;
             postList.Initialize();
         }
 

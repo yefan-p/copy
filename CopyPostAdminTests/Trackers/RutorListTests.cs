@@ -17,6 +17,7 @@ namespace CopyPost.Trackers.Tests
         {
             //dw переменая для записи в событии
             List<TrackersListItem> actual = null;
+            bool flagCall = false;
 
             //dw создаем тестируемый класс
             RutorList itemList = new RutorList();
@@ -24,12 +25,18 @@ namespace CopyPost.Trackers.Tests
             itemList.OnPostReceived += delegate (object sender, RutorListEventArgs e)
                 {
                     actual = e.Posts;
+                    flagCall = true;
                 };
             //dw начинаем получать лист
             itemList.GetList();
 
-            //dw ждем когда событие настанет
-            Thread.Sleep(2000);
+            //dw ждем 12 секунд, если событие наступит раньше, то выполнение пойдет
+            for (int countCall = 0; countCall < 48 && !flagCall; countCall++)
+            {
+                //dw ждем когда событие настанет
+                Thread.Sleep(250);
+            }
+
             //dw проверяем, что объект не null
             Assert.IsNotNull(actual);
             //dw на странице с rutor размещаются только 100 раздач
