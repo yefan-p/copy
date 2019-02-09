@@ -5,7 +5,7 @@ using CopyPost.Trackers;
 
 namespace CopyPost
 {
-    class PostList
+    public class PostList
     {
         mydbContext context = new mydbContext();
 
