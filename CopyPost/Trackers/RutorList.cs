@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CopyPost.Global;
 using HtmlAgilityPack;
+using System.Web;
 
 namespace CopyPost.Trackers
 {
@@ -32,7 +33,7 @@ namespace CopyPost.Trackers
                 List<TrackersListItem> postLst;
                 postLst = htmlNodes.Select((el, i) => new TrackersListItem
                 {
-                    Name = el.LastChild.InnerText,
+                    Name = HttpUtility.HtmlDecode(el.LastChild.InnerText),
                     Href = el.LastChild.GetAttributeValue("href", null),
                     Index = i,
                     Magnet = el.ChildNodes[1].GetAttributeValue("href", null),
