@@ -106,7 +106,7 @@
             this.torrentSoftToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1473, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1370, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -155,7 +155,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(1473, 715);
+            this.splitContainer1.Size = new System.Drawing.Size(1370, 700);
             this.splitContainer1.SplitterDistance = 363;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -297,8 +297,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.splitContainer3);
-            this.splitContainer2.Size = new System.Drawing.Size(1106, 715);
-            this.splitContainer2.SplitterDistance = 733;
+            this.splitContainer2.Size = new System.Drawing.Size(1003, 700);
+            this.splitContainer2.SplitterDistance = 664;
             this.splitContainer2.TabIndex = 0;
             // 
             // splitContainer4
@@ -316,7 +316,7 @@
             // splitContainer4.Panel2
             // 
             this.splitContainer4.Panel2.Controls.Add(this.splitContainer5);
-            this.splitContainer4.Size = new System.Drawing.Size(733, 715);
+            this.splitContainer4.Size = new System.Drawing.Size(664, 700);
             this.splitContainer4.SplitterDistance = 149;
             this.splitContainer4.TabIndex = 1;
             // 
@@ -327,7 +327,7 @@
             this.textBox_Description.Multiline = true;
             this.textBox_Description.Name = "textBox_Description";
             this.textBox_Description.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox_Description.Size = new System.Drawing.Size(733, 149);
+            this.textBox_Description.Size = new System.Drawing.Size(664, 149);
             this.textBox_Description.TabIndex = 1;
             // 
             // splitContainer5
@@ -349,14 +349,14 @@
             // 
             this.splitContainer5.Panel2.Controls.Add(this.label_NumberSpoiler);
             this.splitContainer5.Panel2.Controls.Add(this.textBox_SpoilerContent);
-            this.splitContainer5.Size = new System.Drawing.Size(733, 562);
+            this.splitContainer5.Size = new System.Drawing.Size(664, 547);
             this.splitContainer5.SplitterDistance = 46;
             this.splitContainer5.TabIndex = 6;
             // 
             // button_NextSpoiler
             // 
             this.button_NextSpoiler.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_NextSpoiler.Location = new System.Drawing.Point(648, 11);
+            this.button_NextSpoiler.Location = new System.Drawing.Point(579, 11);
             this.button_NextSpoiler.Name = "button_NextSpoiler";
             this.button_NextSpoiler.Size = new System.Drawing.Size(75, 23);
             this.button_NextSpoiler.TabIndex = 9;
@@ -367,7 +367,7 @@
             // button_DeleteSpoiler
             // 
             this.button_DeleteSpoiler.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_DeleteSpoiler.Location = new System.Drawing.Point(567, 11);
+            this.button_DeleteSpoiler.Location = new System.Drawing.Point(498, 11);
             this.button_DeleteSpoiler.Name = "button_DeleteSpoiler";
             this.button_DeleteSpoiler.Size = new System.Drawing.Size(75, 23);
             this.button_DeleteSpoiler.TabIndex = 8;
@@ -378,7 +378,7 @@
             // button_preSpoiler
             // 
             this.button_preSpoiler.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_preSpoiler.Location = new System.Drawing.Point(486, 11);
+            this.button_preSpoiler.Location = new System.Drawing.Point(417, 11);
             this.button_preSpoiler.Name = "button_preSpoiler";
             this.button_preSpoiler.Size = new System.Drawing.Size(75, 23);
             this.button_preSpoiler.TabIndex = 7;
@@ -392,7 +392,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox_NameSpoiler.Location = new System.Drawing.Point(11, 12);
             this.textBox_NameSpoiler.Name = "textBox_NameSpoiler";
-            this.textBox_NameSpoiler.Size = new System.Drawing.Size(465, 20);
+            this.textBox_NameSpoiler.Size = new System.Drawing.Size(396, 20);
             this.textBox_NameSpoiler.TabIndex = 6;
             this.textBox_NameSpoiler.TextChanged += new System.EventHandler(this.textBox_NameSpoiler_TextChanged);
             // 
@@ -400,7 +400,7 @@
             // 
             this.label_NumberSpoiler.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label_NumberSpoiler.AutoSize = true;
-            this.label_NumberSpoiler.Location = new System.Drawing.Point(707, 3);
+            this.label_NumberSpoiler.Location = new System.Drawing.Point(638, 3);
             this.label_NumberSpoiler.Name = "label_NumberSpoiler";
             this.label_NumberSpoiler.Size = new System.Drawing.Size(0, 13);
             this.label_NumberSpoiler.TabIndex = 11;
@@ -412,7 +412,7 @@
             this.textBox_SpoilerContent.Multiline = true;
             this.textBox_SpoilerContent.Name = "textBox_SpoilerContent";
             this.textBox_SpoilerContent.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox_SpoilerContent.Size = new System.Drawing.Size(733, 512);
+            this.textBox_SpoilerContent.Size = new System.Drawing.Size(664, 497);
             this.textBox_SpoilerContent.TabIndex = 3;
             this.textBox_SpoilerContent.TextChanged += new System.EventHandler(this.textBox_SpoilerContent_TextChanged);
             // 
@@ -434,7 +434,7 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.dataGridView_Search);
-            this.splitContainer3.Size = new System.Drawing.Size(369, 715);
+            this.splitContainer3.Size = new System.Drawing.Size(335, 700);
             this.splitContainer3.SplitterDistance = 92;
             this.splitContainer3.TabIndex = 7;
             // 
@@ -489,7 +489,7 @@
             this.dataGridView_Search.Name = "dataGridView_Search";
             this.dataGridView_Search.ReadOnly = true;
             this.dataGridView_Search.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView_Search.Size = new System.Drawing.Size(369, 619);
+            this.dataGridView_Search.Size = new System.Drawing.Size(335, 604);
             this.dataGridView_Search.TabIndex = 9;
             // 
             // contextMenuStrip_SearchProgram
@@ -519,9 +519,9 @@
             this.StatusLabel_Descript,
             this.Status_ProgressBar,
             this.StatusLabel_Message});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 742);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 727);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1473, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1370, 22);
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -549,7 +549,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1473, 764);
+            this.ClientSize = new System.Drawing.Size(1370, 749);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);

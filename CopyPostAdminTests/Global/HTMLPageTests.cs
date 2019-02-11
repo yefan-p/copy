@@ -22,7 +22,7 @@ namespace CopyPost.Global.Tests
                     actual = e.PageStr;
                     flagCall = true;
                 };
-            page.SetPage(MainFunc.rutorWorkURL_2);
+            page.SetPage(MainFunc.rutorWorkURL);
 
             //dw ждем 12 секунд, если событие выполниться, идем дальше
             for (int countCall = 0; countCall < 48 && !flagCall; countCall++)

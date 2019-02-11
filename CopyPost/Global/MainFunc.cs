@@ -12,9 +12,10 @@ namespace CopyPost
         public static string workDir = Application.StartupPath + @"\";
         public static string prefixTorrentFileName = "[storageTorrents]";
 
-        public static string rutorWorkURL = @"http://www.rutor.info/soft";
-        public static string rutorWorkURL_2 = @"http://rutor.is/soft";
-        public static string rutorWorkURL_3 = @"http://rutorc6mqdinc4cz.onion/soft";
+        public static string rutorURL_info = @"http://www.rutor.info/soft";
+        public static string rutorURL_is = @"http://rutor.is/soft";
+        public static string rutorURL_onion = @"http://rutorc6mqdinc4cz.onion/soft";
+        public static string rutorWorkURL = rutorURL_is; //url, который используется в коде
 
         public static string torrentSoftWorkURLAdd = @"http://torrent-soft.net/admin-panel.php?mod=addnews&action=addnews";
 

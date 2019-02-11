@@ -11,6 +11,8 @@ namespace CopyPost.Global
 {
     public class HTMLPage
     {
+        public event EventHandler<HTMLPageEventArgs> OnPageDownload;
+
         public void SetPage(string URL)
         {
             WebClient client = new WebClient();
@@ -45,7 +47,5 @@ namespace CopyPost.Global
                 Program.statusBarGlobal.Message = "Ошибка подключения при запросе списка торрентов";
             }
         }
-
-        public event EventHandler<HTMLPageEventArgs> OnPageDownload;
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using CopyPost.Global;
 
 namespace CopyPost.Trackers
 {
@@ -42,6 +43,18 @@ namespace CopyPost.Trackers
 
             if(Description != null) CleanDescription();
             CleanSpoilers();
+        }
+
+        public void GetPost(preposts prPost)
+        {
+            HTMLPage page = new HTMLPage();
+            page.OnPageDownload += Page_OnPageDownload;
+            page.SetPage(prPost.href);
+        }
+
+        private void Page_OnPageDownload(object sender, HTMLPageEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         #region Получаем информацию о посте с Web-страницы. Парсинг.
