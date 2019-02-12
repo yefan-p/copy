@@ -44,7 +44,7 @@ namespace CopyPost.Trackers
                     //dw HtmlDecode необходим чтобы привести HTML escape последовательности
                     //в нормальный вид
                     Name = HttpUtility.HtmlDecode(el.LastChild.InnerText),
-                    //добавляем в ссылку домен первого уровня
+                    //dw добавляем в ссылку домен первого уровня
                     Href = rutorMainUrl + el.LastChild.GetAttributeValue("href", null),
                     Index = i,
                     Magnet = el.ChildNodes[1].GetAttributeValue("href", null),

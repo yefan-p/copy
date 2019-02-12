@@ -33,7 +33,7 @@ namespace CopyPost
             switch (prPost.tracker)
             {
                 case 1:
-                    item = new RutorItem(prPost);
+                    item = new RutorItem();
                     break;
                 case 2:
                     break;
