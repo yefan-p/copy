@@ -139,6 +139,10 @@
     <Compile Include="Global\MainFunc.cs" />
     <Compile Include="AddPost\Post.cs" />
     <Compile Include="Main\PostList.cs" />
+    <Compile Include="Parsers\DownloaderHtmlPage.cs" />
+    <Compile Include="Parsers\DownloaderHtmlPageArgs.cs" />
+    <Compile Include="Parsers\ItemList.cs" />
+    <Compile Include="Parsers\ParserRutor.cs" />
     <Compile Include="platforms.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
