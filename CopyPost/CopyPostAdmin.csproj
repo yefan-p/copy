@@ -142,6 +142,7 @@
     <Compile Include="Parsers\DownloaderHtmlPage.cs" />
     <Compile Include="Parsers\DownloaderHtmlPageArgs.cs" />
     <Compile Include="Parsers\ItemList.cs" />
+    <Compile Include="Parsers\ItemListArgs.cs" />
     <Compile Include="Parsers\ParserRutor.cs" />
     <Compile Include="platforms.cs">
       <DependentUpon>DBModel.tt</DependentUpon>

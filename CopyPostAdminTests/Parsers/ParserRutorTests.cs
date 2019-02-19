@@ -1,26 +1,30 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HtmlAgilityPack;
+using CopyPost.Parsers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Threading;
 
 namespace CopyPost.Parsers.Tests
 {
     [TestClass()]
-    public class DownloaderHtmlPageTests
+    public class ParserRutorTests
     {
         [TestMethod()]
-        public void DownloaderPage()
+        public void StartGetListTest()
         {
-            DownloaderHtmlPage downloader = new DownloaderHtmlPage();
-            HtmlDocument actual = null;
-
+            ParserRutor parser = new ParserRutor();
+            List<ItemList> actual = null;
             bool eventCall = false;
 
-            downloader.FinishDownload += delegate (object s, DownloaderHtmlPageArgs e)
+            parser.ListReceived += delegate (object s, ItemListArgs e)
             {
-                actual = e.Page;
+                actual = e.Posts;
                 eventCall = true;
             };
-            downloader.StartDownload(ParserRutor.UriWork);
+            parser.StartGetList();
 
             // ждем 12 секунд, если событие выполниться, идем дальше
             for (int countCall = 0; countCall < 48 && !eventCall; countCall++)
