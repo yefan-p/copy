@@ -26,8 +26,8 @@ namespace CopyPost.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("server=localhost;user id=root;sslmode=None;port=3306;persistsecurityinfo=True;dat" +
-            "abase=storage;password=root")]
+        [global::System.Configuration.DefaultSettingValueAttribute("server=127.0.0.1;user id=root;sslmode=None;port=3306;persistsecurityinfo=True;dat" +
+            "abase=autoparsing;password=")]
         public string DBConnect {
             get {
                 return ((string)(this["DBConnect"]));

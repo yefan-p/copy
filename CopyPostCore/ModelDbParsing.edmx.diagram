@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e947e6b6e597477887a2c309e211acb1" Name="Diagram1">
+        <EntityTypeShape EntityType="autoParsingModel.FoundPost" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="autoParsingModel.Img" Width="1.5" PointX="2.875" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="autoParsingModel.ReadyPost" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="autoParsingModel.Spoiler" Width="1.5" PointX="5.375" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="autoParsingModel.TorrentTracker" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="autoParsingModel.TypeImg" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <AssociationConnector Association="autoParsingModel.fk_FoundPost_TorrentTracker" ManuallyRouted="false" />
+        <AssociationConnector Association="autoParsingModel.fk_ReadyPost_FoundPost1" ManuallyRouted="false" />
+        <AssociationConnector Association="autoParsingModel.fk_Img_TypeImg1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

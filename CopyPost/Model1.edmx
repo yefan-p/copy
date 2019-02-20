@@ -1,0 +1,353 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="autoparsingModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="foundpost">
+          <Key>
+            <PropertyRef Name="idFoundPost" />
+            <PropertyRef Name="TorrentTracker_idTorrentTracker" />
+          </Key>
+          <Property Name="idFoundPost" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="200" />
+          <Property Name="Uri" Type="varchar" MaxLength="500" />
+          <Property Name="Magnet" Type="varchar" MaxLength="500" />
+          <Property Name="FoundedTime" Type="datetime" Precision="0" />
+          <Property Name="TorrentTracker_idTorrentTracker" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="img">
+          <Key>
+            <PropertyRef Name="idImg" />
+            <PropertyRef Name="TypeImg_idTypeImg" />
+            <PropertyRef Name="ReadyPost_idReadyPost" />
+          </Key>
+          <Property Name="idImg" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Uri" Type="varchar" MaxLength="500" />
+          <Property Name="TypeImg_idTypeImg" Type="int" Nullable="false" />
+          <Property Name="ReadyPost_idReadyPost" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="readypost">
+          <Key>
+            <PropertyRef Name="idReadyPost" />
+            <PropertyRef Name="FoundPost_idFoundPost" />
+            <PropertyRef Name="FoundPost_TorrentTracker_idTorrentTracker" />
+          </Key>
+          <Property Name="idReadyPost" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="200" />
+          <Property Name="Description" Type="mediumtext" />
+          <Property Name="TorrentFile" Type="varchar" MaxLength="120" />
+          <Property Name="FoundedTime" Type="datetime" Precision="0" />
+          <Property Name="FoundPost_idFoundPost" Type="int" Nullable="false" />
+          <Property Name="FoundPost_TorrentTracker_idTorrentTracker" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="spoiler">
+          <Key>
+            <PropertyRef Name="idSpoiler" />
+            <PropertyRef Name="ReadyPost_idReadyPost" />
+          </Key>
+          <Property Name="idSpoiler" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Header" Type="varchar" MaxLength="120" />
+          <Property Name="Body" Type="mediumtext" />
+          <Property Name="ReadyPost_idReadyPost" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="torrenttracker">
+          <Key>
+            <PropertyRef Name="idTorrentTracker" />
+          </Key>
+          <Property Name="idTorrentTracker" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="typeimg">
+          <Key>
+            <PropertyRef Name="idTypeImg" />
+          </Key>
+          <Property Name="idTypeImg" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="fk_FoundPost_TorrentTracker">
+          <End Role="torrenttracker" Type="Self.torrenttracker" Multiplicity="1" />
+          <End Role="foundpost" Type="Self.foundpost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="torrenttracker">
+              <PropertyRef Name="idTorrentTracker" />
+            </Principal>
+            <Dependent Role="foundpost">
+              <PropertyRef Name="TorrentTracker_idTorrentTracker" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'fk_Img_ReadyPost1' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="fk_Img_ReadyPost1" />-->
+        <Association Name="fk_Img_TypeImg1">
+          <End Role="typeimg" Type="Self.typeimg" Multiplicity="1" />
+          <End Role="img" Type="Self.img" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="typeimg">
+              <PropertyRef Name="idTypeImg" />
+            </Principal>
+            <Dependent Role="img">
+              <PropertyRef Name="TypeImg_idTypeImg" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ReadyPost_FoundPost1">
+          <End Role="foundpost" Type="Self.foundpost" Multiplicity="1" />
+          <End Role="readypost" Type="Self.readypost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="foundpost">
+              <PropertyRef Name="idFoundPost" />
+              <PropertyRef Name="TorrentTracker_idTorrentTracker" />
+            </Principal>
+            <Dependent Role="readypost">
+              <PropertyRef Name="FoundPost_idFoundPost" />
+              <PropertyRef Name="FoundPost_TorrentTracker_idTorrentTracker" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'fk_Spoiler_ReadyPost1' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="fk_Spoiler_ReadyPost1" />-->
+        <EntityContainer Name="autoparsingModelStoreContainer">
+          <EntitySet Name="foundpost" EntityType="Self.foundpost" Schema="autoparsing" store:Type="Tables" />
+          <EntitySet Name="img" EntityType="Self.img" Schema="autoparsing" store:Type="Tables" />
+          <EntitySet Name="readypost" EntityType="Self.readypost" Schema="autoparsing" store:Type="Tables" />
+          <EntitySet Name="spoiler" EntityType="Self.spoiler" Schema="autoparsing" store:Type="Tables" />
+          <EntitySet Name="torrenttracker" EntityType="Self.torrenttracker" Schema="autoparsing" store:Type="Tables" />
+          <EntitySet Name="typeimg" EntityType="Self.typeimg" Schema="autoparsing" store:Type="Tables" />
+          <AssociationSet Name="fk_FoundPost_TorrentTracker" Association="Self.fk_FoundPost_TorrentTracker">
+            <End Role="torrenttracker" EntitySet="torrenttracker" />
+            <End Role="foundpost" EntitySet="foundpost" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Img_TypeImg1" Association="Self.fk_Img_TypeImg1">
+            <End Role="typeimg" EntitySet="typeimg" />
+            <End Role="img" EntitySet="img" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ReadyPost_FoundPost1" Association="Self.fk_ReadyPost_FoundPost1">
+            <End Role="foundpost" EntitySet="foundpost" />
+            <End Role="readypost" EntitySet="readypost" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="autoparsingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="FoundPost">
+          <Key>
+            <PropertyRef Name="idFoundPost" />
+            <PropertyRef Name="TorrentTracker_idTorrentTracker" />
+          </Key>
+          <Property Name="idFoundPost" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Uri" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Magnet" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="FoundedTime" Type="DateTime" />
+          <Property Name="TorrentTracker_idTorrentTracker" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TorrentTracker" Relationship="Self.fk_FoundPost_TorrentTracker" FromRole="foundpost" ToRole="torrenttracker" />
+          <NavigationProperty Name="ReadyPost" Relationship="Self.fk_ReadyPost_FoundPost1" FromRole="foundpost" ToRole="readypost" />
+        </EntityType>
+        <EntityType Name="Img">
+          <Key>
+            <PropertyRef Name="idImg" />
+            <PropertyRef Name="TypeImg_idTypeImg" />
+            <PropertyRef Name="ReadyPost_idReadyPost" />
+          </Key>
+          <Property Name="idImg" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Uri" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="TypeImg_idTypeImg" Type="Int32" Nullable="false" />
+          <Property Name="ReadyPost_idReadyPost" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TypeImg" Relationship="Self.fk_Img_TypeImg1" FromRole="img" ToRole="typeimg" />
+        </EntityType>
+        <EntityType Name="ReadyPost">
+          <Key>
+            <PropertyRef Name="idReadyPost" />
+            <PropertyRef Name="FoundPost_idFoundPost" />
+            <PropertyRef Name="FoundPost_TorrentTracker_idTorrentTracker" />
+          </Key>
+          <Property Name="idReadyPost" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="16777215" FixedLength="false" Unicode="false" />
+          <Property Name="TorrentFile" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="FoundedTime" Type="DateTime" />
+          <Property Name="FoundPost_idFoundPost" Type="Int32" Nullable="false" />
+          <Property Name="FoundPost_TorrentTracker_idTorrentTracker" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FoundPost" Relationship="Self.fk_ReadyPost_FoundPost1" FromRole="readypost" ToRole="foundpost" />
+        </EntityType>
+        <EntityType Name="Spoiler">
+          <Key>
+            <PropertyRef Name="idSpoiler" />
+            <PropertyRef Name="ReadyPost_idReadyPost" />
+          </Key>
+          <Property Name="idSpoiler" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Header" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="Body" Type="String" MaxLength="16777215" FixedLength="false" Unicode="false" />
+          <Property Name="ReadyPost_idReadyPost" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TorrentTracker">
+          <Key>
+            <PropertyRef Name="idTorrentTracker" />
+          </Key>
+          <Property Name="idTorrentTracker" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="FoundPosts" Relationship="Self.fk_FoundPost_TorrentTracker" FromRole="torrenttracker" ToRole="foundpost" />
+        </EntityType>
+        <EntityType Name="Typeimg">
+          <Key>
+            <PropertyRef Name="idTypeImg" />
+          </Key>
+          <Property Name="idTypeImg" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Imgs" Relationship="Self.fk_Img_TypeImg1" FromRole="typeimg" ToRole="img" />
+        </EntityType>
+        <Association Name="fk_FoundPost_TorrentTracker">
+          <End Role="torrenttracker" Type="autoparsingModel.TorrentTracker" Multiplicity="1" />
+          <End Role="foundpost" Type="autoparsingModel.FoundPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="torrenttracker">
+              <PropertyRef Name="idTorrentTracker" />
+            </Principal>
+            <Dependent Role="foundpost">
+              <PropertyRef Name="TorrentTracker_idTorrentTracker" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ReadyPost_FoundPost1">
+          <End Role="foundpost" Type="autoparsingModel.FoundPost" Multiplicity="1" />
+          <End Role="readypost" Type="autoparsingModel.ReadyPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="foundpost">
+              <PropertyRef Name="idFoundPost" />
+              <PropertyRef Name="TorrentTracker_idTorrentTracker" />
+            </Principal>
+            <Dependent Role="readypost">
+              <PropertyRef Name="FoundPost_idFoundPost" />
+              <PropertyRef Name="FoundPost_TorrentTracker_idTorrentTracker" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Img_TypeImg1">
+          <End Role="typeimg" Type="autoparsingModel.Typeimg" Multiplicity="1" />
+          <End Role="img" Type="autoparsingModel.Img" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="typeimg">
+              <PropertyRef Name="idTypeImg" />
+            </Principal>
+            <Dependent Role="img">
+              <PropertyRef Name="TypeImg_idTypeImg" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbParsingContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="foundpost" EntityType="autoparsingModel.FoundPost" />
+          <EntitySet Name="img" EntityType="autoparsingModel.Img" />
+          <EntitySet Name="readypost" EntityType="autoparsingModel.ReadyPost" />
+          <EntitySet Name="spoiler" EntityType="autoparsingModel.Spoiler" />
+          <EntitySet Name="torrenttracker" EntityType="autoparsingModel.TorrentTracker" />
+          <EntitySet Name="typeimg" EntityType="autoparsingModel.Typeimg" />
+          <AssociationSet Name="fk_FoundPost_TorrentTracker" Association="Self.fk_FoundPost_TorrentTracker">
+            <End Role="torrenttracker" EntitySet="torrenttracker" />
+            <End Role="foundpost" EntitySet="foundpost" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ReadyPost_FoundPost1" Association="Self.fk_ReadyPost_FoundPost1">
+            <End Role="foundpost" EntitySet="foundpost" />
+            <End Role="readypost" EntitySet="readypost" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Img_TypeImg1" Association="Self.fk_Img_TypeImg1">
+            <End Role="typeimg" EntitySet="typeimg" />
+            <End Role="img" EntitySet="img" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="autoparsingModelStoreContainer" CdmEntityContainer="dbParsingContext">
+          <EntitySetMapping Name="foundpost">
+            <EntityTypeMapping TypeName="autoparsingModel.FoundPost">
+              <MappingFragment StoreEntitySet="foundpost">
+                <ScalarProperty Name="idFoundPost" ColumnName="idFoundPost" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Uri" ColumnName="Uri" />
+                <ScalarProperty Name="Magnet" ColumnName="Magnet" />
+                <ScalarProperty Name="FoundedTime" ColumnName="FoundedTime" />
+                <ScalarProperty Name="TorrentTracker_idTorrentTracker" ColumnName="TorrentTracker_idTorrentTracker" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="img">
+            <EntityTypeMapping TypeName="autoparsingModel.Img">
+              <MappingFragment StoreEntitySet="img">
+                <ScalarProperty Name="idImg" ColumnName="idImg" />
+                <ScalarProperty Name="Uri" ColumnName="Uri" />
+                <ScalarProperty Name="TypeImg_idTypeImg" ColumnName="TypeImg_idTypeImg" />
+                <ScalarProperty Name="ReadyPost_idReadyPost" ColumnName="ReadyPost_idReadyPost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="readypost">
+            <EntityTypeMapping TypeName="autoparsingModel.ReadyPost">
+              <MappingFragment StoreEntitySet="readypost">
+                <ScalarProperty Name="idReadyPost" ColumnName="idReadyPost" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TorrentFile" ColumnName="TorrentFile" />
+                <ScalarProperty Name="FoundedTime" ColumnName="FoundedTime" />
+                <ScalarProperty Name="FoundPost_idFoundPost" ColumnName="FoundPost_idFoundPost" />
+                <ScalarProperty Name="FoundPost_TorrentTracker_idTorrentTracker" ColumnName="FoundPost_TorrentTracker_idTorrentTracker" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="spoiler">
+            <EntityTypeMapping TypeName="autoparsingModel.Spoiler">
+              <MappingFragment StoreEntitySet="spoiler">
+                <ScalarProperty Name="idSpoiler" ColumnName="idSpoiler" />
+                <ScalarProperty Name="Header" ColumnName="Header" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="ReadyPost_idReadyPost" ColumnName="ReadyPost_idReadyPost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="torrenttracker">
+            <EntityTypeMapping TypeName="autoparsingModel.TorrentTracker">
+              <MappingFragment StoreEntitySet="torrenttracker">
+                <ScalarProperty Name="idTorrentTracker" ColumnName="idTorrentTracker" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="typeimg">
+            <EntityTypeMapping TypeName="autoparsingModel.Typeimg">
+              <MappingFragment StoreEntitySet="typeimg">
+                <ScalarProperty Name="idTypeImg" ColumnName="idTypeImg" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
