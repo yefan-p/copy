@@ -9,6 +9,11 @@ namespace CopyPostCore.DataBase
 {
     public class DataBaseControl
     {
+        /// <summary>
+        /// Получает последние 100 записей из предварительных раздач в бд
+        /// </summary>
+        /// <param name="trakers">Указывает, под каким трекером надо добавлять</param>
+        /// <returns></returns>
         public List<ItemList> GetLastRecordList(TTrakers trakers)
         {
             autoParsingContext mydb = new autoParsingContext();
@@ -28,7 +33,13 @@ namespace CopyPostCore.DataBase
             return lastPrepost;
         }
 
-        public void AddNewRecordList(List<ItemList> foundedPost, TTrakers traker)
+        /// <summary>
+        /// Добавляет новые записи предварительных раздач в бд
+        /// </summary>
+        /// <param name="foundedPost">Список добавляемых раздач</param>
+        /// <param name="traker">В какой трекер добавлять</param>
+        /// <returns>Возвращает количество записей, которые добавили в бд</returns>
+        public int AddNewRecordList(List<ItemList> foundedPost, TTrakers traker)
         {
             autoParsingContext db = new autoParsingContext();
 
@@ -44,7 +55,9 @@ namespace CopyPostCore.DataBase
                 };
                 db.FoundPost.Add(fPost);
             }
-            db.SaveChanges();
+
+            int result = db.SaveChanges();
+            return result;
         }
     }
 }
