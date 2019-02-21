@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using HtmlAgilityPack;
+using CopyPostCore.DataBase;
 
 namespace CopyPostCore.Parsers
 {
@@ -15,8 +16,17 @@ namespace CopyPostCore.Parsers
         private static readonly Uri UriDotOnion = new Uri(@"http://rutorc6mqdinc4cz.onion/soft");
         public static readonly Uri UriWork = UriDotIs;
 
+        /// <summary>
+        /// Вызывается, когда лист с найденными разадачи сформирован
+        /// </summary>
         public event EventHandler<ItemListArgs> ListReceived;
 
+        /// <summary>
+        /// Вызывается, когда раздача сформирована
+        /// </summary>
+        public event EventHandler<ItemReadyArgs> ItemReceived;
+
+        #region Работа со списком
         /// <summary>
         /// Возвращает список новых раздач
         /// </summary>
@@ -47,7 +57,7 @@ namespace CopyPostCore.Parsers
                     Href = rutorMainUrl + el.LastChild.GetAttributeValue("href", null),
                     Index = i,
                     Magnet = el.ChildNodes[1].GetAttributeValue("href", null),
-                }).ToList();
+                }).Reverse().ToList();
 
                 ItemListArgs eventArgs = new ItemListArgs(postsList);
                 //вызываем событие. аналог if(onPostReceived!=null)onPostReceived(arg);
@@ -55,8 +65,154 @@ namespace CopyPostCore.Parsers
             }
             else
             {
-                MessageService.ShowError("Ошибка на этапе парсинга страницы. htmlNodes = null");
+                MessageService.ShowError("Ошибка на этапе парсинга списка раздач. htmlNodes = null");
             }
         }
+        #endregion
+
+        #region Работа с раздачей
+        /// <summary>
+        /// Возвращает готовый пост.
+        /// </summary>
+        /// <param name="item">Найденный пост, который необходимо распарсить</param>
+        public void StartGetItem(ItemList item)
+        {
+            DownloaderHtmlPage downloaderItem = new DownloaderHtmlPage();
+            downloaderItem.FinishDownload += DownloaderItem_FinishDownload;
+
+            Uri uri = new Uri(item.Href);
+            downloaderItem.StartDownload(uri);
+        }
+
+        private void DownloaderItem_FinishDownload(object sender, DownloaderHtmlPageArgs e)
+        {
+            HtmlNode mainNode = e.Page.DocumentNode.SelectSingleNode(@"//table[@id=""details""]/tr[1]/td[2]");
+
+            if (mainNode != null)
+            {
+                ItemReady item = new ItemReady();
+                item.Spoilers = ParsingSpoilers(mainNode);
+                item.Imgs = ParsingImgs(mainNode, item.Spoilers);
+
+                ItemReadyArgs eventArgs = new ItemReadyArgs(item);
+                ItemReceived?.Invoke(this, eventArgs);
+            }
+            else
+            {
+                MessageService.ShowError("Ошибка на этапе парсинга раздачи. mainNode = null");
+            }
+        }
+
+        private List<ItemSpoiler> ParsingSpoilers(HtmlNode mainNode)
+        {
+            // выбираем все спойлеры. В нодах оказывается храниться весь документ
+            // вне зависимости от того, что и когда мы парсили
+            // поэтому здесь поиск xpath опять идет от корня
+            HtmlNodeCollection spoilersNode = mainNode.SelectNodes(@"//table[@id=""details""]/tr[1]/td[2]//div[@class=""hidewrap""]");
+
+            if (spoilersNode != null)
+            {
+                List<ItemSpoiler> spoilers = new List<ItemSpoiler>();
+                foreach (var item in spoilersNode)
+                {
+                    ItemSpoiler itemHtml = new ItemSpoiler()
+                    {
+                        Header = item.FirstChild.InnerText,
+                        Body = item.LastChild.InnerHtml,
+                    };
+
+                    spoilers.Add(itemHtml);
+                    // Чтобы корректно спарсить описание, необходимо удалить все спойлеры
+                    item.RemoveAll();
+                }
+                return spoilers;
+            }
+            else
+            {
+                MessageService.ShowError("Ошибка при парсинге спойлеров раздачи");
+                return null;
+            }
+        }
+
+        private List<ItemImg> ParsingImgs(HtmlNode mainNode, List<ItemSpoiler> spoilers)
+        {
+            // История следующая. На странице с раздачей могут быть вставлены полноразмерные копии изображений
+            // по прямым ссылкам, в целях оформления внешнего вида (1). И также могут быть вставлены миниатюры изображений
+            // - скриншоты программы, которые обернуты снаружи ссылкой (2). Так же мы изначально получаем страницу, 
+            // в которой сверуты все спойлеры. Содержимое спойлера на странице - просто строка, поэтому мы не получаем
+            // ссылки изображений, которые находяться под спойром. Этот случай нужно парсить отдельно (3).
+            List<ItemImg> imgs;
+
+            // Парсим изображения для внешнего вида (1)
+            HtmlNodeCollection nodesImg = mainNode.SelectNodes(@"//table[@id=""details""]/tr[1]/td[2]//img[not(parent::a)]");
+            imgs = GetImgs(nodesImg, TImg.View);
+
+            // Парсим изображения миниатюры/скриншоты (2)
+            nodesImg = mainNode.SelectNodes(@"//table[@id=""details""]//tr[1]//td[2]//img[(parent::a)]");
+            //это необходимо чтобы после найдных скриншотов лист полностью не перезаписывался
+            var tmpImg = GetImgs(nodesImg, TImg.Screenshot);
+            imgs.AddRange(tmpImg);
+
+            // Парсим изображения из спойлеров (3)
+            tmpImg = GetImgsFromSpoilers(spoilers);
+            imgs.AddRange(tmpImg);
+
+            return imgs;            
+        }
+
+        /// <summary>
+        /// Получаем изображения, из указанной ноды
+        /// </summary>
+        /// <param name="nodesImg">Выбранные ноды, в которых должны быть эти изображения</param>
+        /// <param name="tImg">Тип изображения, котороый необходимо найти</param>
+        /// <param name="messageExclamation">Сообщение пользователю, если изображения не найдены</param>
+        /// <returns>Возвращает список с изображениями</returns>
+        private List<ItemImg> GetImgs(HtmlNodeCollection nodesImg, TImg tImg)
+        {
+            List<ItemImg> imgs = new List<ItemImg>();
+
+            if (nodesImg != null)
+            {
+                foreach (var item in nodesImg)
+                {
+                    HtmlNode parentUrl = item.ParentNode;
+
+                    ItemImg itemImg = new ItemImg()
+                    {
+                        Type = tImg,
+                        Href = item.GetAttributeValue("src", "0"),
+                        ParentHref = parentUrl.GetAttributeValue("href", "0"),
+                    };
+                    imgs.Add(itemImg);
+                }
+            }
+
+            return imgs;
+        }
+
+        /// <summary>
+        /// Получаем скриншоты из указанных спойлеров
+        /// </summary>
+        /// <param name="spoilers">Спойлеры, из которых нужно взять скриншоты</param>
+        /// <returns></returns>
+        private List<ItemImg> GetImgsFromSpoilers(List<ItemSpoiler> spoilers)
+        {
+            List<ItemImg> imgs = new List<ItemImg>();
+
+            foreach (var item in spoilers)
+            {
+                HtmlDocument document = new HtmlDocument();
+                document.LoadHtml(item.Body);
+
+                HtmlNodeCollection nodes = document.DocumentNode.SelectNodes(@"//img[(parent::a)]");
+
+                var imgsTmp = GetImgs(nodes, TImg.Screenshot);
+                imgs.AddRange(imgsTmp);
+            }
+
+            return imgs;
+        }
+
+        #endregion
     }
 }

@@ -146,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataBase\DataBaseControl.cs" />
+    <Compile Include="DataBase\TImg.cs" />
     <Compile Include="DataBase\TTrakers.cs" />
     <Compile Include="FoundPost.cs">
       <DependentUpon>ModelDbParsing.tt</DependentUpon>
@@ -171,8 +172,12 @@
     </Compile>
     <Compile Include="Parsers\DownloaderHtmlPage.cs" />
     <Compile Include="Parsers\DownloaderHtmlPageArgs.cs" />
+    <Compile Include="Parsers\ItemImg.cs" />
     <Compile Include="Parsers\ItemList.cs" />
     <Compile Include="Parsers\ItemListArgs.cs" />
+    <Compile Include="Parsers\ItemReady.cs" />
+    <Compile Include="Parsers\ItemReadyArgs.cs" />
+    <Compile Include="Parsers\ItemSpoiler.cs" />
     <Compile Include="Parsers\ParserRutor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadyPost.cs">

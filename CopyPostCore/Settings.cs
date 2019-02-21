@@ -12,6 +12,6 @@ namespace CopyPostCore
         /// Количество строк, которые мы берем при запросе к бд когда хотим получить 
         /// последние добавленные записи
         /// </summary>
-        public static int NumbersRowsSelect = 100;
+        public const int NumbersRowsSelect = 100;
     }
 }

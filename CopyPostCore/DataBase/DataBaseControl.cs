@@ -10,11 +10,12 @@ namespace CopyPostCore.DataBase
     public class DataBaseControl
     {
         /// <summary>
-        /// Получает последние 100 записей из предварительных раздач в бд
+        /// Возвращает указанное количество последних найденных записей с указанным трекером из бд
         /// </summary>
-        /// <param name="trakers">Указывает, под каким трекером надо добавлять</param>
+        /// <param name="trakers">Выбранный трекер</param>
+        /// <param name="numberRows">Необходимое количество записей. По умолчанию 100.</param>
         /// <returns></returns>
-        public List<ItemList> GetLastRecordList(TTrakers trakers)
+        public List<ItemList> GetLastRecordList(TTrakers trakers, int numberRows = Settings.NumbersRowsSelect)
         {
             autoParsingContext mydb = new autoParsingContext();
 
@@ -29,7 +30,7 @@ namespace CopyPostCore.DataBase
                     Name = el.Name,
                 };
 
-            List<ItemList> lastPrepost = prepostsQuery.Take(Settings.NumbersRowsSelect).ToList();
+            List<ItemList> lastPrepost = prepostsQuery.Take(numberRows).ToList();
             return lastPrepost;
         }
 

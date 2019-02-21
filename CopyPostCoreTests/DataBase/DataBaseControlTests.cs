@@ -14,7 +14,7 @@ namespace CopyPostCore.DataBase.Tests
     public class DataBaseControlTests
     {
         [TestMethod()]
-        public void GetLastRecordListRutorTest()
+        public void GetLastRecordListTest()
         {
             DataBaseControl db = new DataBaseControl();
             List<ItemList> list = db.GetLastRecordList(TTrakers.Rutor);
@@ -44,6 +44,8 @@ namespace CopyPostCore.DataBase.Tests
 
             DataBaseControl db = new DataBaseControl();
             int actual = db.AddNewRecordList(listFound, TTrakers.Rutor);
+
+            Assert.IsNotNull(listFound);
             Assert.AreEqual(listFound.Count(), actual);
         }
     }
