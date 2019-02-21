@@ -8,5 +8,6 @@ namespace CopyPostCore.Parsers
         public string Description { get; set; }
         public List<ItemSpoiler> Spoilers { get; set; }
         public List<ItemImg> Imgs { get; set; }
+        public  string TorrentUrl { get; set; }
     }
 }

@@ -91,8 +91,12 @@ namespace CopyPostCore.Parsers
             if (mainNode != null)
             {
                 ItemReady item = new ItemReady();
+                // Важен порядок вызова функций. 
                 item.Spoilers = ParsingSpoilers(mainNode);
                 item.Imgs = ParsingImgs(mainNode, item.Spoilers);
+                item.Description = HttpUtility.HtmlDecode(mainNode.InnerHtml);
+                item.Name = ParsingName(mainNode);
+                item.TorrentUrl = ParsingTorrentUrl(mainNode);
 
                 ItemReadyArgs eventArgs = new ItemReadyArgs(item);
                 ItemReceived?.Invoke(this, eventArgs);
@@ -213,6 +217,45 @@ namespace CopyPostCore.Parsers
             return imgs;
         }
 
+        /// <summary>
+        /// Получаем имя раздачи
+        /// </summary>
+        /// <param name="mainNode"></param>
+        /// <returns></returns>
+        private string ParsingName(HtmlNode mainNode)
+        {
+            HtmlNode nameNode = mainNode.SelectSingleNode(@"/html/body/div[1]/h1");
+
+            if (nameNode != null)
+            {
+                return HttpUtility.HtmlDecode(nameNode.InnerText);
+            }
+            else
+            {
+                MessageService.ShowError("Не удалось получить имя раздачи");
+                return "";
+            }
+        }
+
+        /// <summary>
+        /// Получаем адрес торрент файла
+        /// </summary>
+        /// <param name="mainNode"></param>
+        /// <returns></returns>
+        private string ParsingTorrentUrl(HtmlNode mainNode)
+        {
+            HtmlNode torrentUrl = mainNode.SelectSingleNode("/html/body/div[2]/div[1]/div[2]/a[2]");
+
+            if (torrentUrl != null)
+            {
+                return torrentUrl.GetAttributeValue("href", "0");
+            }
+            else
+            {
+                MessageService.ShowError("Не удалось получить адрес торрент файла");
+                return "";
+            }
+        }
         #endregion
     }
 }
