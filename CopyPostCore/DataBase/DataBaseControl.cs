@@ -28,6 +28,7 @@ namespace CopyPostCore.DataBase
                     Href = el.Uri,
                     Magnet = el.Magnet,
                     Name = el.Name,
+                    Index = el.idFoundPost,
                 };
 
             List<ItemList> lastPrepost = prepostsQuery.Take(numberRows).ToList();

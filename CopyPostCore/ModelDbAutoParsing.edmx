@@ -8,7 +8,6 @@
         <EntityType Name="foundpost">
           <Key>
             <PropertyRef Name="idFoundPost" />
-            <PropertyRef Name="TorrentTracker_idTorrentTracker" />
           </Key>
           <Property Name="idFoundPost" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="200" />
@@ -20,8 +19,6 @@
         <EntityType Name="img">
           <Key>
             <PropertyRef Name="idImg" />
-            <PropertyRef Name="TypeImg_idTypeImg" />
-            <PropertyRef Name="ReadyPost_idReadyPost" />
           </Key>
           <Property Name="idImg" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Uri" Type="varchar" MaxLength="500" />
@@ -31,8 +28,6 @@
         <EntityType Name="readypost">
           <Key>
             <PropertyRef Name="idReadyPost" />
-            <PropertyRef Name="FoundPost_idFoundPost" />
-            <PropertyRef Name="FoundPost_TorrentTracker_idTorrentTracker" />
           </Key>
           <Property Name="idReadyPost" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="200" />
@@ -40,12 +35,10 @@
           <Property Name="TorrentFile" Type="varchar" MaxLength="120" />
           <Property Name="FoundedTime" Type="datetime" Precision="0" />
           <Property Name="FoundPost_idFoundPost" Type="int" Nullable="false" />
-          <Property Name="FoundPost_TorrentTracker_idTorrentTracker" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="spoiler">
           <Key>
             <PropertyRef Name="idSpoiler" />
-            <PropertyRef Name="ReadyPost_idReadyPost" />
           </Key>
           <Property Name="idSpoiler" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Header" Type="varchar" MaxLength="120" />
@@ -66,7 +59,7 @@
           <Property Name="idTypeImg" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="10" />
         </EntityType>
-        <Association Name="fk_FoundPost_TorrentTracker">
+        <Association Name="fk_FoundPost_TorrentTracker1">
           <End Role="torrenttracker" Type="Self.torrenttracker" Multiplicity="1" />
           <End Role="foundpost" Type="Self.foundpost" Multiplicity="*" />
           <ReferentialConstraint>
@@ -78,9 +71,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-warning 6035: The relationship 'fk_Img_ReadyPost1' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="fk_Img_ReadyPost1" />-->
+        <Association Name="fk_Img_ReadyPost1">
+          <End Role="readypost" Type="Self.readypost" Multiplicity="1" />
+          <End Role="img" Type="Self.img" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="readypost">
+              <PropertyRef Name="idReadyPost" />
+            </Principal>
+            <Dependent Role="img">
+              <PropertyRef Name="ReadyPost_idReadyPost" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_Img_TypeImg1">
           <End Role="typeimg" Type="Self.typeimg" Multiplicity="1" />
           <End Role="img" Type="Self.img" Multiplicity="*" />
@@ -99,17 +101,24 @@ warning 6035: The relationship 'fk_Img_ReadyPost1' has columns that are not part
           <ReferentialConstraint>
             <Principal Role="foundpost">
               <PropertyRef Name="idFoundPost" />
-              <PropertyRef Name="TorrentTracker_idTorrentTracker" />
             </Principal>
             <Dependent Role="readypost">
               <PropertyRef Name="FoundPost_idFoundPost" />
-              <PropertyRef Name="FoundPost_TorrentTracker_idTorrentTracker" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-warning 6035: The relationship 'fk_Spoiler_ReadyPost1' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="fk_Spoiler_ReadyPost1" />-->
+        <Association Name="fk_Spoiler_ReadyPost1">
+          <End Role="readypost" Type="Self.readypost" Multiplicity="1" />
+          <End Role="spoiler" Type="Self.spoiler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="readypost">
+              <PropertyRef Name="idReadyPost" />
+            </Principal>
+            <Dependent Role="spoiler">
+              <PropertyRef Name="ReadyPost_idReadyPost" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="autoParsingModelStoreContainer">
           <EntitySet Name="foundpost" EntityType="Self.foundpost" Schema="autoparsing" store:Type="Tables" />
           <EntitySet Name="img" EntityType="Self.img" Schema="autoparsing" store:Type="Tables" />
@@ -117,9 +126,13 @@ warning 6035: The relationship 'fk_Spoiler_ReadyPost1' has columns that are not 
           <EntitySet Name="spoiler" EntityType="Self.spoiler" Schema="autoparsing" store:Type="Tables" />
           <EntitySet Name="torrenttracker" EntityType="Self.torrenttracker" Schema="autoparsing" store:Type="Tables" />
           <EntitySet Name="typeimg" EntityType="Self.typeimg" Schema="autoparsing" store:Type="Tables" />
-          <AssociationSet Name="fk_FoundPost_TorrentTracker" Association="Self.fk_FoundPost_TorrentTracker">
+          <AssociationSet Name="fk_FoundPost_TorrentTracker1" Association="Self.fk_FoundPost_TorrentTracker1">
             <End Role="torrenttracker" EntitySet="torrenttracker" />
             <End Role="foundpost" EntitySet="foundpost" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Img_ReadyPost1" Association="Self.fk_Img_ReadyPost1">
+            <End Role="readypost" EntitySet="readypost" />
+            <End Role="img" EntitySet="img" />
           </AssociationSet>
           <AssociationSet Name="fk_Img_TypeImg1" Association="Self.fk_Img_TypeImg1">
             <End Role="typeimg" EntitySet="typeimg" />
@@ -128,6 +141,10 @@ warning 6035: The relationship 'fk_Spoiler_ReadyPost1' has columns that are not 
           <AssociationSet Name="fk_ReadyPost_FoundPost1" Association="Self.fk_ReadyPost_FoundPost1">
             <End Role="foundpost" EntitySet="foundpost" />
             <End Role="readypost" EntitySet="readypost" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Spoiler_ReadyPost1" Association="Self.fk_Spoiler_ReadyPost1">
+            <End Role="readypost" EntitySet="readypost" />
+            <End Role="spoiler" EntitySet="spoiler" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -138,7 +155,6 @@ warning 6035: The relationship 'fk_Spoiler_ReadyPost1' has columns that are not 
         <EntityType Name="FoundPost">
           <Key>
             <PropertyRef Name="idFoundPost" />
-            <PropertyRef Name="TorrentTracker_idTorrentTracker" />
           </Key>
           <Property Name="idFoundPost" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
@@ -146,26 +162,23 @@ warning 6035: The relationship 'fk_Spoiler_ReadyPost1' has columns that are not 
           <Property Name="Magnet" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="FoundedTime" Type="DateTime" />
           <Property Name="TorrentTracker_idTorrentTracker" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="TorrentTracker" Relationship="Self.fk_FoundPost_TorrentTracker" FromRole="foundpost" ToRole="torrenttracker" />
+          <NavigationProperty Name="TorrentTracker" Relationship="Self.fk_FoundPost_TorrentTracker1" FromRole="foundpost" ToRole="torrenttracker" />
           <NavigationProperty Name="ReadyPost" Relationship="Self.fk_ReadyPost_FoundPost1" FromRole="foundpost" ToRole="readypost" />
         </EntityType>
         <EntityType Name="Img">
           <Key>
             <PropertyRef Name="idImg" />
-            <PropertyRef Name="TypeImg_idTypeImg" />
-            <PropertyRef Name="ReadyPost_idReadyPost" />
           </Key>
           <Property Name="idImg" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Uri" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="TypeImg_idTypeImg" Type="Int32" Nullable="false" />
           <Property Name="ReadyPost_idReadyPost" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ReadyPost" Relationship="Self.fk_Img_ReadyPost1" FromRole="img" ToRole="readypost" />
           <NavigationProperty Name="TypeImg" Relationship="Self.fk_Img_TypeImg1" FromRole="img" ToRole="typeimg" />
         </EntityType>
         <EntityType Name="ReadyPost">
           <Key>
             <PropertyRef Name="idReadyPost" />
-            <PropertyRef Name="FoundPost_idFoundPost" />
-            <PropertyRef Name="FoundPost_TorrentTracker_idTorrentTracker" />
           </Key>
           <Property Name="idReadyPost" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
@@ -173,18 +186,19 @@ warning 6035: The relationship 'fk_Spoiler_ReadyPost1' has columns that are not 
           <Property Name="TorrentFile" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
           <Property Name="FoundedTime" Type="DateTime" />
           <Property Name="FoundPost_idFoundPost" Type="Int32" Nullable="false" />
-          <Property Name="FoundPost_TorrentTracker_idTorrentTracker" Type="Int32" Nullable="false" />
           <NavigationProperty Name="FoundPost" Relationship="Self.fk_ReadyPost_FoundPost1" FromRole="readypost" ToRole="foundpost" />
+          <NavigationProperty Name="Imgs" Relationship="Self.fk_Img_ReadyPost1" FromRole="readypost" ToRole="img" />
+          <NavigationProperty Name="Spoilers" Relationship="Self.fk_Spoiler_ReadyPost1" FromRole="readypost" ToRole="spoiler" />
         </EntityType>
         <EntityType Name="Spoiler">
           <Key>
             <PropertyRef Name="idSpoiler" />
-            <PropertyRef Name="ReadyPost_idReadyPost" />
           </Key>
           <Property Name="idSpoiler" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Header" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
           <Property Name="Body" Type="String" MaxLength="16777215" FixedLength="false" Unicode="false" />
           <Property Name="ReadyPost_idReadyPost" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ReadyPost" Relationship="Self.fk_Spoiler_ReadyPost1" FromRole="spoiler" ToRole="readypost" />
         </EntityType>
         <EntityType Name="TorrentTracker">
           <Key>
@@ -192,7 +206,7 @@ warning 6035: The relationship 'fk_Spoiler_ReadyPost1' has columns that are not 
           </Key>
           <Property Name="idTorrentTracker" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="FoundPosts" Relationship="Self.fk_FoundPost_TorrentTracker" FromRole="torrenttracker" ToRole="foundpost" />
+          <NavigationProperty Name="FoundPosts" Relationship="Self.fk_FoundPost_TorrentTracker1" FromRole="torrenttracker" ToRole="foundpost" />
         </EntityType>
         <EntityType Name="TypeImg">
           <Key>
@@ -202,7 +216,7 @@ warning 6035: The relationship 'fk_Spoiler_ReadyPost1' has columns that are not 
           <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Imgs" Relationship="Self.fk_Img_TypeImg1" FromRole="typeimg" ToRole="img" />
         </EntityType>
-        <Association Name="fk_FoundPost_TorrentTracker">
+        <Association Name="fk_FoundPost_TorrentTracker1">
           <End Role="torrenttracker" Type="autoParsingModel.TorrentTracker" Multiplicity="1" />
           <End Role="foundpost" Type="autoParsingModel.FoundPost" Multiplicity="*" />
           <ReferentialConstraint>
@@ -220,11 +234,21 @@ warning 6035: The relationship 'fk_Spoiler_ReadyPost1' has columns that are not 
           <ReferentialConstraint>
             <Principal Role="foundpost">
               <PropertyRef Name="idFoundPost" />
-              <PropertyRef Name="TorrentTracker_idTorrentTracker" />
             </Principal>
             <Dependent Role="readypost">
               <PropertyRef Name="FoundPost_idFoundPost" />
-              <PropertyRef Name="FoundPost_TorrentTracker_idTorrentTracker" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Img_ReadyPost1">
+          <End Role="readypost" Type="autoParsingModel.ReadyPost" Multiplicity="1" />
+          <End Role="img" Type="autoParsingModel.Img" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="readypost">
+              <PropertyRef Name="idReadyPost" />
+            </Principal>
+            <Dependent Role="img">
+              <PropertyRef Name="ReadyPost_idReadyPost" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -240,6 +264,18 @@ warning 6035: The relationship 'fk_Spoiler_ReadyPost1' has columns that are not 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_Spoiler_ReadyPost1">
+          <End Role="readypost" Type="autoParsingModel.ReadyPost" Multiplicity="1" />
+          <End Role="spoiler" Type="autoParsingModel.Spoiler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="readypost">
+              <PropertyRef Name="idReadyPost" />
+            </Principal>
+            <Dependent Role="spoiler">
+              <PropertyRef Name="ReadyPost_idReadyPost" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="autoParsingContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="FoundPost" EntityType="autoParsingModel.FoundPost" />
           <EntitySet Name="Img" EntityType="autoParsingModel.Img" />
@@ -247,7 +283,7 @@ warning 6035: The relationship 'fk_Spoiler_ReadyPost1' has columns that are not 
           <EntitySet Name="Spoiler" EntityType="autoParsingModel.Spoiler" />
           <EntitySet Name="TorrentTracker" EntityType="autoParsingModel.TorrentTracker" />
           <EntitySet Name="TypeImg" EntityType="autoParsingModel.TypeImg" />
-          <AssociationSet Name="fk_FoundPost_TorrentTracker" Association="Self.fk_FoundPost_TorrentTracker">
+          <AssociationSet Name="fk_FoundPost_TorrentTracker1" Association="Self.fk_FoundPost_TorrentTracker1">
             <End Role="torrenttracker" EntitySet="TorrentTracker" />
             <End Role="foundpost" EntitySet="FoundPost" />
           </AssociationSet>
@@ -255,9 +291,17 @@ warning 6035: The relationship 'fk_Spoiler_ReadyPost1' has columns that are not 
             <End Role="foundpost" EntitySet="FoundPost" />
             <End Role="readypost" EntitySet="ReadyPost" />
           </AssociationSet>
+          <AssociationSet Name="fk_Img_ReadyPost1" Association="Self.fk_Img_ReadyPost1">
+            <End Role="readypost" EntitySet="ReadyPost" />
+            <End Role="img" EntitySet="Img" />
+          </AssociationSet>
           <AssociationSet Name="fk_Img_TypeImg1" Association="Self.fk_Img_TypeImg1">
             <End Role="typeimg" EntitySet="TypeImg" />
             <End Role="img" EntitySet="Img" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Spoiler_ReadyPost1" Association="Self.fk_Spoiler_ReadyPost1">
+            <End Role="readypost" EntitySet="ReadyPost" />
+            <End Role="spoiler" EntitySet="Spoiler" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -297,7 +341,6 @@ warning 6035: The relationship 'fk_Spoiler_ReadyPost1' has columns that are not 
                 <ScalarProperty Name="TorrentFile" ColumnName="TorrentFile" />
                 <ScalarProperty Name="FoundedTime" ColumnName="FoundedTime" />
                 <ScalarProperty Name="FoundPost_idFoundPost" ColumnName="FoundPost_idFoundPost" />
-                <ScalarProperty Name="FoundPost_TorrentTracker_idTorrentTracker" ColumnName="FoundPost_TorrentTracker_idTorrentTracker" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

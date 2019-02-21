@@ -18,5 +18,7 @@ namespace CopyPostCore
         public string Header { get; set; }
         public string Body { get; set; }
         public int ReadyPost_idReadyPost { get; set; }
+    
+        public virtual ReadyPost ReadyPost { get; set; }
     }
 }

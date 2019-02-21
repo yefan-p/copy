@@ -19,6 +19,7 @@ namespace CopyPostCore
         public int TypeImg_idTypeImg { get; set; }
         public int ReadyPost_idReadyPost { get; set; }
     
+        public virtual ReadyPost ReadyPost { get; set; }
         public virtual TypeImg TypeImg { get; set; }
     }
 }

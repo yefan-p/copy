@@ -80,9 +80,17 @@ namespace CopyPostCore.Parsers
             DownloaderHtmlPage downloaderItem = new DownloaderHtmlPage();
             downloaderItem.FinishDownload += DownloaderItem_FinishDownload;
 
+            _itemList = item;
+
             Uri uri = new Uri(item.Href);
             downloaderItem.StartDownload(uri);
         }
+
+        /// <summary>
+        /// Приватное поле класса. Необходимо для передачи информации из какой найденной раздачи и 
+        /// получился текущий пост.
+        /// </summary>
+        private ItemList _itemList;
 
         private void DownloaderItem_FinishDownload(object sender, DownloaderHtmlPageArgs e)
         {
