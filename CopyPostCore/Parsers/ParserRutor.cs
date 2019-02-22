@@ -19,12 +19,12 @@ namespace CopyPostCore.Parsers
         /// <summary>
         /// Вызывается, когда лист с найденными разадачи сформирован
         /// </summary>
-        public event EventHandler<ItemListArgs> ListReceived;
+        public event EventHandler<FoundPostArgs> FoundPostsReceived;
 
         /// <summary>
         /// Вызывается, когда раздача сформирована
         /// </summary>
-        public event EventHandler<ItemReadyArgs> ItemReceived;
+        public event EventHandler<ReadyPostArgs> ReadyPostsReceived;
 
         #region Работа со списком
         /// <summary>
@@ -48,20 +48,20 @@ namespace CopyPostCore.Parsers
 
             if (htmlNodes != null)
             {
-                List<ItemList> postsList;
-                postsList = htmlNodes.Select((el, i) => new ItemList
-                {
-                    // HtmlDecode необходим чтобы привести HTML escape последовательности
-                    // в нормальный вид
-                    Name = HttpUtility.HtmlDecode(el.LastChild.InnerText),
-                    Href = rutorMainUrl + el.LastChild.GetAttributeValue("href", null),
-                    Index = i,
-                    Magnet = el.ChildNodes[1].GetAttributeValue("href", null),
-                }).Reverse().ToList();
+                var foundQuery = 
+                    from el in htmlNodes
+                    select new FoundPost
+                    {
+                        Name = HttpUtility.HtmlDecode(el.LastChild.InnerText),
+                        Uri = rutorMainUrl + el.LastChild.GetAttributeValue("href", null),
+                        Magnet = el.ChildNodes[1].GetAttributeValue("href", null),
+                        FoundedTime = DateTime.Now,
+                        TorrentTracker_idTorrentTracker = (int)TTrakers.Rutor,
+                    };
+                List<FoundPost> foundPosts = foundQuery.Reverse().ToList();
 
-                ItemListArgs eventArgs = new ItemListArgs(postsList);
-                //вызываем событие. аналог if(onPostReceived!=null)onPostReceived(arg);
-                ListReceived?.Invoke(this, eventArgs);
+                FoundPostArgs eventArgs = new FoundPostArgs(foundPosts);
+                FoundPostsReceived?.Invoke(this, eventArgs);
             }
             else
             {
@@ -75,14 +75,14 @@ namespace CopyPostCore.Parsers
         /// Возвращает готовый пост.
         /// </summary>
         /// <param name="item">Найденный пост, который необходимо распарсить</param>
-        public void StartGetItem(ItemList item)
+        public void StartGetItem(FoundPost item)
         {
             DownloaderHtmlPage downloaderItem = new DownloaderHtmlPage();
             downloaderItem.FinishDownload += DownloaderItem_FinishDownload;
 
-            _itemList = item;
+            _parentItem = item;
 
-            Uri uri = new Uri(item.Href);
+            Uri uri = new Uri(item.Uri);
             downloaderItem.StartDownload(uri);
         }
 
@@ -90,7 +90,7 @@ namespace CopyPostCore.Parsers
         /// Приватное поле класса. Необходимо для передачи информации из какой найденной раздачи и 
         /// получился текущий пост.
         /// </summary>
-        private ItemList _itemList;
+        private FoundPost _parentItem;
 
         private void DownloaderItem_FinishDownload(object sender, DownloaderHtmlPageArgs e)
         {
@@ -98,16 +98,19 @@ namespace CopyPostCore.Parsers
 
             if (mainNode != null)
             {
-                ItemReady item = new ItemReady();
-                // Важен порядок вызова функций. 
-                item.Spoilers = ParsingSpoilers(mainNode);
-                item.Imgs = ParsingImgs(mainNode, item.Spoilers);
-                item.Description = HttpUtility.HtmlDecode(mainNode.InnerHtml);
-                item.Name = ParsingName(mainNode);
-                item.TorrentUrl = ParsingTorrentUrl(mainNode);
+                // Важно чтобы сначала вызывался парсинг спойлеров, а затем только парсинг описание
+                // Порядок вызова остальных функций не важен. Читай комментарий в функции со спойлерами 
+                ReadyPost readyPost = new ReadyPost();
+                readyPost.Spoilers = ParsingSpoilers(mainNode, readyPost);
+                readyPost.Imgs = ParsingImgs(mainNode, readyPost);
+                readyPost.Description = HttpUtility.HtmlDecode(mainNode.InnerHtml);
+                readyPost.Name = ParsingName(mainNode);
+                readyPost.TorrentFile = ParsingTorrentUrl(mainNode);
+                readyPost.FoundPost = _parentItem;
+                readyPost.FoundedTime = DateTime.Now;
 
-                ItemReadyArgs eventArgs = new ItemReadyArgs(item);
-                ItemReceived?.Invoke(this, eventArgs);
+                ReadyPostArgs eventArgs = new ReadyPostArgs(readyPost);
+                ReadyPostsReceived?.Invoke(this, eventArgs);
             }
             else
             {
@@ -115,7 +118,13 @@ namespace CopyPostCore.Parsers
             }
         }
 
-        private List<ItemSpoiler> ParsingSpoilers(HtmlNode mainNode)
+        /// <summary>
+        /// Выдергивает спойлеры со страницы
+        /// </summary>
+        /// <param name="mainNode">Кусок html, в которм будет производится поиск</param>
+        /// <param name="readyPost">Пост, к которому будет относится спойлер</param>
+        /// <returns></returns>
+        private List<Spoiler> ParsingSpoilers(HtmlNode mainNode, ReadyPost readyPost)
         {
             // выбираем все спойлеры. В нодах оказывается храниться весь документ
             // вне зависимости от того, что и когда мы парсили
@@ -124,17 +133,20 @@ namespace CopyPostCore.Parsers
 
             if (spoilersNode != null)
             {
-                List<ItemSpoiler> spoilers = new List<ItemSpoiler>();
+                List<Spoiler> spoilers = new List<Spoiler>();
+
                 foreach (var item in spoilersNode)
                 {
-                    ItemSpoiler itemHtml = new ItemSpoiler()
+                    Spoiler itemHtml = new Spoiler()
                     {
                         Header = item.FirstChild.InnerText,
                         Body = item.LastChild.InnerHtml,
+                        ReadyPost = readyPost,
                     };
 
                     spoilers.Add(itemHtml);
                     // Чтобы корректно спарсить описание, необходимо удалить все спойлеры
+                    // По этой же причине не используется linq
                     item.RemoveAll();
                 }
                 return spoilers;
@@ -146,27 +158,27 @@ namespace CopyPostCore.Parsers
             }
         }
 
-        private List<ItemImg> ParsingImgs(HtmlNode mainNode, List<ItemSpoiler> spoilers)
+        private List<Img> ParsingImgs(HtmlNode mainNode, ReadyPost readyPost)
         {
             // История следующая. На странице с раздачей могут быть вставлены полноразмерные копии изображений
             // по прямым ссылкам, в целях оформления внешнего вида (1). И также могут быть вставлены миниатюры изображений
             // - скриншоты программы, которые обернуты снаружи ссылкой (2). Так же мы изначально получаем страницу, 
             // в которой сверуты все спойлеры. Содержимое спойлера на странице - просто строка, поэтому мы не получаем
             // ссылки изображений, которые находяться под спойром. Этот случай нужно парсить отдельно (3).
-            List<ItemImg> imgs;
+            List<Img> imgs;
 
             // Парсим изображения для внешнего вида (1)
             HtmlNodeCollection nodesImg = mainNode.SelectNodes(@"//table[@id=""details""]/tr[1]/td[2]//img[not(parent::a)]");
-            imgs = GetImgs(nodesImg, TImg.View);
+            imgs = GetImgs(nodesImg, TImg.View, readyPost);
 
             // Парсим изображения миниатюры/скриншоты (2)
             nodesImg = mainNode.SelectNodes(@"//table[@id=""details""]//tr[1]//td[2]//img[(parent::a)]");
             //это необходимо чтобы после найдных скриншотов лист полностью не перезаписывался
-            var tmpImg = GetImgs(nodesImg, TImg.Screenshot);
+            var tmpImg = GetImgs(nodesImg, TImg.Screenshot, readyPost);
             imgs.AddRange(tmpImg);
 
             // Парсим изображения из спойлеров (3)
-            tmpImg = GetImgsFromSpoilers(spoilers);
+            tmpImg = GetImgsFromSpoilers(readyPost);
             imgs.AddRange(tmpImg);
 
             return imgs;            
@@ -177,28 +189,25 @@ namespace CopyPostCore.Parsers
         /// </summary>
         /// <param name="nodesImg">Выбранные ноды, в которых должны быть эти изображения</param>
         /// <param name="tImg">Тип изображения, котороый необходимо найти</param>
-        /// <param name="messageExclamation">Сообщение пользователю, если изображения не найдены</param>
+        /// <param name="readyPost">Пост, к которому необходимо добавить изображение</param>
         /// <returns>Возвращает список с изображениями</returns>
-        private List<ItemImg> GetImgs(HtmlNodeCollection nodesImg, TImg tImg)
+        private List<Img> GetImgs(HtmlNodeCollection nodesImg, TImg tImg, ReadyPost readyPost)
         {
-            List<ItemImg> imgs = new List<ItemImg>();
+            List<Img> imgs = new List<Img>();
 
             if (nodesImg != null)
             {
-                foreach (var item in nodesImg)
-                {
-                    HtmlNode parentUrl = item.ParentNode;
-
-                    ItemImg itemImg = new ItemImg()
+                //ParentHref = parentUrl.GetAttributeValue("href", "0"),
+                var imgQuery =
+                    from el in nodesImg
+                    select new Img
                     {
-                        Type = tImg,
-                        Href = item.GetAttributeValue("src", "0"),
-                        ParentHref = parentUrl.GetAttributeValue("href", "0"),
+                        TypeImg_idTypeImg = (int)tImg,
+                        Uri = el.GetAttributeValue("src", null),
+                        ReadyPost = readyPost,
                     };
-                    imgs.Add(itemImg);
-                }
+                imgs = imgQuery.ToList();
             }
-
             return imgs;
         }
 
@@ -207,18 +216,17 @@ namespace CopyPostCore.Parsers
         /// </summary>
         /// <param name="spoilers">Спойлеры, из которых нужно взять скриншоты</param>
         /// <returns></returns>
-        private List<ItemImg> GetImgsFromSpoilers(List<ItemSpoiler> spoilers)
+        private List<Img> GetImgsFromSpoilers(ReadyPost readyPost)
         {
-            List<ItemImg> imgs = new List<ItemImg>();
+            List<Img> imgs = new List<Img>();
 
-            foreach (var item in spoilers)
+            foreach (var item in readyPost.Spoilers)
             {
                 HtmlDocument document = new HtmlDocument();
                 document.LoadHtml(item.Body);
 
                 HtmlNodeCollection nodes = document.DocumentNode.SelectNodes(@"//img[(parent::a)]");
-
-                var imgsTmp = GetImgs(nodes, TImg.Screenshot);
+                var imgsTmp = GetImgs(nodes, TImg.Screenshot, readyPost);
                 imgs.AddRange(imgsTmp);
             }
 

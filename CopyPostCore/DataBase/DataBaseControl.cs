@@ -15,23 +15,17 @@ namespace CopyPostCore.DataBase
         /// <param name="trakers">Выбранный трекер</param>
         /// <param name="numberRows">Необходимое количество записей. По умолчанию 100.</param>
         /// <returns></returns>
-        public List<ItemList> GetLastRecordList(TTrakers trakers, int numberRows = Settings.NumbersRowsSelect)
+        public List<FoundPost> GetLastRecordList(TTrakers trakers, int numberRows = Settings.NumbersRowsSelect)
         {
             autoParsingContext mydb = new autoParsingContext();
 
-            var prepostsQuery =
-                from el in mydb.FoundPost
+            var foundPostsQuery =
+                (from el in mydb.FoundPost
                 where el.TorrentTracker.idTorrentTracker == (int)trakers
                 orderby el.idFoundPost descending
-                select new ItemList
-                {
-                    Href = el.Uri,
-                    Magnet = el.Magnet,
-                    Name = el.Name,
-                    Index = el.idFoundPost,
-                };
+                select el as FoundPost);
 
-            List<ItemList> lastPrepost = prepostsQuery.Take(numberRows).ToList();
+            List<FoundPost> lastPrepost = foundPostsQuery.Take(numberRows).ToList();
             return lastPrepost;
         }
 
@@ -39,24 +33,11 @@ namespace CopyPostCore.DataBase
         /// Добавляет новые записи предварительных раздач в бд
         /// </summary>
         /// <param name="foundedPost">Список добавляемых раздач</param>
-        /// <param name="traker">В какой трекер добавлять</param>
         /// <returns>Возвращает количество записей, которые добавили в бд</returns>
-        public int AddNewRecordList(List<ItemList> foundedPost, TTrakers traker)
+        public int AddNewRecordList(List<FoundPost> foundedPost)
         {
             autoParsingContext db = new autoParsingContext();
-
-            foreach (var item in foundedPost)
-            {
-                FoundPost fPost = new FoundPost
-                {
-                    Name = item.Name,
-                    Magnet = item.Magnet,
-                    Uri = item.Href,
-                    FoundedTime = DateTime.Now,
-                    TorrentTracker_idTorrentTracker = (int)traker,
-                };
-                db.FoundPost.Add(fPost);
-            }
+            db.FoundPost.AddRange(foundedPost);
 
             int result = db.SaveChanges();
             return result;

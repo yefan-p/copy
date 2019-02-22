@@ -17,7 +17,7 @@ namespace CopyPostCore.DataBase.Tests
         public void GetLastRecordListTest()
         {
             DataBaseControl db = new DataBaseControl();
-            List<ItemList> list = db.GetLastRecordList(TTrakers.Rutor);
+            List<FoundPost> list = db.GetLastRecordList(TTrakers.Rutor);
 
             Assert.AreEqual(100, list.Count());
         }
@@ -25,13 +25,13 @@ namespace CopyPostCore.DataBase.Tests
         [TestMethod()]
         public void AddNewRecordListTest()
         {
-            List<ItemList> listFound = null;
+            List<FoundPost> listFound = null;
             bool eventCall = false;
 
             ParserRutor parser = new ParserRutor();
-            parser.ListReceived += delegate(object s, ItemListArgs e)
+            parser.FoundPostsReceived += delegate(object s, FoundPostArgs e)
                 {
-                    listFound = e.Posts;
+                    listFound = e.FoundPosts;
                     eventCall = true;
                 };
             parser.StartGetList();
@@ -43,7 +43,7 @@ namespace CopyPostCore.DataBase.Tests
             }
 
             DataBaseControl db = new DataBaseControl();
-            int actual = db.AddNewRecordList(listFound, TTrakers.Rutor);
+            int actual = db.AddNewRecordList(listFound);
 
             Assert.IsNotNull(listFound);
             Assert.AreEqual(listFound.Count(), actual);

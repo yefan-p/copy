@@ -17,12 +17,12 @@ namespace CopyPostCore.Parsers.Tests
         public void StartGetListTest()
         {
             ParserRutor parser = new ParserRutor();
-            List<ItemList> actual = null;
+            List<FoundPost> actual = null;
             bool eventCall = false;
 
-            parser.ListReceived += delegate (object s, ItemListArgs e)
+            parser.FoundPostsReceived += delegate (object s, FoundPostArgs e)
             {
-                actual = e.Posts;
+                actual = e.FoundPosts;
                 eventCall = true;
             };
             parser.StartGetList();
@@ -40,16 +40,16 @@ namespace CopyPostCore.Parsers.Tests
         public void StartGetItemTest()
         {
             ParserRutor parser = new ParserRutor();
-            ItemReady actual = null;
+            ReadyPost actual = null;
             bool eventCall = false;
 
             DataBaseControl db = new DataBaseControl();
-            List<ItemList> list = db.GetLastRecordList(TTrakers.Rutor, 10);
-            ItemList itemList = list.First();
+            List<FoundPost> list = db.GetLastRecordList(TTrakers.Rutor, 10);
+            FoundPost itemList = list.First();
 
-            parser.ItemReceived += delegate (object s, ItemReadyArgs e)
+            parser.ReadyPostsReceived += delegate (object s, ReadyPostArgs e)
             {
-                actual = e.ReadyPost;
+                actual = e.ReadyPostRecieved;
                 eventCall = true;
             };
             parser.StartGetItem(itemList);

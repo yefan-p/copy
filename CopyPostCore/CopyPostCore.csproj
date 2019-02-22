@@ -172,13 +172,9 @@
     </Compile>
     <Compile Include="Parsers\DownloaderHtmlPage.cs" />
     <Compile Include="Parsers\DownloaderHtmlPageArgs.cs" />
-    <Compile Include="Parsers\ItemImg.cs" />
-    <Compile Include="Parsers\ItemList.cs" />
-    <Compile Include="Parsers\ItemListArgs.cs" />
-    <Compile Include="Parsers\ItemReady.cs" />
-    <Compile Include="Parsers\ItemReadyArgs.cs" />
-    <Compile Include="Parsers\ItemSpoiler.cs" />
+    <Compile Include="Parsers\FoundPostArgs.cs" />
     <Compile Include="Parsers\ParserRutor.cs" />
+    <Compile Include="Parsers\ReadyPostArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadyPost.cs">
       <DependentUpon>ModelDbAutoParsing.tt</DependentUpon>

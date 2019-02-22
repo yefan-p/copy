@@ -2,7 +2,6 @@
 using HtmlAgilityPack;
 using System.Threading;
 
-
 namespace CopyPostCore.Parsers.Tests
 {
     [TestClass()]
