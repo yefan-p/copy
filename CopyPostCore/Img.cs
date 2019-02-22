@@ -18,6 +18,7 @@ namespace CopyPostCore
         public string Uri { get; set; }
         public int TypeImg_idTypeImg { get; set; }
         public int ReadyPost_idReadyPost { get; set; }
+        public string Uri_Parent { get; set; }
     
         public virtual ReadyPost ReadyPost { get; set; }
         public virtual TypeImg TypeImg { get; set; }

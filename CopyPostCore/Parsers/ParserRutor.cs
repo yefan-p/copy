@@ -105,7 +105,7 @@ namespace CopyPostCore.Parsers
                 readyPost.Imgs = ParsingImgs(mainNode, readyPost);
                 readyPost.Description = HttpUtility.HtmlDecode(mainNode.InnerHtml);
                 readyPost.Name = ParsingName(mainNode);
-                readyPost.TorrentFile = ParsingTorrentUrl(mainNode);
+                readyPost.TorrentUrl = ParsingTorrentUrl(mainNode);
                 readyPost.FoundPost = _parentItem;
                 readyPost.FoundedTime = DateTime.Now;
 
@@ -173,7 +173,6 @@ namespace CopyPostCore.Parsers
 
             // Парсим изображения миниатюры/скриншоты (2)
             nodesImg = mainNode.SelectNodes(@"//table[@id=""details""]//tr[1]//td[2]//img[(parent::a)]");
-            //это необходимо чтобы после найдных скриншотов лист полностью не перезаписывался
             var tmpImg = GetImgs(nodesImg, TImg.Screenshot, readyPost);
             imgs.AddRange(tmpImg);
 
@@ -197,13 +196,13 @@ namespace CopyPostCore.Parsers
 
             if (nodesImg != null)
             {
-                //ParentHref = parentUrl.GetAttributeValue("href", "0"),
                 var imgQuery =
                     from el in nodesImg
                     select new Img
                     {
                         TypeImg_idTypeImg = (int)tImg,
                         Uri = el.GetAttributeValue("src", null),
+                        Uri_Parent = el.ParentNode.GetAttributeValue("href", null),
                         ReadyPost = readyPost,
                     };
                 imgs = imgQuery.ToList();
