@@ -44,10 +44,10 @@ namespace CopyPostCore.Parsers.Tests
             bool eventCall = false;
 
             DataBaseControl db = new DataBaseControl();
-            List<FoundPost> list = db.GetLastRecordList(TTrakers.Rutor, 10);
+            List<FoundPost> list = db.GetLastFounded(TTrakers.Rutor, 10);
             FoundPost itemList = list.First();
 
-            parser.ReadyPostsReceived += delegate (object s, ReadyPostArgs e)
+            parser.ReadyPostsReceived += delegate(object s, ReadyPostArgs e)
             {
                 actual = e.ReadyPostRecieved;
                 eventCall = true;

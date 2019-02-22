@@ -15,7 +15,7 @@ namespace CopyPostCore.DataBase
         /// <param name="trakers">Выбранный трекер</param>
         /// <param name="numberRows">Необходимое количество записей. По умолчанию 100.</param>
         /// <returns></returns>
-        public List<FoundPost> GetLastRecordList(TTrakers trakers, int numberRows = Settings.NumbersRowsSelect)
+        public List<FoundPost> GetLastFounded(TTrakers trakers, int numberRows = Settings.NumbersRowsSelect)
         {
             autoParsingContext mydb = new autoParsingContext();
 
@@ -34,11 +34,22 @@ namespace CopyPostCore.DataBase
         /// </summary>
         /// <param name="foundedPost">Список добавляемых раздач</param>
         /// <returns>Возвращает количество записей, которые добавили в бд</returns>
-        public int AddNewRecordList(List<FoundPost> foundedPost)
+        public int AddFoundeds(List<FoundPost> foundedPost)
         {
             autoParsingContext db = new autoParsingContext();
             db.FoundPost.AddRange(foundedPost);
+            int result = db.SaveChanges();
+            return result;
+        }
 
+        /// <summary>
+        /// Добавляет новую запись готового поста в бд
+        /// </summary>
+        /// <param name="readyPost">Готовый пост, который нужно добавить</param>
+        /// <returns></returns>
+        public int AddReady(ReadyPost readyPost, autoParsingContext db)
+        {
+            db.ReadyPost.Add(readyPost);
             int result = db.SaveChanges();
             return result;
         }
