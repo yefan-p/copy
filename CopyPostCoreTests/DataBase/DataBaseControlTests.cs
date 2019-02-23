@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CopyPostCore.Parsers;
 using System.Threading;
+using CopyPostCoreTests;
 
 namespace CopyPostCore.DataBase.Tests
 {
@@ -35,8 +36,7 @@ namespace CopyPostCore.DataBase.Tests
                     eventCall = true;
                 };
             parser.StartGetList();
-
-            SleepTimer(12, ref eventCall);
+            CommonFunction.SleepTimer(12, ref eventCall);
 
             DataBaseControl db = new DataBaseControl();
             int actual = db.AddFoundeds(listFound);
@@ -60,29 +60,14 @@ namespace CopyPostCore.DataBase.Tests
                 eventCall = true;
             };
             parserRutor.StartGetItem(foundPost);
-            SleepTimer(12, ref eventCall);
+            CommonFunction.SleepTimer(12, ref eventCall);
 
             DataBaseControl dataBaseControl = new DataBaseControl();
             Assert.IsNotNull(readyPost);
-            int actual = dataBaseControl.AddReady(readyPost, db);
+            int actual = dataBaseControl.AddReady(readyPost);
 
             Assert.AreEqual(9, actual);
         }
 
-        /// <summary>
-        /// Останавливает выполнение текущего потока на указанное количество секунд.
-        /// Можно прервать сон, присвоив значению по ссылке истину
-        /// </summary>
-        /// <param name="maxWait">Максимальное время ождания в секундах</param>
-        /// <param name="flag">Переменная для прерывания "сна"</param>
-        private void SleepTimer(int maxWait, ref bool flag)
-        {
-            int sleepTime = 250;
-            int sleepCount = (maxWait * 1000) / sleepTime;
-            for (int countCall = 0; countCall < sleepCount && !flag; countCall++)
-            {
-                Thread.Sleep(sleepTime);
-            }
-        }
     }
 }

@@ -9,10 +9,10 @@ namespace CopyPostCore.Parsers
     public class DownloaderHtmlPage
     {
         /// <summary>
-        /// Начинает загрузку HTML страницы
+        /// Начинает загрузку HTML страницы асинхронно
         /// </summary>
         /// <param name="uri">Указывает, какую страницу загружать</param>
-        public void StartDownload(Uri uri)
+        public void StartDownloadAsync(Uri uri)
         {
             // Стандартный способ загрузки страниц из AgilityPack не подходит
             // так как он не может скачивать через Tor прокси
@@ -46,6 +46,21 @@ namespace CopyPostCore.Parsers
             {
                 MessageService.ShowError("Ошибка подключения при запросе списка торрентов.");
             }
+        }
+
+        public HtmlDocument DownloadPage(Uri uri)
+        {
+            WebClient client = new WebClient();
+            HttpToSocks5Proxy proxy = new HttpToSocks5Proxy("127.0.0.1", 9050);
+            client.Proxy = proxy;
+
+            byte[] dataArray = client.DownloadData(uri);
+            string page = Encoding.UTF8.GetString(dataArray);
+
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(page);
+
+            return doc;
         }
     }
 }

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopyPostCore", "CopyPostCor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopyPostCoreTests", "CopyPostCoreTests\CopyPostCoreTests.csproj", "{0FF82611-F638-4C5B-B0D6-9A0F9599EE44}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateDatabase", "UpdateDatabase\UpdateDatabase.csproj", "{7EEF2298-FB8F-4666-8204-6B73320DA2FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{0FF82611-F638-4C5B-B0D6-9A0F9599EE44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FF82611-F638-4C5B-B0D6-9A0F9599EE44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FF82611-F638-4C5B-B0D6-9A0F9599EE44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EEF2298-FB8F-4666-8204-6B73320DA2FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EEF2298-FB8F-4666-8204-6B73320DA2FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EEF2298-FB8F-4666-8204-6B73320DA2FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EEF2298-FB8F-4666-8204-6B73320DA2FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

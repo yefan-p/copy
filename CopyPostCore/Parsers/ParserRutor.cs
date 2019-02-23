@@ -34,7 +34,7 @@ namespace CopyPostCore.Parsers
         {
             DownloaderHtmlPage downloader = new DownloaderHtmlPage();
             downloader.FinishDownload += Downloader_FinishDownload;
-            downloader.StartDownload(UriWork);
+            downloader.StartDownloadAsync(UriWork);
         }
 
         private void Downloader_FinishDownload(object sender, DownloaderHtmlPageArgs e)
@@ -105,7 +105,7 @@ namespace CopyPostCore.Parsers
             _parentItem = item;
 
             Uri uri = new Uri(item.Uri);
-            downloaderItem.StartDownload(uri);
+            downloaderItem.StartDownloadAsync(uri);
         }
 
         /// <summary>

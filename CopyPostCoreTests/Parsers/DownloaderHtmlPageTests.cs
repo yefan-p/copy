@@ -1,6 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using CopyPostCore.Parsers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using HtmlAgilityPack;
 using System.Threading;
+using CopyPostCoreTests;
 
 namespace CopyPostCore.Parsers.Tests
 {
@@ -20,15 +22,25 @@ namespace CopyPostCore.Parsers.Tests
                 actual = e.Page;
                 eventCall = true;
             };
-            downloader.StartDownload(ParserRutor.UriWork);
-
-            // ждем 12 секунд, если событие выполниться, идем дальше
-            for (int countCall = 0; countCall < 48 && !eventCall; countCall++)
-            {
-                Thread.Sleep(250);
-            }
+            downloader.StartDownloadAsync(ParserRutor.UriWork);
+            CommonFunction.SleepTimer(12, ref eventCall);
 
             Assert.IsNotNull(actual);
+        }
+
+        [TestMethod()]
+        public void DownloadPageTest()
+        {
+            DownloaderHtmlPage downloader = new DownloaderHtmlPage();
+            HtmlDocument actual = null;
+
+            actual = downloader.DownloadPage(ParserRutor.UriWork);
+
+            StringAssert.Contains(actual.ParsedText, @"<meta http-equiv=""content-type"" content=""text/html; charset=utf-8"" />");
+            StringAssert.Contains(actual.ParsedText, @"<link rel=""shortcut icon"" href=""/s/favicon.ico"" />");
+            StringAssert.Contains(actual.ParsedText, @"<title>зеркало rutor.info :: Софт</title>");
+            StringAssert.Contains(actual.ParsedText, @"Файлы для обмена предоставлены пользователями сайта. Администрация не несёт ответственности за их содержание.");
+            StringAssert.Contains(actual.ParsedText, @"На сервере хранятся только торрент-файлы. Это значит, что мы не храним никаких нелегальных материалов. <a href=""/advertise.php"">Реклама</a>. ");
         }
     }
 }

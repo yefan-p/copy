@@ -9,6 +9,13 @@ namespace CopyPostCore.DataBase
 {
     public class DataBaseControl
     {
+        public DataBaseControl()
+        {
+            Db = new autoParsingContext();
+        }
+
+        public autoParsingContext Db { get; private set; }
+
         /// <summary>
         /// Возвращает указанное количество последних найденных записей с указанным трекером из бд
         /// </summary>
@@ -17,10 +24,8 @@ namespace CopyPostCore.DataBase
         /// <returns></returns>
         public List<FoundPost> GetLastFounded(TTrakers trakers, int numberRows = Settings.NumbersRowsSelect)
         {
-            autoParsingContext mydb = new autoParsingContext();
-
             var foundPostsQuery =
-                (from el in mydb.FoundPost
+                (from el in Db.FoundPost
                 where el.TorrentTracker.idTorrentTracker == (int)trakers
                 orderby el.idFoundPost descending
                 select el as FoundPost);
@@ -36,9 +41,8 @@ namespace CopyPostCore.DataBase
         /// <returns>Возвращает количество записей, которые добавили в бд</returns>
         public int AddFoundeds(List<FoundPost> foundedPost)
         {
-            autoParsingContext db = new autoParsingContext();
-            db.FoundPost.AddRange(foundedPost);
-            int result = db.SaveChanges();
+            Db.FoundPost.AddRange(foundedPost);
+            int result = Db.SaveChanges();
             return result;
         }
 
@@ -47,11 +51,12 @@ namespace CopyPostCore.DataBase
         /// </summary>
         /// <param name="readyPost">Готовый пост, который нужно добавить</param>
         /// <returns></returns>
-        public int AddReady(ReadyPost readyPost, autoParsingContext db)
+        public int AddReady(ReadyPost readyPost)
         {
-            db.ReadyPost.Add(readyPost);
-            int result = db.SaveChanges();
+            Db.ReadyPost.Add(readyPost);
+            int result = Db.SaveChanges();
             return result;
         }
+
     }
 }
