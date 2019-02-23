@@ -10,8 +10,15 @@ namespace UpdateDatabase
     {
         static void Main(string[] args)
         {
+            DateTime start = DateTime.Now;
+            Console.WriteLine(start);
+
             MainPresenter mp = new MainPresenter();
-            Console.WriteLine("OK!");
+
+            DateTime finish = DateTime.Now;
+            Console.WriteLine(finish);
+            Console.WriteLine(finish - start);
+
             Console.ReadLine();
         }
     }

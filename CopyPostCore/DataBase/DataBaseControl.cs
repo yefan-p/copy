@@ -58,5 +58,16 @@ namespace CopyPostCore.DataBase
             return result;
         }
 
+        /// <summary>
+        /// Добавляет несколько новых записей готовых постов в бд
+        /// </summary>
+        /// <param name="readyPost"></param>
+        /// <returns></returns>
+        public int AddReady(List<ReadyPost> readyPost)
+        {
+            Db.ReadyPost.AddRange(readyPost);
+            int result = Db.SaveChanges();
+            return result;
+        }
     }
 }

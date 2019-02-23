@@ -27,8 +27,46 @@ namespace CopyPostCore.Parsers
         public event EventHandler<ReadyPostArgs> ReadyPostsReceived;
 
         #region Работа со списком
+
         /// <summary>
-        /// Возвращает список всех найденных раздач
+        /// Возвращает список найденных раздач
+        /// </summary>
+        /// <returns></returns>
+        public List<FoundPost> GetList()
+        {
+            DownloaderHtmlPage downloader = new DownloaderHtmlPage();
+            HtmlDocument document = downloader.DownloadPage(UriWork);
+
+            HtmlNodeCollection htmlNodes = document.DocumentNode.SelectNodes(@"//div[@id=""index""]//tr[position()>1]/td[2]");
+
+            // необходимо для добавления корректной ссылки на страницу раздачи
+            // по умолчанию ссылка парситься без домена первого уровня
+            string rutorMainUrl = UriWork.OriginalString.Replace(@"/soft", "");
+
+            if (htmlNodes != null)
+            {
+                var foundQuery =
+                    from el in htmlNodes
+                    select new FoundPost
+                    {
+                        Name = HttpUtility.HtmlDecode(el.LastChild.InnerText),
+                        Uri = rutorMainUrl + el.LastChild.GetAttributeValue("href", null),
+                        Magnet = el.ChildNodes[1].GetAttributeValue("href", null),
+                        FoundedTime = DateTime.Now,
+                        TorrentTracker_idTorrentTracker = (int)TTrakers.Rutor,
+                    };
+                List<FoundPost> foundPosts = foundQuery.Reverse().ToList();
+                return foundPosts;
+            }
+            else
+            {
+                MessageService.ShowError("Ошибка на этапе парсинга списка раздач. htmlNodes = null");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Возвращает список всех найденных раздач, async
         /// </summary>
         public void StartGetList()
         {
@@ -94,7 +132,56 @@ namespace CopyPostCore.Parsers
 
         #region Работа с раздачей
         /// <summary>
-        /// Возвращает готовый пост.
+        /// Получить список готовых постов из списка найденных постов
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public List<ReadyPost> GetItems(List<FoundPost> list)
+        {
+            List<ReadyPost> readyPosts = new List<ReadyPost>();
+            foreach (var item in list)
+            {
+                readyPosts.Add(GetItem(item));
+            }
+            return readyPosts;
+        }
+
+        /// <summary>
+        /// Получает полноценный пост, по найденному посту
+        /// </summary>
+        /// <param name="item">Найденный пост</param>
+        /// <returns></returns>
+        public ReadyPost GetItem(FoundPost item)
+        {
+            DownloaderHtmlPage downloader = new DownloaderHtmlPage();
+            HtmlDocument document = downloader.DownloadPage(new Uri(item.Uri));
+
+            HtmlNode mainNode = document.DocumentNode.SelectSingleNode(@"//table[@id=""details""]/tr[1]/td[2]");
+
+            if (mainNode != null)
+            {
+                // Важно чтобы сначала вызывался парсинг спойлеров, а затем только парсинг описания
+                // Порядок вызова остальных функций не важен. Читай комментарий в методе со спойлерами 
+                ReadyPost readyPost = new ReadyPost();
+                readyPost.Spoilers = ParsingSpoilers(mainNode, readyPost);
+                readyPost.Imgs = ParsingImgs(mainNode, readyPost);
+                readyPost.Description = HttpUtility.HtmlDecode(mainNode.InnerHtml);
+                readyPost.Name = ParsingName(mainNode);
+                readyPost.TorrentUrl = ParsingTorrentUrl(mainNode);
+                readyPost.FoundPost = item;
+                readyPost.FoundedTime = DateTime.Now;
+
+                return readyPost;
+            }
+            else
+            {
+                MessageService.ShowError("Ошибка на этапе парсинга раздачи. mainNode = null");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Возвращает готовый пост. Async
         /// </summary>
         /// <param name="item">Найденный пост, который необходимо распарсить</param>
         public void StartGetItem(FoundPost item)

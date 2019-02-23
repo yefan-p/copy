@@ -13,52 +13,16 @@ namespace UpdateDatabase
     {
         public MainPresenter()
         {
-            counter = 0;
-            readyPosts = new List<ReadyPost>();
-
             ParserRutor parserRutor = new ParserRutor();
-            parserRutor.FoundPostsReceived += ParserRutor_FoundPostsReceived;
-            parserRutor.StartGetList();
-        }
+            List<FoundPost> foundPosts = parserRutor.GetList();
 
-        private void ParserRutor_FoundPostsReceived(object sender, FoundPostArgs e)
-        {
-            DataBaseControl db = new DataBaseControl();
-            List<FoundPost> oldPosts = db.GetLastFounded(TTrakers.Rutor);
+            DataBaseControl dataBase = new DataBaseControl();
+            List<FoundPost> oldFoundPosts = dataBase.GetLastFounded(TTrakers.Rutor);
 
-            ParserRutor parserRutor = new ParserRutor();
+            foundPosts = parserRutor.DeleteDuplicateFromList(oldFoundPosts, foundPosts);
+            List<ReadyPost> readyPosts = parserRutor.GetItems(foundPosts);
 
-            List<FoundPost> newPosts = e.FoundPosts;
-            newPosts = parserRutor.DeleteDuplicateFromList(oldPosts, newPosts);
-            foundPosts = newPosts;
-
-            foreach (var item in newPosts)
-            {
-                parserRutor.ReadyPostsReceived += ParserRutor_ReadyPostsReceived;
-                parserRutor.StartGetItem(item);
-            }
-        }
-
-        private List<FoundPost> foundPosts;
-        private List<ReadyPost> readyPosts;
-        private int counter;
-
-        private void ParserRutor_ReadyPostsReceived(object sender, ReadyPostArgs e)
-        {
-            readyPosts.Add(e.ReadyPostRecieved);
-            counter++;
-            if (foundPosts.Count() == counter)
-            {
-                AddInDb();
-            }
-        }
-
-        private void AddInDb()
-        {
-            DataBaseControl db = new DataBaseControl();
-            db.AddFoundeds(foundPosts);
-            db.Db.ReadyPost.AddRange(readyPosts);
-            db.Db.SaveChanges();
+            dataBase.AddReady(readyPosts);
         }
     }
 }
