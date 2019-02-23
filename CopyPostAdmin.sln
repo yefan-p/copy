@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopyPostCoreTests", "CopyPo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateDatabase", "UpdateDatabase\UpdateDatabase.csproj", "{7EEF2298-FB8F-4666-8204-6B73320DA2FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TorrentSoftAutoAddPost", "TorrentSoftAutoAddPost\TorrentSoftAutoAddPost.csproj", "{151B0518-D3B1-4D7C-8C44-C6A09D2EC2F9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{7EEF2298-FB8F-4666-8204-6B73320DA2FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EEF2298-FB8F-4666-8204-6B73320DA2FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EEF2298-FB8F-4666-8204-6B73320DA2FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{151B0518-D3B1-4D7C-8C44-C6A09D2EC2F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{151B0518-D3B1-4D7C-8C44-C6A09D2EC2F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{151B0518-D3B1-4D7C-8C44-C6A09D2EC2F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{151B0518-D3B1-4D7C-8C44-C6A09D2EC2F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

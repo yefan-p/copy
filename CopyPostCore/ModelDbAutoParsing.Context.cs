@@ -31,5 +31,6 @@ namespace CopyPostCore
         public virtual DbSet<Spoiler> Spoiler { get; set; }
         public virtual DbSet<TorrentTracker> TorrentTracker { get; set; }
         public virtual DbSet<TypeImg> TypeImg { get; set; }
+        public virtual DbSet<TorrentSoftPost> TorrentSoftPost { get; set; }
     }
 }

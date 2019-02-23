@@ -46,6 +46,14 @@
           <Property Name="Body" Type="mediumtext" />
           <Property Name="ReadyPost_idReadyPost" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="torrentsoftpost">
+          <Key>
+            <PropertyRef Name="idTorrentSoftPost" />
+          </Key>
+          <Property Name="idTorrentSoftPost" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WasAdded" Type="datetime" Precision="0" />
+          <Property Name="ReadyPost_idReadyPost" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="torrenttracker">
           <Key>
             <PropertyRef Name="idTorrentTracker" />
@@ -120,11 +128,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_TorrentSoftPost_ReadyPost1">
+          <End Role="readypost" Type="Self.readypost" Multiplicity="1" />
+          <End Role="torrentsoftpost" Type="Self.torrentsoftpost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="readypost">
+              <PropertyRef Name="idReadyPost" />
+            </Principal>
+            <Dependent Role="torrentsoftpost">
+              <PropertyRef Name="ReadyPost_idReadyPost" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="autoParsingModelStoreContainer">
           <EntitySet Name="foundpost" EntityType="Self.foundpost" Schema="autoparsing" store:Type="Tables" />
           <EntitySet Name="img" EntityType="Self.img" Schema="autoparsing" store:Type="Tables" />
           <EntitySet Name="readypost" EntityType="Self.readypost" Schema="autoparsing" store:Type="Tables" />
           <EntitySet Name="spoiler" EntityType="Self.spoiler" Schema="autoparsing" store:Type="Tables" />
+          <EntitySet Name="torrentsoftpost" EntityType="Self.torrentsoftpost" Schema="autoparsing" store:Type="Tables" />
           <EntitySet Name="torrenttracker" EntityType="Self.torrenttracker" Schema="autoparsing" store:Type="Tables" />
           <EntitySet Name="typeimg" EntityType="Self.typeimg" Schema="autoparsing" store:Type="Tables" />
           <AssociationSet Name="fk_FoundPost_TorrentTracker1" Association="Self.fk_FoundPost_TorrentTracker1">
@@ -146,6 +167,10 @@
           <AssociationSet Name="fk_Spoiler_ReadyPost1" Association="Self.fk_Spoiler_ReadyPost1">
             <End Role="readypost" EntitySet="readypost" />
             <End Role="spoiler" EntitySet="spoiler" />
+          </AssociationSet>
+          <AssociationSet Name="fk_TorrentSoftPost_ReadyPost1" Association="Self.fk_TorrentSoftPost_ReadyPost1">
+            <End Role="readypost" EntitySet="readypost" />
+            <End Role="torrentsoftpost" EntitySet="torrentsoftpost" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -190,6 +215,7 @@
           <NavigationProperty Name="Imgs" Relationship="Self.fk_Img_ReadyPost1" FromRole="readypost" ToRole="img" />
           <NavigationProperty Name="Spoilers" Relationship="Self.fk_Spoiler_ReadyPost1" FromRole="readypost" ToRole="spoiler" />
           <Property Name="TorrentUrl" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="torrentsoftpost" Relationship="autoParsingModel.fk_TorrentSoftPost_ReadyPost1" FromRole="ReadyPost" ToRole="torrentsoftpost" />
         </EntityType>
         <EntityType Name="Spoiler">
           <Key>
@@ -304,7 +330,33 @@
             <End Role="readypost" EntitySet="ReadyPost" />
             <End Role="spoiler" EntitySet="Spoiler" />
           </AssociationSet>
+          <EntitySet Name="TorrentSoftPost" EntityType="autoParsingModel.TorrentSoftPost" />
+          <AssociationSet Name="fk_TorrentSoftPost_ReadyPost1" Association="autoParsingModel.fk_TorrentSoftPost_ReadyPost1">
+            <End Role="ReadyPost" EntitySet="ReadyPost" />
+            <End Role="torrentsoftpost" EntitySet="TorrentSoftPost" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="TorrentSoftPost">
+          <Key>
+            <PropertyRef Name="idTorrentSoftPost" />
+          </Key>
+          <Property Name="idTorrentSoftPost" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WasAdded" Type="DateTime" />
+          <Property Name="ReadyPost_idReadyPost" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ReadyPost" Relationship="autoParsingModel.fk_TorrentSoftPost_ReadyPost1" FromRole="torrentsoftpost" ToRole="ReadyPost" />
+        </EntityType>
+        <Association Name="fk_TorrentSoftPost_ReadyPost1">
+          <End Type="autoParsingModel.ReadyPost" Role="ReadyPost" Multiplicity="1" />
+          <End Type="autoParsingModel.TorrentSoftPost" Role="torrentsoftpost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReadyPost">
+              <PropertyRef Name="idReadyPost" />
+            </Principal>
+            <Dependent Role="torrentsoftpost">
+              <PropertyRef Name="ReadyPost_idReadyPost" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -369,6 +421,15 @@
               <MappingFragment StoreEntitySet="typeimg">
                 <ScalarProperty Name="idTypeImg" ColumnName="idTypeImg" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TorrentSoftPost">
+            <EntityTypeMapping TypeName="autoParsingModel.TorrentSoftPost">
+              <MappingFragment StoreEntitySet="torrentsoftpost">
+                <ScalarProperty Name="ReadyPost_idReadyPost" ColumnName="ReadyPost_idReadyPost" />
+                <ScalarProperty Name="WasAdded" ColumnName="WasAdded" />
+                <ScalarProperty Name="idTorrentSoftPost" ColumnName="idTorrentSoftPost" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

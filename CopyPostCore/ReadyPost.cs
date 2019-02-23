@@ -19,6 +19,7 @@ namespace CopyPostCore
         {
             this.Imgs = new HashSet<Img>();
             this.Spoilers = new HashSet<Spoiler>();
+            this.torrentsoftpost = new HashSet<TorrentSoftPost>();
         }
     
         public int idReadyPost { get; set; }
@@ -33,5 +34,7 @@ namespace CopyPostCore
         public virtual ICollection<Img> Imgs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Spoiler> Spoilers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TorrentSoftPost> torrentsoftpost { get; set; }
     }
 }

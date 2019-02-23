@@ -183,6 +183,9 @@
     <Compile Include="Spoiler.cs">
       <DependentUpon>ModelDbAutoParsing.tt</DependentUpon>
     </Compile>
+    <Compile Include="TorrentSoftPost.cs">
+      <DependentUpon>ModelDbAutoParsing.tt</DependentUpon>
+    </Compile>
     <Compile Include="TorrentTracker.cs">
       <DependentUpon>ModelDbAutoParsing.tt</DependentUpon>
     </Compile>
