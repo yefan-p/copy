@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using CopyPostCore.DataBase;
+using CopyPostCoreTests;
 
 namespace CopyPostCore.Parsers.Tests
 {
@@ -26,12 +27,7 @@ namespace CopyPostCore.Parsers.Tests
                 eventCall = true;
             };
             parser.StartGetList();
-
-            // ждем 12 секунд, если событие выполниться, идем дальше
-            for (int countCall = 0; countCall < 48 && !eventCall; countCall++)
-            {
-                Thread.Sleep(250);
-            }
+            CommonFunction.SleepTimer(12, ref eventCall);
 
             Assert.IsNotNull(actual);
         }
@@ -47,20 +43,39 @@ namespace CopyPostCore.Parsers.Tests
             List<FoundPost> list = db.GetLastFounded(TTrakers.Rutor, 10);
             FoundPost itemList = list.First();
 
-            parser.ReadyPostsReceived += delegate(object s, ReadyPostArgs e)
+            parser.ReadyPostsReceived += delegate (object s, ReadyPostArgs e)
             {
                 actual = e.ReadyPostRecieved;
                 eventCall = true;
             };
             parser.StartGetItem(itemList);
-
-            // ждем 12 секунд, если событие выполниться, идем дальше
-            for (int countCall = 0; countCall < 48 && !eventCall; countCall++)
-            {
-                Thread.Sleep(250);
-            }
+            CommonFunction.SleepTimer(12, ref eventCall);
 
             Assert.IsNotNull(actual);
+        }
+
+        [TestMethod()]
+        public void DeleteDuplicateFromListTest()
+        {
+            ParserRutor parser = new ParserRutor();
+            List<FoundPost> newPost = null;
+            bool eventCall = false;
+
+            parser.FoundPostsReceived += delegate (object s, FoundPostArgs e)
+            {
+                newPost = e.FoundPosts;
+                eventCall = true;
+            };
+            parser.StartGetList();
+            CommonFunction.SleepTimer(12, ref eventCall);
+
+            Assert.IsNotNull(newPost);
+
+            DataBaseControl dataBase = new DataBaseControl();
+            List<FoundPost> oldPost = dataBase.GetLastFounded(TTrakers.Rutor);
+
+            List<FoundPost> actual = parser.DeleteDuplicateFromList(oldPost, newPost);
+            Assert.Fail();
         }
     }
 }

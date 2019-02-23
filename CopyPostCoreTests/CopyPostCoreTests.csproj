@@ -88,6 +88,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="CommonFunction.cs" />
     <Compile Include="DataBase\DataBaseControlTests.cs" />
     <Compile Include="Parsers\DownloaderHtmlPageTests.cs" />
     <Compile Include="Parsers\ParserRutorTests.cs" />

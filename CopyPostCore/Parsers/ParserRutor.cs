@@ -28,7 +28,7 @@ namespace CopyPostCore.Parsers
 
         #region Работа со списком
         /// <summary>
-        /// Возвращает список новых раздач
+        /// Возвращает список всех найденных раздач
         /// </summary>
         public void StartGetList()
         {
@@ -67,6 +67,28 @@ namespace CopyPostCore.Parsers
             {
                 MessageService.ShowError("Ошибка на этапе парсинга списка раздач. htmlNodes = null");
             }
+        }
+
+        /// <summary>
+        /// Удаляет повторяющиеся записи из списка найденных постов.
+        /// </summary>
+        /// <param name="oldPost">Посты, которые уже есть в базе</param>
+        /// <param name="newPost">Посты, в которых могут быть дубликаты</param>
+        /// <returns></returns>
+        public List<FoundPost> DeleteDuplicateFromList(List<FoundPost> oldPost, List<FoundPost> newPost)
+        {
+            //Получаем повторяющиеся магнет ссылки
+            var magnetQuery =
+                from left in oldPost
+                from right in newPost 
+                where right.Magnet == left.Magnet
+                select right.Magnet;
+            List<string> magnetList = magnetQuery.ToList();
+
+            //Выбираем только те ссылки, которые отсутвуют в повторяющихся
+            List<FoundPost> filteredList = newPost.Where(i => !magnetList.Contains(i.Magnet)).ToList();
+
+            return filteredList;
         }
         #endregion
 
