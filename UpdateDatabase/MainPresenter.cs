@@ -17,7 +17,7 @@ namespace UpdateDatabase
             List<FoundPost> foundPosts = parserRutor.GetList();
 
             DataBaseControl dataBase = new DataBaseControl();
-            List<FoundPost> oldFoundPosts = dataBase.GetLastFounded(TTrakers.Rutor);
+            List<FoundPost> oldFoundPosts = dataBase.GetLastFounded(TTrakers.Rutor, 500);
 
             foundPosts = parserRutor.DeleteDuplicateFromList(oldFoundPosts, foundPosts);
             List<ReadyPost> readyPosts = parserRutor.GetItems(foundPosts);

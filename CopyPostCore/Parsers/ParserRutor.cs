@@ -286,8 +286,11 @@ namespace CopyPostCore.Parsers
             imgs.AddRange(tmpImg);
 
             // Парсим изображения из спойлеров (3)
-            tmpImg = GetImgsFromSpoilers(readyPost);
-            imgs.AddRange(tmpImg);
+            if (readyPost.Spoilers != null)
+            {
+                tmpImg = GetImgsFromSpoilers(readyPost);
+                imgs.AddRange(tmpImg);
+            }
 
             return imgs;            
         }
