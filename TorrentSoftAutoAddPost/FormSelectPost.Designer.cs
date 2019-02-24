@@ -1,6 +1,6 @@
 ﻿namespace TorrentSoftAutoAddPost
 {
-    partial class Form1
+    partial class FormSelectPost
     {
         /// <summary>
         /// Required designer variable.

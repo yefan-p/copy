@@ -90,6 +90,7 @@
   <ItemGroup>
     <Compile Include="CommonFunction.cs" />
     <Compile Include="DataBase\DataBaseControlTests.cs" />
+    <Compile Include="Model\DataBaseSoftControllerTests.cs" />
     <Compile Include="Parsers\DownloaderHtmlPageTests.cs" />
     <Compile Include="Parsers\ParserImgsTests.cs" />
     <Compile Include="Parsers\ParserRutorTests.cs" />
@@ -103,6 +104,10 @@
     <ProjectReference Include="..\CopyPostCore\CopyPostCore.csproj">
       <Project>{6A8181F8-F617-49F7-8A33-DE4F403FBAE0}</Project>
       <Name>CopyPostCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TorrentSoftAutoAddPost\TorrentSoftAutoAddPost.csproj">
+      <Project>{151B0518-D3B1-4D7C-8C44-C6A09D2EC2F9}</Project>
+      <Name>TorrentSoftAutoAddPost</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

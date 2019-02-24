@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace TorrentSoftAutoAddPost
 {
-    public partial class Form1 : Form
+    public partial class FormSelectPost : Form
     {
-        public Form1()
+        public FormSelectPost()
         {
             InitializeComponent();
         }
