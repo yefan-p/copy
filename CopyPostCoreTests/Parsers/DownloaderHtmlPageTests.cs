@@ -36,6 +36,7 @@ namespace CopyPostCore.Parsers.Tests
 
             actual = downloader.DownloadPage(ParserRutor.UriWork);
 
+            Assert.IsNotNull(actual);
             StringAssert.Contains(actual.ParsedText, @"<meta http-equiv=""content-type"" content=""text/html; charset=utf-8"" />");
             StringAssert.Contains(actual.ParsedText, @"<link rel=""shortcut icon"" href=""/s/favicon.ico"" />");
             StringAssert.Contains(actual.ParsedText, @"<title>зеркало rutor.info :: Софт</title>");

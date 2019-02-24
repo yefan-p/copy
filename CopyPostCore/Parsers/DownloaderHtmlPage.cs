@@ -3,6 +3,7 @@ using System.Net;
 using System.Text;
 using MihaZupan;
 using HtmlAgilityPack;
+using System.Collections.Specialized;
 
 namespace CopyPostCore.Parsers
 {
