@@ -28,13 +28,78 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.grid_NotPublished = new System.Windows.Forms.DataGridView();
+            this.grid_Published = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grid_NotPublished)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grid_Published)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.grid_NotPublished);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.grid_Published);
+            this.splitContainer1.Size = new System.Drawing.Size(800, 450);
+            this.splitContainer1.SplitterDistance = 403;
+            this.splitContainer1.TabIndex = 0;
+            // 
+            // grid_NotPublished
+            // 
+            this.grid_NotPublished.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grid_NotPublished.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grid_NotPublished.Location = new System.Drawing.Point(0, 0);
+            this.grid_NotPublished.MultiSelect = false;
+            this.grid_NotPublished.Name = "grid_NotPublished";
+            this.grid_NotPublished.ReadOnly = true;
+            this.grid_NotPublished.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.grid_NotPublished.Size = new System.Drawing.Size(403, 450);
+            this.grid_NotPublished.TabIndex = 0;
+            // 
+            // grid_Published
+            // 
+            this.grid_Published.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grid_Published.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grid_Published.Location = new System.Drawing.Point(0, 0);
+            this.grid_Published.Name = "grid_Published";
+            this.grid_Published.Size = new System.Drawing.Size(393, 450);
+            this.grid_Published.TabIndex = 0;
+            // 
+            // FormSelectPost
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.splitContainer1);
+            this.Name = "FormSelectPost";
             this.Text = "Form1";
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.grid_NotPublished)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grid_Published)).EndInit();
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.DataGridView grid_NotPublished;
+        private System.Windows.Forms.DataGridView grid_Published;
     }
 }
 

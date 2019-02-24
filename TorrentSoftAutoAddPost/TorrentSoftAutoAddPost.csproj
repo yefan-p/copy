@@ -75,11 +75,17 @@
     <Compile Include="FormSelectPost.Designer.cs">
       <DependentUpon>FormSelectPost.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\DataBaseController.cs" />
+    <Compile Include="GridNotPublishedClickArgs.cs" />
+    <Compile Include="Model\DataBaseSoftController.cs" />
     <Compile Include="Model\Settings.cs" />
     <Compile Include="Model\TorrentSoftPostApp.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadyPostView.cs" />
+    <Compile Include="TorrentSoftPostView.cs" />
+    <EmbeddedResource Include="FormSelectPost.resx">
+      <DependentUpon>FormSelectPost.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
