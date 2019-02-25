@@ -2,7 +2,7 @@
 
 namespace TorrentSoftAutoAddPost
 {
-    public class TorrentSoftPostView
+    public class ViewTorrentSoftPost
     {
         public int Id { get; set; }
         public int ReadyPostId { get; set; }

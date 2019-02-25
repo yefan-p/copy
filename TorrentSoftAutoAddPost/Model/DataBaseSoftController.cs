@@ -13,7 +13,7 @@ namespace TorrentSoftAutoAddPost.Model
         /// Получает из бд уже опубликованные на torrentSoft посты
         /// </summary>
         /// <returns></returns>
-        public List<TorrentSoftPostApp> GetPublisedPost()
+        public List<TorrentSoftPost> GetPublisedPost()
         {
             autoParsingContext context = new autoParsingContext();
 
@@ -21,15 +21,14 @@ namespace TorrentSoftAutoAddPost.Model
                 from softPost in context.TorrentSoftPost
                 join readyPost in context.ReadyPost
                     on softPost.ReadyPost_idReadyPost equals readyPost.idReadyPost
-                select new TorrentSoftPostApp
+                select new TorrentSoftPost
                 {
-                    IdReadyPost = readyPost.idReadyPost,
+                    ReadyPost_idReadyPost = readyPost.idReadyPost,
                     WasAdded = softPost.WasAdded ?? DateTime.Now,
-                    Name = readyPost.Name,
-                    ReadyPostDb = readyPost,
+                    ReadyPost = readyPost,
                 };
 
-            List<TorrentSoftPostApp> torrentSofts = publishedQuery.Take(Settings.PublishedCount).ToList();
+            List<TorrentSoftPost> torrentSofts = publishedQuery.Take(Settings.PublishedCount).ToList();
 
             return torrentSofts;
         }

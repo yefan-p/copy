@@ -2,7 +2,7 @@
 
 namespace TorrentSoftAutoAddPost
 {
-    public class ReadyPostView
+    public class ViewReadyPost
     {
         public int Id { get; set; }
         public DateTime WasFounded { get; set; }

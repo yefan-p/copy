@@ -14,8 +14,8 @@ namespace TorrentSoftAutoAddPost
 {
     public interface IFormSelectPost
     {
-        void SetNotPublishedPost(List<ReadyPostView> listPost);
-        void SetPublishedPost(List<TorrentSoftPostView> listPost);
+        void SetNotPublishedPost(List<ViewReadyPost> listPost);
+        void SetPublishedPost(List<ViewTorrentSoftPost> listPost);
         event EventHandler<GridNotPublishedClickArgs> GridNotPublishedClick;
     }
 
@@ -38,12 +38,12 @@ namespace TorrentSoftAutoAddPost
             GridNotPublishedClick?.Invoke(this, args);
         }
 
-        public void SetNotPublishedPost(List<ReadyPostView> listPost)
+        public void SetNotPublishedPost(List<ViewReadyPost> listPost)
         {
             grid_NotPublished.DataSource = listPost;
         }
 
-        public void SetPublishedPost(List<TorrentSoftPostView> listPost)
+        public void SetPublishedPost(List<ViewTorrentSoftPost> listPost)
         {
             grid_Published.DataSource = listPost;
         }

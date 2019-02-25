@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CopyPostCore;
 
 namespace TorrentSoftAutoAddPost.Model.Tests
 {
@@ -15,7 +16,7 @@ namespace TorrentSoftAutoAddPost.Model.Tests
         public void GetPublisedPostTest()
         {
             DataBaseSoftController dataBase = new DataBaseSoftController();
-            List<TorrentSoftPostApp> list = dataBase.GetPublisedPost();
+            List<TorrentSoftPost> list = dataBase.GetPublisedPost();
             Assert.Fail();
         }
     }

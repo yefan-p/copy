@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TorrentSoftAutoAddPost.Model;
 
 namespace TorrentSoftAutoAddPost
 {
@@ -16,6 +17,7 @@ namespace TorrentSoftAutoAddPost
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
             Application.Run(new FormSelectPost());
         }
     }
