@@ -7,7 +7,7 @@ using System.Collections.Specialized;
 
 namespace CopyPostCore.Parsers
 {
-    public class DownloaderHtmlPage
+    public class DownloaderThroughTor
     {
         /// <summary>
         /// Начинает загрузку HTML страницы асинхронно
@@ -49,7 +49,7 @@ namespace CopyPostCore.Parsers
             }
         }
 
-        public HtmlDocument DownloadPage(Uri uri)
+        public HtmlDocument Page(Uri uri)
         {
             WebClient client = new WebClient();
             HttpToSocks5Proxy proxy = new HttpToSocks5Proxy("127.0.0.1", 9050);
@@ -62,6 +62,33 @@ namespace CopyPostCore.Parsers
             doc.LoadHtml(page);
 
             return doc;
+        }
+
+        /// <summary>
+        /// Начинает загружать файл через прокси тор асинхронно
+        /// </summary>
+        /// <param name="uri">Откуда необходимо скачать файл</param>
+        /// <param name="fileName">Куда необходимо сохранить файл</param>
+        public void FileAsync(Uri uri, string fileName)
+        {
+            WebClient client = new WebClient();
+            HttpToSocks5Proxy proxy = new HttpToSocks5Proxy("127.0.0.1", 9050);
+            client.Proxy = proxy;
+
+            client.DownloadFileCompleted += Client_DownloadFileCompleted;
+            client.DownloadFileAsync(uri, fileName);
+        }
+
+        private void Client_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            if (e.Error == null)
+            {
+                MessageService.ShowMessage("Файл успешно загружен");
+            }
+            else
+            {
+                MessageService.ShowError($"При загрузке файла произошла ошибка. {e.Error.Message}");
+            }
         }
     }
 }

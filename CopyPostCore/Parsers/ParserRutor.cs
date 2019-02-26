@@ -34,8 +34,8 @@ namespace CopyPostCore.Parsers
         /// <returns></returns>
         public List<FoundPost> GetList()
         {
-            DownloaderHtmlPage downloader = new DownloaderHtmlPage();
-            HtmlDocument document = downloader.DownloadPage(UriWork);
+            DownloaderThroughTor downloader = new DownloaderThroughTor();
+            HtmlDocument document = downloader.Page(UriWork);
 
             HtmlNodeCollection htmlNodes = document.DocumentNode.SelectNodes(@"//div[@id=""index""]//tr[position()>1]/td[2]");
 
@@ -70,7 +70,7 @@ namespace CopyPostCore.Parsers
         /// </summary>
         public void StartGetList()
         {
-            DownloaderHtmlPage downloader = new DownloaderHtmlPage();
+            DownloaderThroughTor downloader = new DownloaderThroughTor();
             downloader.FinishDownload += Downloader_FinishDownload;
             downloader.StartDownloadAsync(UriWork);
         }
@@ -153,8 +153,8 @@ namespace CopyPostCore.Parsers
         /// <returns></returns>
         public ReadyPost GetItem(FoundPost item)
         {
-            DownloaderHtmlPage downloader = new DownloaderHtmlPage();
-            HtmlDocument document = downloader.DownloadPage(new Uri(item.Uri));
+            DownloaderThroughTor downloader = new DownloaderThroughTor();
+            HtmlDocument document = downloader.Page(new Uri(item.Uri));
 
             HtmlNode mainNode = document.DocumentNode.SelectSingleNode(@"//table[@id=""details""]/tr[1]/td[2]");
 
@@ -186,7 +186,7 @@ namespace CopyPostCore.Parsers
         /// <param name="item">Найденный пост, который необходимо распарсить</param>
         public void StartGetItem(FoundPost item)
         {
-            DownloaderHtmlPage downloaderItem = new DownloaderHtmlPage();
+            DownloaderThroughTor downloaderItem = new DownloaderThroughTor();
             downloaderItem.FinishDownload += DownloaderItem_FinishDownload;
 
             _parentItem = item;

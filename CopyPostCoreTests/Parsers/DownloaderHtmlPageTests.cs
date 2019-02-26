@@ -12,7 +12,7 @@ namespace CopyPostCore.Parsers.Tests
         [TestMethod()]
         public void StartDownloadTest()
         {
-            DownloaderHtmlPage downloader = new DownloaderHtmlPage();
+            DownloaderThroughTor downloader = new DownloaderThroughTor();
             HtmlDocument actual = null;
 
             bool eventCall = false;
@@ -31,10 +31,10 @@ namespace CopyPostCore.Parsers.Tests
         [TestMethod()]
         public void DownloadPageTest()
         {
-            DownloaderHtmlPage downloader = new DownloaderHtmlPage();
+            DownloaderThroughTor downloader = new DownloaderThroughTor();
             HtmlDocument actual = null;
 
-            actual = downloader.DownloadPage(ParserRutor.UriWork);
+            actual = downloader.Page(ParserRutor.UriWork);
 
             Assert.IsNotNull(actual);
             StringAssert.Contains(actual.ParsedText, @"<meta http-equiv=""content-type"" content=""text/html; charset=utf-8"" />");

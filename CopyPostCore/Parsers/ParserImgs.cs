@@ -48,8 +48,8 @@ namespace CopyPostCore.Parsers
         /// <returns></returns>
         public string GetDirectUri(string uri, string xPath)
         {
-            DownloaderHtmlPage downloader = new DownloaderHtmlPage();
-            HtmlDocument document = downloader.DownloadPage(new Uri(uri));
+            DownloaderThroughTor downloader = new DownloaderThroughTor();
+            HtmlDocument document = downloader.Page(new Uri(uri));
 
             HtmlNode node = document.DocumentNode.SelectSingleNode(xPath);
             string result = uri;
