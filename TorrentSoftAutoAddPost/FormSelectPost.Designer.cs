@@ -58,6 +58,7 @@
             // 
             // grid_NotPublished
             // 
+            this.grid_NotPublished.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.grid_NotPublished.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grid_NotPublished.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grid_NotPublished.Location = new System.Drawing.Point(0, 0);
@@ -70,6 +71,7 @@
             // 
             // grid_Published
             // 
+            this.grid_Published.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.grid_Published.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grid_Published.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grid_Published.Location = new System.Drawing.Point(0, 0);

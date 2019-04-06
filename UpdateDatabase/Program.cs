@@ -14,6 +14,8 @@ namespace UpdateDatabase
             Console.WriteLine(start);
 
             MainPresenter mp = new MainPresenter();
+            int result = mp.Refresh();
+            Console.WriteLine($"Amount new posts {result}");
 
             DateTime finish = DateTime.Now;
             Console.WriteLine(finish);

@@ -4,7 +4,7 @@ namespace TorrentSoftAutoAddPost
 {
     public class GridNotPublishedClickArgs : EventArgs
     {
-        public  GridNotPublishedClickArgs(string value)
+        public GridNotPublishedClickArgs(string value)
         {
             IdReadyPost = int.Parse(value);
         }

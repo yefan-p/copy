@@ -170,7 +170,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelDbAutoParsing.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Parsers\DownloaderHtmlPage.cs" />
+    <Compile Include="Parsers\DownloaderThroughTor.cs" />
     <Compile Include="Parsers\DownloaderHtmlPageArgs.cs" />
     <Compile Include="Parsers\FoundPostArgs.cs" />
     <Compile Include="Parsers\ParserImgs.cs" />

@@ -13,6 +13,11 @@ namespace UpdateDatabase
     {
         public MainPresenter()
         {
+
+        }
+
+        public int Refresh()
+        {
             ParserRutor parserRutor = new ParserRutor();
             List<FoundPost> foundPosts = parserRutor.GetList();
 
@@ -22,7 +27,8 @@ namespace UpdateDatabase
             foundPosts = parserRutor.DeleteDuplicateFromList(oldFoundPosts, foundPosts);
             List<ReadyPost> readyPosts = parserRutor.GetItems(foundPosts);
 
-            dataBase.AddReady(readyPosts);
+            int result = dataBase.AddReady(readyPosts);
+            return result;
         }
     }
 }

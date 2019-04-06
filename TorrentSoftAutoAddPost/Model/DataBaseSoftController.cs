@@ -9,6 +9,13 @@ namespace TorrentSoftAutoAddPost.Model
 {
     public class DataBaseSoftController
     {
+        public DataBaseSoftController()
+        {
+            Db = new autoParsingContext();
+        }
+
+        public autoParsingContext Db { get; private set; }
+
         /// <summary>
         /// Получает из бд уже опубликованные на torrentSoft посты
         /// </summary>
@@ -19,14 +26,7 @@ namespace TorrentSoftAutoAddPost.Model
 
             var publishedQuery =
                 from softPost in context.TorrentSoftPost
-                join readyPost in context.ReadyPost
-                    on softPost.ReadyPost_idReadyPost equals readyPost.idReadyPost
-                select new TorrentSoftPost
-                {
-                    ReadyPost_idReadyPost = readyPost.idReadyPost,
-                    WasAdded = softPost.WasAdded ?? DateTime.Now,
-                    ReadyPost = readyPost,
-                };
+                select softPost;
 
             List<TorrentSoftPost> torrentSofts = publishedQuery.Take(Settings.PublishedCount).ToList();
 
@@ -46,16 +46,35 @@ namespace TorrentSoftAutoAddPost.Model
                 from softPost in context.TorrentSoftPost
                 from readyPost in context.ReadyPost
                 where softPost.ReadyPost_idReadyPost == readyPost.idReadyPost
+                orderby readyPost.idReadyPost descending
                 select readyPost.idReadyPost;
             List<int> publishedId = publishedQuery.Take(Settings.NotPublishedCount).ToList();
 
             //Выбираем только те id, которые отсутвуют в повторяющихся
             List<ReadyPost> notPublishedPost = context.ReadyPost
                           .Where(i => !publishedId.Contains(i.idReadyPost))
+                          .OrderByDescending(i => i.idReadyPost)
                           .Take(Settings.NotPublishedCount)
                           .ToList();
 
             return notPublishedPost;
+        }
+
+        /// <summary>
+        /// Получает готовый пост по id
+        /// </summary>
+        /// <param name="idReadyPost">id поста который необходимо выложить</param>
+        /// <returns>Готовый пост</returns>
+        public ReadyPost GetBrowserPost(int idReadyPost)
+        {
+            var queryPost =
+                from el in Db.ReadyPost
+                where el.idReadyPost == idReadyPost
+                select el;
+
+            ReadyPost readyPost = queryPost.Single();
+
+            return readyPost;
         }
     }
 }

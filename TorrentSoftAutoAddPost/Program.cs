@@ -18,7 +18,11 @@ namespace TorrentSoftAutoAddPost
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.Run(new FormSelectPost());
+            FormSelectPost formSelectPost = new FormSelectPost();
+
+            MainPresenter mainPresenter = new MainPresenter(formSelectPost);
+
+            Application.Run(formSelectPost);
         }
     }
 }

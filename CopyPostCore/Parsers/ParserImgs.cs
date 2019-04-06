@@ -9,10 +9,26 @@ namespace CopyPostCore.Parsers
 {
     public class ParserImgs
     {
-        public static string RadikalXPath = @"/html/body/div[2]/div[1]/div/div[1]/div[1]/div[2]/div[2]/div[1]/img";
+        public static string RadikalXPath = @"/html/body/div[3]/div[1]/div/div[1]/div[1]/div[2]/div[2]/div[1]/img";
         public static string ImagebanXPath = @"/html/body/table//td/center/table//tr/td[2]/center[2]/div[1]/ul/li/img";
         public static string LostpicXPath = @"/html/body/div[2]/div[2]/div[1]/a/img";
         public static string FastpicXPath = @"//*[@id=""image""]";
+
+        /// <summary>
+        /// Возвращает прямые ссылки на изображения, по списку объектов изображений из бд
+        /// </summary>
+        /// <returns></returns>
+        public List<string> DirectListManager(List<Img> imgs)
+        {
+            List<string> imgsList = new List<string>();
+            foreach (var item in imgs)
+            {
+                string result = DirectUriManager(item);
+                imgsList.Add(result);
+            }
+
+            return imgsList;
+        }
 
         /// <summary>
         /// Возвращает прямую ссылку на изображение, по объекту изображения из бд

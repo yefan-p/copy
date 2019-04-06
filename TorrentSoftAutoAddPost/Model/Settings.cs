@@ -38,5 +38,20 @@ namespace TorrentSoftAutoAddPost.Model
         /// текста, то Selenium будет набирать ее слишком долго.
         /// </summary>
         public static string PasteClipboardSelenium = $"{Keys.Control}v{Keys.Control}";
+
+        /// <summary>
+        /// Ссылки на изображения, которые используются при оформлении поста для указания
+        /// системных требований
+        /// </summary>
+        public static List<string> WhiteListImgs = new List<string>(new string[] 
+            {
+                @"http://img11.lostpic.net/2017/01/17/71bd8a93f3303507e1c026261abf7ab4.png",
+                @"http://s013.radikal.ru/i324/1508/b3/bd532b0f09a3.png",
+                @"https://d.radikal.ru/d25/1809/4b/ba5f44c921c2.png",
+                @"https://d.radikal.ru/d00/1806/0a/77b025f85e94.png",
+                @"http://s011.radikal.ru/i316/1508/ec/e0232836c69c.png",
+                @"http://img11.lostpic.net/2016/12/07/f9c17412fb839c9f812edf427434fe3e.png",
+                @"https://a.radikal.ru/a21/1812/26/6655f0fcef27.png",
+            });
     }
 }
