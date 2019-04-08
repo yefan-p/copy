@@ -15,13 +15,15 @@ namespace TorrentSoftAutoAddPost
         /// </summary>
         private readonly IFormSelectPost _formSelectPost;
 
+        private readonly BrowserManager browser = new BrowserManager();
+
         public MainPresenter(IFormSelectPost formSelectPost)
         {
             _formSelectPost = formSelectPost;
             _formSelectPost.GridNotPublishedClick += _formSelectPost_GridNotPublishedClick;
+            browser.Open();
 
             RefreshGridsForm();
-            
         }
 
         private void _formSelectPost_GridNotPublishedClick(object sender, GridNotPublishedClickArgs e)
@@ -29,8 +31,20 @@ namespace TorrentSoftAutoAddPost
             DataBaseSoftController dataBase = new DataBaseSoftController();
             ReadyPost readyPost = dataBase.GetBrowserPost(e.IdReadyPost);
 
-            PostController postController = new PostController(readyPost);
-            BrowserPost browserPost = postController.BrowserPostReady;
+            PostController postController = new PostController();
+            postController.PostComplete += PostController_PostComplete;
+            postController.GetBrowserPost(readyPost);
+        }
+
+        private void PostController_PostComplete(object sender, EventArgs e)
+        {
+            BrowserPost browserPost = (sender as PostController).BrowserPostReady;
+            browser.FillPost(browserPost);
+
+            DataBaseSoftController dataBase = new DataBaseSoftController();
+            dataBase.AddTorrentSoftPost(browserPost.IdReadyPost);
+
+            RefreshGridsForm();
         }
 
         /// <summary>

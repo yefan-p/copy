@@ -7,6 +7,7 @@ using CopyPostCore;
 using CopyPostCore.DataBase;
 using CopyPostCore.Parsers;
 using HtmlAgilityPack;
+using System.IO;
 
 namespace TorrentSoftAutoAddPost.Model
 {
@@ -20,17 +21,21 @@ namespace TorrentSoftAutoAddPost.Model
         /// </summary>
         public BrowserPost BrowserPostReady { get; private set; } = new BrowserPost();
 
-        public PostController(ReadyPost readyPost)
+        public event EventHandler PostComplete;
+
+        public void GetBrowserPost(ReadyPost readyPost)
         {
             string description = DeleteImgs(readyPost.Description);
-            description = description.Replace("<br>", "");
-            description = description.Replace("<div></div>", "");
+            description = DeleteSpace(description);
+
+            BrowserPostReady.IdReadyPost = readyPost.idReadyPost;
 
             BrowserPostReady.Name = readyPost.Name;
             BrowserPostReady.Description = description;
             SetSpoilers(readyPost);
-            SetScreens(readyPost.Imgs.ToList());
             SetPoster(readyPost.Imgs.ToList());
+            SetTorrentFile(readyPost);
+            SetScreens(readyPost.Imgs.ToList());
         }
 
         /// <summary>
@@ -63,6 +68,33 @@ namespace TorrentSoftAutoAddPost.Model
             BrowserPostReady.Screenshot = parserImgs.DirectListManager(result.ToList());
         }
 
+        private void SetTorrentFile(ReadyPost readyPost)
+        {
+            string today = DateTime.Today.ToShortDateString();
+            string folderName = Environment.CurrentDirectory + $"\\storage\\{today}";
+            Directory.CreateDirectory(folderName);
+
+            string fileName = GetSafeFilename(readyPost.Name);
+            DownloaderThroughTor downloader = new DownloaderThroughTor();
+
+            Uri uriFile = new Uri(ParserRutor.Main.OriginalString + readyPost.TorrentUrl);
+            downloader.FinishedDownoadFile += Downloader_FinishedDownoadFile;
+            downloader.FileAsync(uriFile, $"{folderName}\\{fileName}.torrent");
+
+            BrowserPostReady.TorrentFile = $"{folderName}\\{fileName}.torrent";
+        }
+
+        private void Downloader_FinishedDownoadFile(object sender, EventArgs e)
+        {
+            PostComplete?.Invoke(this, EventArgs.Empty);
+        }
+
+        public string GetSafeFilename(string filename)
+        {
+            string[] stringArr = filename.Split(Path.GetInvalidFileNameChars());
+            return string.Join("", stringArr);
+        }
+
         /// <summary>
         /// Удаляет все изображения из описания, ссылки которые отсутсвуют в white листе
         /// </summary>
@@ -89,6 +121,33 @@ namespace TorrentSoftAutoAddPost.Model
             }
 
             return htmlNode.OuterHtml;
+        }
+
+        private string DeleteSpace(string description)
+        {
+            StringBuilder stringBuilder = new StringBuilder(description);
+            description = description.Replace("<div></div>", "");
+
+            while (description.Contains("<hr><hr>"))
+            {
+                description = description.Replace("<hr><hr>", "<hr>");
+            }
+
+            while (description.Contains("<br><br>"))
+            {
+                description = description.Replace("<br><br>", "<br>");
+            }
+
+            while (description.Contains($"<br>{Environment.NewLine}<br>"))
+            {
+                description = description.Replace($"<br>{Environment.NewLine}<br>", Environment.NewLine);
+            }
+
+            while (description.Contains(Environment.NewLine + Environment.NewLine))
+            {
+                description = description.Replace(Environment.NewLine + Environment.NewLine, Environment.NewLine);
+            }
+            return description;
         }
 
         /// <summary>

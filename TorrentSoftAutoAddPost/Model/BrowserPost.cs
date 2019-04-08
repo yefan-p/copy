@@ -12,5 +12,6 @@ namespace TorrentSoftAutoAddPost.Model
         public string TorrentFile { get; set; }
         public List<string> Screenshot { get; set; }
         public string Poster { get; set; }
+        public int IdReadyPost { get; set; }
     }
 }

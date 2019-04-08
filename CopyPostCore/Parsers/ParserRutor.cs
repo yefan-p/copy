@@ -11,10 +11,12 @@ namespace CopyPostCore.Parsers
 {
     public class ParserRutor
     {
-        private static readonly Uri UriDotInfo = new Uri(@"http://www.rutor.info/soft");
-        private static readonly Uri UriDotIs = new Uri(@"http://rutor.is/soft");
-        private static readonly Uri UriDotOnion = new Uri(@"http://rutorc6mqdinc4cz.onion/soft");
-        public static readonly Uri UriWork = UriDotIs;
+        private static readonly Uri MainDotIs = new Uri(@"http://www.rutor.is");
+        private static readonly Uri MainDotInfo = new Uri(@"http://www.rutor.info");
+        private static readonly Uri MainDotOnion = new Uri(@"http://rutorc6mqdinc4cz.onion");
+        public static readonly Uri Main = MainDotIs;
+
+        public static readonly Uri UriSoft = new Uri(Main.OriginalString + "/soft");
 
         /// <summary>
         /// Вызывается, когда лист с найденными разадачи сформирован
@@ -35,13 +37,13 @@ namespace CopyPostCore.Parsers
         public List<FoundPost> GetList()
         {
             DownloaderThroughTor downloader = new DownloaderThroughTor();
-            HtmlDocument document = downloader.Page(UriWork);
+            HtmlDocument document = downloader.Page(UriSoft);
 
             HtmlNodeCollection htmlNodes = document.DocumentNode.SelectNodes(@"//div[@id=""index""]//tr[position()>1]/td[2]");
 
             // необходимо для добавления корректной ссылки на страницу раздачи
             // по умолчанию ссылка парситься без домена первого уровня
-            string rutorMainUrl = UriWork.OriginalString.Replace(@"/soft", "");
+            string rutorMainUrl = UriSoft.OriginalString.Replace(@"/soft", "");
 
             if (htmlNodes != null)
             {
@@ -72,7 +74,7 @@ namespace CopyPostCore.Parsers
         {
             DownloaderThroughTor downloader = new DownloaderThroughTor();
             downloader.FinishDownload += Downloader_FinishDownload;
-            downloader.StartDownloadAsync(UriWork);
+            downloader.StartDownloadAsync(UriSoft);
         }
 
         private void Downloader_FinishDownload(object sender, DownloaderHtmlPageArgs e)
@@ -82,7 +84,7 @@ namespace CopyPostCore.Parsers
 
             // необходимо для добавления корректной ссылки на страницу раздачи
             // по умолчанию ссылка парситься без домена первого уровня
-            string rutorMainUrl = UriWork.OriginalString.Replace(@"/soft", "");
+            string rutorMainUrl = UriSoft.OriginalString.Replace(@"/soft", "");
 
             if (htmlNodes != null)
             {

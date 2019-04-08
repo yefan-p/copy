@@ -79,11 +79,13 @@ namespace CopyPostCore.Parsers
             client.DownloadFileAsync(uri, fileName);
         }
 
+        public event EventHandler FinishedDownoadFile;
+
         private void Client_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
             if (e.Error == null)
             {
-                MessageService.ShowMessage("Файл успешно загружен");
+                FinishedDownoadFile?.Invoke(this, EventArgs.Empty);
             }
             else
             {

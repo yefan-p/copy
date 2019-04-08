@@ -25,6 +25,16 @@ namespace TorrentSoftAutoAddPost
         {
             InitializeComponent();
             grid_NotPublished.CellDoubleClick += Grid_NotPublished_CellDoubleClick;
+            grid_Published.SelectionChanged += Grid_Published_MultiSelectChanged;
+        }
+
+        private void Grid_Published_MultiSelectChanged(object sender, EventArgs e)
+        {
+            DataGridView dataGrid = (DataGridView)sender;
+            int count = dataGrid.SelectedRows.Count;
+            ToolTip toolTip = new ToolTip();
+            IWin32Window win = this;
+            toolTip.Show(count.ToString(), win, Cursor.Position, 2500);
         }
 
         private void Grid_NotPublished_CellDoubleClick(object sender, DataGridViewCellEventArgs e)

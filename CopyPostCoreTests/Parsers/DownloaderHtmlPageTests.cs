@@ -22,7 +22,7 @@ namespace CopyPostCore.Parsers.Tests
                 actual = e.Page;
                 eventCall = true;
             };
-            downloader.StartDownloadAsync(ParserRutor.UriWork);
+            downloader.StartDownloadAsync(ParserRutor.UriSoft);
             CommonFunction.SleepTimer(12, ref eventCall);
 
             Assert.IsNotNull(actual);
@@ -34,7 +34,7 @@ namespace CopyPostCore.Parsers.Tests
             DownloaderThroughTor downloader = new DownloaderThroughTor();
             HtmlDocument actual = null;
 
-            actual = downloader.Page(ParserRutor.UriWork);
+            actual = downloader.Page(ParserRutor.UriSoft);
 
             Assert.IsNotNull(actual);
             StringAssert.Contains(actual.ParsedText, @"<meta http-equiv=""content-type"" content=""text/html; charset=utf-8"" />");

@@ -23,6 +23,7 @@ namespace TorrentSoftAutoAddPost.Model
             FirefoxProfile profile = new FirefoxProfile(Settings.FirefoxProfileDir);
             options.Profile = profile;
             Browser = new FirefoxDriver(options);
+            Browser.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
         }
 
         /// <summary>
@@ -41,8 +42,8 @@ namespace TorrentSoftAutoAddPost.Model
         {
             Browser.Navigate().GoToUrl(Settings.TorrentSoftUri);
 
-            FillMainInput(post);
             FillScreenshot(post.Screenshot);
+            FillMainInput(post);
             FillTorrentFile(post);
 
         }
@@ -63,15 +64,15 @@ namespace TorrentSoftAutoAddPost.Model
             IWebElement buttonClone = Browser.FindElement(selector);
             buttonClone.Click();
 
-            selector = By.CssSelector(@"[name=""full_story""]");
-            IWebElement bodyPost = Browser.FindElement(selector);
-            Clipboard.SetText(post.Description);
-            bodyPost.SendKeys(Settings.PasteClipboardSelenium);
-
             selector = By.CssSelector(@"[name=""xfield[poster]""]");
             IWebElement inputPoster = Browser.FindElement(selector);
             Clipboard.SetText(post.Poster);
             inputPoster.SendKeys(Settings.PasteClipboardSelenium);
+
+            selector = By.CssSelector(@"[name=""full_story""]");
+            IWebElement bodyPost = Browser.FindElement(selector);
+            Clipboard.SetText(post.Description);
+            bodyPost.SendKeys(Settings.PasteClipboardSelenium);
         }
 
         /// <summary>
@@ -91,10 +92,13 @@ namespace TorrentSoftAutoAddPost.Model
 
             for (int i = 1; i < maxCount; i++)
             {
-                By selector = By.CssSelector($"[name=\"xfield[images-{i}]\"]");
-                IWebElement inputScreen = Browser.FindElement(selector);
-                Clipboard.SetText(list[i - 1]);
-                inputScreen.SendKeys(Settings.PasteClipboardSelenium);
+                if (list[i - 1] != "")
+                {
+                    By selector = By.CssSelector($"[name=\"xfield[images-{i}]\"]");
+                    IWebElement inputScreen = Browser.FindElement(selector);
+                    Clipboard.SetText(list[i - 1]);
+                    inputScreen.SendKeys(Settings.PasteClipboardSelenium);
+                }
             }
         }
 
@@ -110,11 +114,12 @@ namespace TorrentSoftAutoAddPost.Model
             Thread.Sleep(800);
             ButtonDownloadTorrent.Click();
 
-            selector = By.CssSelector(@"iframe");
-            IWebElement WindowFrame = Browser.FindElement(selector);
+            By selectorFrame = By.CssSelector(@"iframe");
+            IWebElement WindowFrame = Browser.FindElement(selectorFrame);
             Browser.SwitchTo().Frame(WindowFrame);
-            selector = By.CssSelector(@"input[multiple=""multiple""]");
-            IWebElement ButtonLoadTorrentFile = Browser.FindElement(selector);
+
+            By selectorFile = By.CssSelector(@"input[multiple=""multiple""]");
+            IWebElement ButtonLoadTorrentFile = Browser.FindElement(selectorFile);
             Thread.Sleep(250);
             ButtonLoadTorrentFile.SendKeys(post.TorrentFile);
 

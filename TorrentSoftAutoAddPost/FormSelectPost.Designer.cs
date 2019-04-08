@@ -76,6 +76,8 @@
             this.grid_Published.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grid_Published.Location = new System.Drawing.Point(0, 0);
             this.grid_Published.Name = "grid_Published";
+            this.grid_Published.ReadOnly = true;
+            this.grid_Published.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grid_Published.Size = new System.Drawing.Size(393, 450);
             this.grid_Published.TabIndex = 0;
             // 

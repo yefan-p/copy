@@ -26,6 +26,7 @@ namespace TorrentSoftAutoAddPost.Model
 
             var publishedQuery =
                 from softPost in context.TorrentSoftPost
+                orderby softPost.WasAdded descending
                 select softPost;
 
             List<TorrentSoftPost> torrentSofts = publishedQuery.Take(Settings.PublishedCount).ToList();
@@ -75,6 +76,20 @@ namespace TorrentSoftAutoAddPost.Model
             ReadyPost readyPost = queryPost.Single();
 
             return readyPost;
+        }
+
+        public void AddTorrentSoftPost(int idReadyPost)
+        {
+            autoParsingContext context = new autoParsingContext();
+
+            TorrentSoftPost post = new TorrentSoftPost()
+            {
+                ReadyPost_idReadyPost = idReadyPost,
+                WasAdded = DateTime.Now,
+            };
+
+            context.TorrentSoftPost.Add(post);
+            context.SaveChanges();
         }
     }
 }
