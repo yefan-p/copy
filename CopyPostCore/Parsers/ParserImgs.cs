@@ -114,7 +114,15 @@ namespace CopyPostCore.Parsers
              * Отсюда следует, что нужно взять у дочерний ссылки первую часть до thumbs,
              * у родительской - вторую часть после show, а посередине получишвейся ссылке поставить out и заменить
              * последний слеш на точку
+             * 
              */
+
+            //Родительская ссылка может уже быть прямой ссылкой на изображение
+            if (parentUri.Contains("/out/"))
+            {
+                return parentUri;
+            }
+
             int thumbs = childUri.IndexOf("thumbs");
             childUri = childUri.Substring(0, thumbs);
 

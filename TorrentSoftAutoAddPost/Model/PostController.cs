@@ -27,15 +27,16 @@ namespace TorrentSoftAutoAddPost.Model
         {
             string description = DeleteImgs(readyPost.Description);
             description = DeleteSpace(description);
+            //description = FormatImg(description);
 
             BrowserPostReady.IdReadyPost = readyPost.idReadyPost;
-
             BrowserPostReady.Name = readyPost.Name;
             BrowserPostReady.Description = description;
+
             SetSpoilers(readyPost);
             SetPoster(readyPost.Imgs.ToList());
-            SetTorrentFile(readyPost);
             SetScreens(readyPost.Imgs.ToList());
+            SetTorrentFile(readyPost);
         }
 
         /// <summary>
@@ -45,12 +46,20 @@ namespace TorrentSoftAutoAddPost.Model
         private void SetPoster(List<Img> imgs)
         {
             var viewsImgs = from el in imgs
-                            where el.TypeImg.idTypeImg == (int)TImg.View
+                            where el.TypeImg.idTypeImg == (int)TImg.View 
+                                && !Settings.WhiteListImgs.Contains(el.Uri)
                             select el.Uri;
 
-            FormSelectPoster formSelectPoster = new FormSelectPoster(viewsImgs.ToList());
-            formSelectPoster.PosterSelected += FormSelectPoster_PosterSelected;
-            formSelectPoster.ShowDialog();
+            if (viewsImgs.Count() > 1)
+            {
+                FormSelectPoster formSelectPoster = new FormSelectPoster(viewsImgs.ToList());
+                formSelectPoster.PosterSelected += FormSelectPoster_PosterSelected;
+                formSelectPoster.ShowDialog();
+            }
+            else
+            {
+                BrowserPostReady.Poster = viewsImgs.First();
+            }
         }
 
         private void FormSelectPoster_PosterSelected(object sender, PosterSelectedArgs e)
@@ -89,6 +98,11 @@ namespace TorrentSoftAutoAddPost.Model
             PostComplete?.Invoke(this, EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Возвращает строку, котора может быть использована для имени файла win
+        /// </summary>
+        /// <param name="filename">Строка в которой могут содержаться недопустимые символы в имени файла</param>
+        /// <returns></returns>
         public string GetSafeFilename(string filename)
         {
             string[] stringArr = filename.Split(Path.GetInvalidFileNameChars());
@@ -123,25 +137,17 @@ namespace TorrentSoftAutoAddPost.Model
             return htmlNode.OuterHtml;
         }
 
+        /// <summary>
+        /// Удаляет лишние пробелы из описания
+        /// </summary>
+        /// <param name="description"></param>
+        /// <returns></returns>
         private string DeleteSpace(string description)
         {
-            StringBuilder stringBuilder = new StringBuilder(description);
             description = description.Replace("<div></div>", "");
 
-            while (description.Contains("<hr><hr>"))
-            {
-                description = description.Replace("<hr><hr>", "<hr>");
-            }
-
-            while (description.Contains("<br><br>"))
-            {
-                description = description.Replace("<br><br>", "<br>");
-            }
-
-            while (description.Contains($"<br>{Environment.NewLine}<br>"))
-            {
-                description = description.Replace($"<br>{Environment.NewLine}<br>", Environment.NewLine);
-            }
+            description = description.Replace("<hr>", "");
+            description = description.Replace("<br>", "");
 
             while (description.Contains(Environment.NewLine + Environment.NewLine))
             {
@@ -163,7 +169,39 @@ namespace TorrentSoftAutoAddPost.Model
                 spoilersResult += $"[spoiler={item.Header}]{item.Body}[/spoiler]";
             }
 
+            if (BrowserPostReady.Description.EndsWith(Environment.NewLine))
+            {
+                BrowserPostReady.Description += Environment.NewLine;
+            }
+            else
+            {
+                BrowserPostReady.Description += Environment.NewLine + Environment.NewLine;
+            }
+
             BrowserPostReady.Description += spoilersResult;
+        }
+
+        /// <summary>
+        /// Находит изображения и форматирует их
+        /// </summary>
+        /// <param name="description">Описание с возможными изображениями</param>
+        /// <returns></returns>
+        private string FormatImg(string description)
+        {
+            HtmlDocument htmlDocument = new HtmlDocument();
+            htmlDocument.LoadHtml(description);
+
+            HtmlNode htmlNode = htmlDocument.DocumentNode;
+            HtmlNodeCollection nodesImg = htmlNode.SelectNodes(@"//img");
+
+            HtmlNode brElement = HtmlNode.CreateNode("<br>");
+
+            if (nodesImg != null && nodesImg.Count() == 1)
+            {
+                htmlNode.InsertAfter(brElement, nodesImg.First());
+            }
+
+            return htmlNode.OuterHtml;
         }
     }
 }
