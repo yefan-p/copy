@@ -25,7 +25,7 @@ namespace TorrentSoftAutoAddPost.Model
         /// Директория пользовательского профиля Firefox для Selenium.
         /// В Firefox можно узнать в Справка > Информация для решения проблем > Папка профиля
         /// </summary>
-        public static string FirefoxProfileDir = @"C:\Users\User\AppData\Roaming\Mozilla\Firefox\Profiles\gazt4y16.default";
+        public static string FirefoxProfileDir = @"C:\Users\User\AppData\Roaming\Mozilla\Firefox\Profiles\mv82ox8n.default";
 
         /// <summary>
         /// Url страницы, на которой производится добавление постов на сайт торрентСофт

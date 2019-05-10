@@ -10,6 +10,7 @@ namespace CopyPostCore.Parsers
     public class ParserImgs
     {
         public static string RadikalXPath = @"/html/body/div[3]/div[1]/div/div[1]/div[1]/div[2]/div[2]/div[1]/img";
+        public static string RadikalXPath2 = @"/html/body/div[2]/div[1]/div/div[1]/div[1]/div[2]/div[2]/div[1]/img";
         public static string ImagebanXPath = @"/html/body/table//td/center/table//tr/td[2]/center[2]/div[1]/ul/li/img";
         public static string LostpicXPath = @"/html/body/div[2]/div[2]/div[1]/a/img";
         public static string FastpicXPath = @"//*[@id=""image""]";
@@ -42,7 +43,7 @@ namespace CopyPostCore.Parsers
 
             // условия расставлены в порядке убывания количества упоминаний хостинга в бд
             if (uriImg.Contains("radikal"))
-                result = GetDirectUri(img.Uri_Parent, RadikalXPath);
+                result = GetDirectUri(img.Uri_Parent, RadikalXPath2);
             else if (uriImg.Contains("imageban"))
                 result = GetUriImageban(img.Uri_Parent, img.Uri);
             else if (uriImg.Contains("lostpic"))

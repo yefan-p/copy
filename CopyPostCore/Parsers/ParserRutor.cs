@@ -14,7 +14,7 @@ namespace CopyPostCore.Parsers
         private static readonly Uri MainDotIs = new Uri(@"http://www.rutor.is");
         private static readonly Uri MainDotInfo = new Uri(@"http://www.rutor.info");
         private static readonly Uri MainDotOnion = new Uri(@"http://rutorc6mqdinc4cz.onion");
-        public static readonly Uri Main = MainDotIs;
+        public static readonly Uri Main = MainDotOnion;
 
         public static readonly Uri UriSoft = new Uri(Main.OriginalString + "/soft");
 
