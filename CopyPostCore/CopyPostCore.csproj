@@ -149,26 +149,26 @@
     <Compile Include="DataBase\TImg.cs" />
     <Compile Include="DataBase\TTrakers.cs" />
     <Compile Include="FoundPost.cs">
-      <DependentUpon>ModelDbAutoParsing.tt</DependentUpon>
+      <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Img.cs">
-      <DependentUpon>ModelDbAutoParsing.tt</DependentUpon>
+      <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
     <Compile Include="MessageService.cs" />
-    <Compile Include="ModelDbAutoParsing.Context.cs">
+    <Compile Include="ModelDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ModelDbAutoParsing.Context.tt</DependentUpon>
+      <DependentUpon>ModelDB.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModelDbAutoParsing.cs">
+    <Compile Include="ModelDB.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ModelDbAutoParsing.tt</DependentUpon>
+      <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModelDbAutoParsing.Designer.cs">
+    <Compile Include="ModelDB.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ModelDbAutoParsing.edmx</DependentUpon>
+      <DependentUpon>ModelDB.edmx</DependentUpon>
     </Compile>
     <Compile Include="Parsers\DownloaderThroughTor.cs" />
     <Compile Include="Parsers\DownloaderHtmlPageArgs.cs" />
@@ -178,30 +178,30 @@
     <Compile Include="Parsers\ReadyPostArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadyPost.cs">
-      <DependentUpon>ModelDbAutoParsing.tt</DependentUpon>
+      <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="Spoiler.cs">
-      <DependentUpon>ModelDbAutoParsing.tt</DependentUpon>
+      <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
     <Compile Include="TorrentSoftPost.cs">
-      <DependentUpon>ModelDbAutoParsing.tt</DependentUpon>
+      <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
     <Compile Include="TorrentTracker.cs">
-      <DependentUpon>ModelDbAutoParsing.tt</DependentUpon>
+      <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
     <Compile Include="TypeImg.cs">
-      <DependentUpon>ModelDbAutoParsing.tt</DependentUpon>
+      <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EntityDeploy Include="ModelDbAutoParsing.edmx">
+    <EntityDeploy Include="ModelDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ModelDbAutoParsing.Designer.cs</LastGenOutput>
+      <LastGenOutput>ModelDB.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="ModelDbAutoParsing.edmx.diagram">
-      <DependentUpon>ModelDbAutoParsing.edmx</DependentUpon>
+    <None Include="ModelDB.edmx.diagram">
+      <DependentUpon>ModelDB.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -209,15 +209,15 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ModelDbAutoParsing.Context.tt">
+    <Content Include="ModelDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ModelDbAutoParsing.edmx</DependentUpon>
-      <LastGenOutput>ModelDbAutoParsing.Context.cs</LastGenOutput>
+      <DependentUpon>ModelDB.edmx</DependentUpon>
+      <LastGenOutput>ModelDB.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="ModelDbAutoParsing.tt">
+    <Content Include="ModelDB.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ModelDbAutoParsing.edmx</DependentUpon>
-      <LastGenOutput>ModelDbAutoParsing.cs</LastGenOutput>
+      <DependentUpon>ModelDB.edmx</DependentUpon>
+      <LastGenOutput>ModelDB.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

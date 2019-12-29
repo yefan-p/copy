@@ -17,13 +17,13 @@ namespace CopyPostCore
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TypeImg()
         {
-            this.Imgs = new HashSet<Img>();
+            this.Img = new HashSet<Img>();
         }
     
         public int idTypeImg { get; set; }
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Img> Imgs { get; set; }
+        public virtual ICollection<Img> Img { get; set; }
     }
 }

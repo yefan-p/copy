@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="autoParsingModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="autoparsingModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="foundpost">
           <Key>
             <PropertyRef Name="idFoundPost" />
@@ -42,7 +42,7 @@
             <PropertyRef Name="idSpoiler" />
           </Key>
           <Property Name="idSpoiler" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Header" Type="varchar" MaxLength="120" />
+          <Property Name="Header" Type="varchar" MaxLength="300" />
           <Property Name="Body" Type="mediumtext" />
           <Property Name="ReadyPost_idReadyPost" Type="int" Nullable="false" />
         </EntityType>
@@ -140,7 +140,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="autoParsingModelStoreContainer">
+        <EntityContainer Name="autoparsingModelStoreContainer">
           <EntitySet Name="foundpost" EntityType="Self.foundpost" Schema="autoparsing" store:Type="Tables" />
           <EntitySet Name="img" EntityType="Self.img" Schema="autoparsing" store:Type="Tables" />
           <EntitySet Name="readypost" EntityType="Self.readypost" Schema="autoparsing" store:Type="Tables" />
@@ -173,10 +173,11 @@
             <End Role="torrentsoftpost" EntitySet="torrentsoftpost" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="autoParsingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="CopyPostCore" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="FoundPost">
           <Key>
             <PropertyRef Name="idFoundPost" />
@@ -195,12 +196,12 @@
             <PropertyRef Name="idImg" />
           </Key>
           <Property Name="idImg" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Uri_Parent" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Uri" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="TypeImg_idTypeImg" Type="Int32" Nullable="false" />
           <Property Name="ReadyPost_idReadyPost" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ReadyPost" Relationship="Self.fk_Img_ReadyPost1" FromRole="img" ToRole="readypost" />
           <NavigationProperty Name="TypeImg" Relationship="Self.fk_Img_TypeImg1" FromRole="img" ToRole="typeimg" />
-          <Property Name="Uri_Parent" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ReadyPost">
           <Key>
@@ -209,23 +210,32 @@
           <Property Name="idReadyPost" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="16777215" FixedLength="false" Unicode="false" />
+          <Property Name="TorrentUrl" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
           <Property Name="FoundedTime" Type="DateTime" />
           <Property Name="FoundPost_idFoundPost" Type="Int32" Nullable="false" />
           <NavigationProperty Name="FoundPost" Relationship="Self.fk_ReadyPost_FoundPost1" FromRole="readypost" ToRole="foundpost" />
           <NavigationProperty Name="Imgs" Relationship="Self.fk_Img_ReadyPost1" FromRole="readypost" ToRole="img" />
           <NavigationProperty Name="Spoilers" Relationship="Self.fk_Spoiler_ReadyPost1" FromRole="readypost" ToRole="spoiler" />
-          <Property Name="TorrentUrl" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="torrentsoftpost" Relationship="autoParsingModel.fk_TorrentSoftPost_ReadyPost1" FromRole="ReadyPost" ToRole="torrentsoftpost" />
+          <NavigationProperty Name="TorrentSoftPost" Relationship="Self.fk_TorrentSoftPost_ReadyPost1" FromRole="readypost" ToRole="torrentsoftpost" />
         </EntityType>
         <EntityType Name="Spoiler">
           <Key>
             <PropertyRef Name="idSpoiler" />
           </Key>
           <Property Name="idSpoiler" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Header" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="Header" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="Body" Type="String" MaxLength="16777215" FixedLength="false" Unicode="false" />
           <Property Name="ReadyPost_idReadyPost" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ReadyPost" Relationship="Self.fk_Spoiler_ReadyPost1" FromRole="spoiler" ToRole="readypost" />
+        </EntityType>
+        <EntityType Name="TorrentSoftPost">
+          <Key>
+            <PropertyRef Name="idTorrentSoftPost" />
+          </Key>
+          <Property Name="idTorrentSoftPost" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WasAdded" Type="DateTime" />
+          <Property Name="ReadyPost_idReadyPost" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ReadyPost" Relationship="Self.fk_TorrentSoftPost_ReadyPost1" FromRole="torrentsoftpost" ToRole="readypost" />
         </EntityType>
         <EntityType Name="TorrentTracker">
           <Key>
@@ -233,7 +243,7 @@
           </Key>
           <Property Name="idTorrentTracker" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="FoundPosts" Relationship="Self.fk_FoundPost_TorrentTracker1" FromRole="torrenttracker" ToRole="foundpost" />
+          <NavigationProperty Name="FoundPost" Relationship="Self.fk_FoundPost_TorrentTracker1" FromRole="torrenttracker" ToRole="foundpost" />
         </EntityType>
         <EntityType Name="TypeImg">
           <Key>
@@ -241,11 +251,11 @@
           </Key>
           <Property Name="idTypeImg" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Imgs" Relationship="Self.fk_Img_TypeImg1" FromRole="typeimg" ToRole="img" />
+          <NavigationProperty Name="Img" Relationship="Self.fk_Img_TypeImg1" FromRole="typeimg" ToRole="img" />
         </EntityType>
         <Association Name="fk_FoundPost_TorrentTracker1">
-          <End Role="torrenttracker" Type="autoParsingModel.TorrentTracker" Multiplicity="1" />
-          <End Role="foundpost" Type="autoParsingModel.FoundPost" Multiplicity="*" />
+          <End Role="torrenttracker" Type="CopyPostCore.TorrentTracker" Multiplicity="1" />
+          <End Role="foundpost" Type="CopyPostCore.FoundPost" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="torrenttracker">
               <PropertyRef Name="idTorrentTracker" />
@@ -256,8 +266,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_ReadyPost_FoundPost1">
-          <End Role="foundpost" Type="autoParsingModel.FoundPost" Multiplicity="1" />
-          <End Role="readypost" Type="autoParsingModel.ReadyPost" Multiplicity="*" />
+          <End Role="foundpost" Type="CopyPostCore.FoundPost" Multiplicity="1" />
+          <End Role="readypost" Type="CopyPostCore.ReadyPost" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="foundpost">
               <PropertyRef Name="idFoundPost" />
@@ -268,8 +278,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_Img_ReadyPost1">
-          <End Role="readypost" Type="autoParsingModel.ReadyPost" Multiplicity="1" />
-          <End Role="img" Type="autoParsingModel.Img" Multiplicity="*" />
+          <End Role="readypost" Type="CopyPostCore.ReadyPost" Multiplicity="1" />
+          <End Role="img" Type="CopyPostCore.Img" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="readypost">
               <PropertyRef Name="idReadyPost" />
@@ -280,8 +290,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_Img_TypeImg1">
-          <End Role="typeimg" Type="autoParsingModel.TypeImg" Multiplicity="1" />
-          <End Role="img" Type="autoParsingModel.Img" Multiplicity="*" />
+          <End Role="typeimg" Type="CopyPostCore.TypeImg" Multiplicity="1" />
+          <End Role="img" Type="CopyPostCore.Img" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="typeimg">
               <PropertyRef Name="idTypeImg" />
@@ -292,8 +302,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_Spoiler_ReadyPost1">
-          <End Role="readypost" Type="autoParsingModel.ReadyPost" Multiplicity="1" />
-          <End Role="spoiler" Type="autoParsingModel.Spoiler" Multiplicity="*" />
+          <End Role="readypost" Type="CopyPostCore.ReadyPost" Multiplicity="1" />
+          <End Role="spoiler" Type="CopyPostCore.Spoiler" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="readypost">
               <PropertyRef Name="idReadyPost" />
@@ -303,13 +313,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_TorrentSoftPost_ReadyPost1">
+          <End Role="readypost" Type="CopyPostCore.ReadyPost" Multiplicity="1" />
+          <End Role="torrentsoftpost" Type="CopyPostCore.TorrentSoftPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="readypost">
+              <PropertyRef Name="idReadyPost" />
+            </Principal>
+            <Dependent Role="torrentsoftpost">
+              <PropertyRef Name="ReadyPost_idReadyPost" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="autoParsingContext" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="FoundPost" EntityType="autoParsingModel.FoundPost" />
-          <EntitySet Name="Img" EntityType="autoParsingModel.Img" />
-          <EntitySet Name="ReadyPost" EntityType="autoParsingModel.ReadyPost" />
-          <EntitySet Name="Spoiler" EntityType="autoParsingModel.Spoiler" />
-          <EntitySet Name="TorrentTracker" EntityType="autoParsingModel.TorrentTracker" />
-          <EntitySet Name="TypeImg" EntityType="autoParsingModel.TypeImg" />
+          <EntitySet Name="FoundPost" EntityType="CopyPostCore.FoundPost" />
+          <EntitySet Name="Img" EntityType="CopyPostCore.Img" />
+          <EntitySet Name="ReadyPost" EntityType="CopyPostCore.ReadyPost" />
+          <EntitySet Name="Spoiler" EntityType="CopyPostCore.Spoiler" />
+          <EntitySet Name="TorrentSoftPost" EntityType="CopyPostCore.TorrentSoftPost" />
+          <EntitySet Name="TorrentTracker" EntityType="CopyPostCore.TorrentTracker" />
+          <EntitySet Name="TypeImg" EntityType="CopyPostCore.TypeImg" />
           <AssociationSet Name="fk_FoundPost_TorrentTracker1" Association="Self.fk_FoundPost_TorrentTracker1">
             <End Role="torrenttracker" EntitySet="TorrentTracker" />
             <End Role="foundpost" EntitySet="FoundPost" />
@@ -330,41 +353,19 @@
             <End Role="readypost" EntitySet="ReadyPost" />
             <End Role="spoiler" EntitySet="Spoiler" />
           </AssociationSet>
-          <EntitySet Name="TorrentSoftPost" EntityType="autoParsingModel.TorrentSoftPost" />
-          <AssociationSet Name="fk_TorrentSoftPost_ReadyPost1" Association="autoParsingModel.fk_TorrentSoftPost_ReadyPost1">
-            <End Role="ReadyPost" EntitySet="ReadyPost" />
+          <AssociationSet Name="fk_TorrentSoftPost_ReadyPost1" Association="Self.fk_TorrentSoftPost_ReadyPost1">
+            <End Role="readypost" EntitySet="ReadyPost" />
             <End Role="torrentsoftpost" EntitySet="TorrentSoftPost" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="TorrentSoftPost">
-          <Key>
-            <PropertyRef Name="idTorrentSoftPost" />
-          </Key>
-          <Property Name="idTorrentSoftPost" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="WasAdded" Type="DateTime" />
-          <Property Name="ReadyPost_idReadyPost" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ReadyPost" Relationship="autoParsingModel.fk_TorrentSoftPost_ReadyPost1" FromRole="torrentsoftpost" ToRole="ReadyPost" />
-        </EntityType>
-        <Association Name="fk_TorrentSoftPost_ReadyPost1">
-          <End Type="autoParsingModel.ReadyPost" Role="ReadyPost" Multiplicity="1" />
-          <End Type="autoParsingModel.TorrentSoftPost" Role="torrentsoftpost" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ReadyPost">
-              <PropertyRef Name="idReadyPost" />
-            </Principal>
-            <Dependent Role="torrentsoftpost">
-              <PropertyRef Name="ReadyPost_idReadyPost" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="autoParsingModelStoreContainer" CdmEntityContainer="autoParsingContext">
+        <EntityContainerMapping StorageEntityContainer="autoparsingModelStoreContainer" CdmEntityContainer="autoParsingContext">
           <EntitySetMapping Name="FoundPost">
-            <EntityTypeMapping TypeName="autoParsingModel.FoundPost">
+            <EntityTypeMapping TypeName="CopyPostCore.FoundPost">
               <MappingFragment StoreEntitySet="foundpost">
                 <ScalarProperty Name="idFoundPost" ColumnName="idFoundPost" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -376,10 +377,10 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Img">
-            <EntityTypeMapping TypeName="autoParsingModel.Img">
+            <EntityTypeMapping TypeName="CopyPostCore.Img">
               <MappingFragment StoreEntitySet="img">
-                <ScalarProperty Name="Uri_Parent" ColumnName="Uri_Parent" />
                 <ScalarProperty Name="idImg" ColumnName="idImg" />
+                <ScalarProperty Name="Uri_Parent" ColumnName="Uri_Parent" />
                 <ScalarProperty Name="Uri" ColumnName="Uri" />
                 <ScalarProperty Name="TypeImg_idTypeImg" ColumnName="TypeImg_idTypeImg" />
                 <ScalarProperty Name="ReadyPost_idReadyPost" ColumnName="ReadyPost_idReadyPost" />
@@ -387,19 +388,19 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ReadyPost">
-            <EntityTypeMapping TypeName="autoParsingModel.ReadyPost">
+            <EntityTypeMapping TypeName="CopyPostCore.ReadyPost">
               <MappingFragment StoreEntitySet="readypost">
-                <ScalarProperty Name="TorrentUrl" ColumnName="TorrentUrl" />
                 <ScalarProperty Name="idReadyPost" ColumnName="idReadyPost" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TorrentUrl" ColumnName="TorrentUrl" />
                 <ScalarProperty Name="FoundedTime" ColumnName="FoundedTime" />
                 <ScalarProperty Name="FoundPost_idFoundPost" ColumnName="FoundPost_idFoundPost" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Spoiler">
-            <EntityTypeMapping TypeName="autoParsingModel.Spoiler">
+            <EntityTypeMapping TypeName="CopyPostCore.Spoiler">
               <MappingFragment StoreEntitySet="spoiler">
                 <ScalarProperty Name="idSpoiler" ColumnName="idSpoiler" />
                 <ScalarProperty Name="Header" ColumnName="Header" />
@@ -408,8 +409,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TorrentSoftPost">
+            <EntityTypeMapping TypeName="CopyPostCore.TorrentSoftPost">
+              <MappingFragment StoreEntitySet="torrentsoftpost">
+                <ScalarProperty Name="idTorrentSoftPost" ColumnName="idTorrentSoftPost" />
+                <ScalarProperty Name="WasAdded" ColumnName="WasAdded" />
+                <ScalarProperty Name="ReadyPost_idReadyPost" ColumnName="ReadyPost_idReadyPost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="TorrentTracker">
-            <EntityTypeMapping TypeName="autoParsingModel.TorrentTracker">
+            <EntityTypeMapping TypeName="CopyPostCore.TorrentTracker">
               <MappingFragment StoreEntitySet="torrenttracker">
                 <ScalarProperty Name="idTorrentTracker" ColumnName="idTorrentTracker" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -417,19 +427,10 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TypeImg">
-            <EntityTypeMapping TypeName="autoParsingModel.TypeImg">
+            <EntityTypeMapping TypeName="CopyPostCore.TypeImg">
               <MappingFragment StoreEntitySet="typeimg">
                 <ScalarProperty Name="idTypeImg" ColumnName="idTypeImg" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TorrentSoftPost">
-            <EntityTypeMapping TypeName="autoParsingModel.TorrentSoftPost">
-              <MappingFragment StoreEntitySet="torrentsoftpost">
-                <ScalarProperty Name="ReadyPost_idReadyPost" ColumnName="ReadyPost_idReadyPost" />
-                <ScalarProperty Name="WasAdded" ColumnName="WasAdded" />
-                <ScalarProperty Name="idTorrentSoftPost" ColumnName="idTorrentSoftPost" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

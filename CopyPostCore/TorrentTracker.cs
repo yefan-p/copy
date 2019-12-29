@@ -17,13 +17,13 @@ namespace CopyPostCore
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TorrentTracker()
         {
-            this.FoundPosts = new HashSet<FoundPost>();
+            this.FoundPost = new HashSet<FoundPost>();
         }
     
         public int idTorrentTracker { get; set; }
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FoundPost> FoundPosts { get; set; }
+        public virtual ICollection<FoundPost> FoundPost { get; set; }
     }
 }

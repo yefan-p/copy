@@ -64,10 +64,26 @@ namespace TorrentSoftAutoAddPost.Model
             IWebElement buttonClone = Browser.FindElement(selector);
             buttonClone.Click();
 
-            selector = By.CssSelector(@"[name=""xfield[poster]""]");
-            IWebElement inputPoster = Browser.FindElement(selector);
-            Clipboard.SetText(post.Poster);
-            inputPoster.SendKeys(Settings.PasteClipboardSelenium);
+            try
+            {
+                //кнопка постер
+                selector = By.XPath(@"/html/body/div[3]/div/div[2]/div[2]/div[1]/form/div/div[1]/div/div[15]/div/div/div/div[2]/input");
+                IWebElement inputPosterButton = Browser.FindElement(selector);
+
+                string poster = post.Poster ?? "не найдено";
+                inputPosterButton.SendKeys(poster);
+            }
+            catch(WebDriverException)
+            {
+                //Строка постер
+                selector = By.CssSelector(@"[name=""xfield[poster]""]");
+                IWebElement inputPoster = Browser.FindElement(selector);
+
+                string poster = post.Poster ?? "не найдено";
+                Clipboard.SetText(poster);
+                inputPoster.SendKeys(Settings.PasteClipboardSelenium);
+            }
+
 
             selector = By.CssSelector(@"[name=""full_story""]");
             IWebElement bodyPost = Browser.FindElement(selector);

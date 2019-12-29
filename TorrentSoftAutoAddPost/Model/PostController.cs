@@ -58,7 +58,7 @@ namespace TorrentSoftAutoAddPost.Model
             }
             else
             {
-                BrowserPostReady.Poster = viewsImgs.First();
+                BrowserPostReady.Poster = viewsImgs.FirstOrDefault();
             }
         }
 
@@ -86,7 +86,7 @@ namespace TorrentSoftAutoAddPost.Model
             string fileName = GetSafeFilename(readyPost.Name);
             DownloaderThroughTor downloader = new DownloaderThroughTor();
 
-            Uri uriFile = new Uri(ParserRutor.Main.OriginalString + readyPost.TorrentUrl);
+            Uri uriFile = new Uri(/*ParserRutor.Main + */readyPost.TorrentUrl);
             downloader.FinishedDownoadFile += Downloader_FinishedDownoadFile;
             downloader.FileAsync(uriFile, $"{folderName}\\{fileName}.torrent");
 

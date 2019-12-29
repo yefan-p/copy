@@ -19,15 +19,15 @@ namespace CopyPostCore
         {
             this.Imgs = new HashSet<Img>();
             this.Spoilers = new HashSet<Spoiler>();
-            this.torrentsoftpost = new HashSet<TorrentSoftPost>();
+            this.TorrentSoftPost = new HashSet<TorrentSoftPost>();
         }
     
         public int idReadyPost { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public string TorrentUrl { get; set; }
         public Nullable<System.DateTime> FoundedTime { get; set; }
         public int FoundPost_idFoundPost { get; set; }
-        public string TorrentUrl { get; set; }
     
         public virtual FoundPost FoundPost { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -35,6 +35,6 @@ namespace CopyPostCore
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Spoiler> Spoilers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TorrentSoftPost> torrentsoftpost { get; set; }
+        public virtual ICollection<TorrentSoftPost> TorrentSoftPost { get; set; }
     }
 }
